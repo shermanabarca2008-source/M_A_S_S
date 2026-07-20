@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+    <html class="light" lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="jakarta.faces.passthrough"><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Registro de Pacientes - M.A.S.S.</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries">
+
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#004d99",
+                        "on-primary-container": "#dae5ff",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "tertiary": "#005b15",
+                        "surface-container-high": "#ddeaf2",
+                        "surface-container": "#e3f0f8",
+                        "on-surface": "#111d23",
+                        "primary-container": "#1565c0",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#111d23",
+                        "on-error-container": "#93000a",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#e9f6fd",
+                        "outline": "#727783",
+                        "secondary": "#5d5f5f",
+                        "on-primary-fixed-variant": "#00468c",
+                        "on-surface-variant": "#424752",
+                        "tertiary-fixed-dim": "#7ddc7a",
+                        "surface-bright": "#f4faff",
+                        "on-secondary-fixed-variant": "#454747",
+                        "surface-container-highest": "#d7e4ec",
+                        "surface-dim": "#cfdce4",
+                        "on-secondary-container": "#616363",
+                        "primary-fixed": "#d6e3ff",
+                        "background": "#f4faff",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "inverse-primary": "#a9c7ff",
+                        "inverse-on-surface": "#e6f3fb",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "on-tertiary-container": "#9afa95",
+                        "surface-variant": "#d7e4ec",
+                        "outline-variant": "#c2c6d4",
+                        "tertiary-container": "#0f7623",
+                        "tertiary-fixed": "#98f994",
+                        "surface-tint": "#005db7",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#263238",
+                        "surface": "#f4faff",
+                        "on-tertiary-fixed": "#002204",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#001b3d",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#dfe0e0",
+                        "on-tertiary-fixed-variant": "#005313"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "max_container": "1440px",
+                        "xl": "32px",
+                        "gutter": "24px",
+                        "sm": "8px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "base": "4px",
+                        "sidebar_width": "280px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: #F5F7FA; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid #E0E4E8;
+        }
+        .step-indicator.active {
+            @apply bg-primary text-white;
+        }
+        .step-indicator.complete {
+            @apply bg-tertiary text-white;
+        }
+        .form-input-focus:focus {
+            outline: none;
+            border-color: #1565c0;
+            box-shadow: 0 0 0 2px rgba(21, 101, 192, 0.1);
+        }
+        .transition-all-200 { transition: all 200ms ease-in-out; }
+    </style>
+</head>
+<body class="min-h-screen text-on-background bg-background">
+<!-- TopNavBar Replacement for Transactional View -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-lg h-16 bg-surface-container-highest border-b border-outline-variant shadow-sm">
+    <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+        <h1 class="font-headline-md text-headline-md font-bold text-primary">M.A.S.S.</h1>
+    </div>
+    <div class="hidden md:block">
+        <span class="font-label-md text-on-surface-variant">Portal de Registro de Pacientes</span>
+    </div>
+</header>
+<main class="pt-24 pb-xl px-md lg:px-0">
+    <div class="max-w-[1000px] mx-auto">
+        <!-- Hero Header Section -->
+        <div class="mb-xl text-center md:text-left flex flex-col md:flex-row items-center gap-lg">
+            <div class="w-20 h-20 bg-primary-container rounded-xl flex items-center justify-center shadow-lg transform rotate-3">
+                <span class="material-symbols-outlined text-white text-4xl" style="font-variation-settings: 'FILL' 1;">person_add</span>
+            </div>
+            <div>
+                <h2 class="font-headline-lg text-headline-lg text-on-surface">Crea tu Cuenta de Paciente</h2>
+                <p class="font-body-md text-on-surface-variant mt-1">Regístrate en el Medical Appointment Scheduling System para gestionar tus citas médicas con facilidad.</p>
+            </div>
+        </div>
+        <h:form id="registrationForm" styleClass="space-y-gutter">
+            <!-- Bento Grid Layout for Form Sections -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+
+            </div>
+                <!-- Section 1: Personal Data -->
+                <div class="lg:col-span-8 glass-panel p-lg rounded-xl shadow-sm transition-all-200 hover:shadow-md">
+                    <div class="flex items-center gap-2 mb-md text-primary">
+                        <span class="material-symbols-outlined">badge</span>
+                        <h3 class="font-headline-sm text-headline-sm">Información Personal</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="font-label-md text-label-md text-on-surface-variant" for="cedula">Cédula</label>
+                                <h:inputText
+                                        id="cedula"
+                                        name="cedula"
+                                        type="text"
+                                        value="#{pacienteBean.cedula}"
+                                        pt:placeholder="1900863067"
+                                        required="true"
+                                        styleClass="form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"
+                                        />
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="font-label-md text-label-md text-on-surface-variant" for="genero">Género</label>
+                            <select class="form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md" id="genero" name="genero" required="">
+                                <option disabled="" selected="" value="">Seleccionar género</option>
+                                <option value="masculino">Masculino</option>
+                                <option value="femenino">Femenino</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="font-label-md text-label-md text-on-surface-variant" for="nombres">Nombres</label>
+                                <h:inputText
+                                        id="nombres"
+                                        name="nombres"
+                                        type="text"
+                                        value="#{pacienteBean.nombres}"
+                                        pt:placeholder="Escribe tus nombres"
+                                        required="true"
+                                        styleClass="form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"
+                                        />
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="font-label-md text-label-md text-on-surface-variant" for="apellidos">Apellidos</label>
+                                <h:inputText
+                                        id="apellidos"
+                                        name="apellidos"
+                                        type="text"
+                                        value="#{pacienteBean.apellidos}"
+                                        pt:placeholder="Escribe tus apellidos"
+                                        required="true"
+                                        styleClass="form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"
+                                        />
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="font-label-md text-label-md text-on-surface-variant" for="fecha_nacimiento">Fecha de nacimiento</label>
+                            <h:inputText
+                                    id="fecha_nacimiento"
+                                    type="date"
+                                    value="#{pacienteBean.fechaNacimiento}"
+                                    converter="localDateConverter"
+                                    required="true"
+                                    styleClass="form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"/>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sidebar Section: Contact Details -->
+                <div class="lg:col-span-4 glass-panel p-lg rounded-xl shadow-sm transition-all-200 hover:shadow-md border-l-4 border-primary">
+                    <div class="flex items-center gap-2 mb-md text-primary">
+                        <span class="material-symbols-outlined">contact_phone</span>
+                        <h3 class="font-headline-sm text-headline-sm">Contacto</h3>
+                    </div>
+                    <div class="space-y-md">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="font-label-md text-label-md text-on-surface-variant" for="telefono">Teléfono</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-3.5 material-symbols-outlined text-outline text-md">call</span>
+                                    <h:inputText
+                                            id="telefono"
+                                            name="telefono"
+                                            type="tel"
+                                            value="#{pacienteBean.telefono}"
+                                            required="true"
+                                            pt:placeholder="0990160983"
+                                            styleClass="w-full pl-10 form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"
+                                    />
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="font-label-md text-label-md text-on-surface-variant" for="correo">Correo Electrónico</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-3.5 material-symbols-outlined text-outline text-md">mail</span>
+                                    <h:inputText
+                                            id="correo"
+                                            name="correo"
+                                            type="email"
+                                            value="#{pacienteBean.correo}"
+                                            required="true"
+                                            pt:placeholder="usuario@ejemplo.com"
+                                            styleClass="w-full pl-10 form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"
+                                            />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Section 3: Emergency & Security -->
+                <div class="lg:col-span-12 grid grid-cols-1 gap-gutter">
+
+                    <!-- Password & Security -->
+                    <div class="glass-panel p-lg rounded-xl shadow-sm transition-all-200 hover:shadow-md">
+                        <div class="flex items-center gap-2 mb-md text-primary">
+                            <span class="material-symbols-outlined">lock</span>
+                            <h3 class="font-headline-sm text-headline-sm">Seguridad de la Cuenta</h3>
+                        </div>
+                        <div class="space-y-md">
+                            <div class="flex flex-col gap-1.5">
+                                <label class="font-label-md text-label-md text-on-surface-variant" for="password">Contraseña</label>
+                                <h:inputSecret
+                                        id="password"
+                                        value="#{pacienteBean.contrasena}"
+                                        required="true"
+                                        pt:placeholder="Mínimo 8 caracteres"
+                                        styleClass="form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"
+                                        redisplay="true"/>
+                                <!-- Password Strength Indicator -->
+                                <div class="mt-2 h-1.5 w-full bg-surface-container-high rounded-full overflow-hidden">
+                                    <div class="h-full w-0 bg-error transition-all duration-300" id="password-strength">
+
+                                </div>
+                                <span class="font-label-sm text-label-sm text-on-surface-variant" id="password-feedback">Seguridad de contraseña</span>
+                            </div>
+                            <div class="flex flex-col gap-1.5">
+                                <label class="font-label-md text-label-md text-on-surface-variant" for="confirm_password">Confirmar Contraseña</label>
+                                <input class="form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md" id="confirm_password" name="confirm_password" placeholder="Repite tu contraseña" required="" type="password"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Terms & Actions -->
+            <div class="flex flex-col items-center gap-lg py-md">
+                <label class="flex items-center gap-3 cursor-pointer group">
+                    <input class="w-5 h-5 rounded text-primary border-outline-variant focus:ring-primary" required="" type="checkbox"/>
+                    <span class="font-body-md text-on-surface-variant group-hover:text-on-surface transition-colors">Acepto los <a class="text-primary font-bold hover:underline" href="#">términos y condiciones</a> de privacidad de datos médicos.</span>
+                </label>
+            </div>
+                <div class="flex flex-col md:flex-row items-center gap-md w-full md:w-auto">
+                        <h:commandButton
+                                value="Registrarme"
+                                action="#{pacienteBean.registrarPaciente}"
+                                styleClass="w-full md:w-64 py-4 px-xl bg-primary text-white font-headline-sm rounded-xl shadow-lg"/>
+
+                        <h:commandButton
+                                value="Cancelar"
+                                action="index?faces-redirect=true"
+                                immediate="true"
+                                styleClass="w-full md:w-auto px-xl py-4 font-label-md"/>
+            </div>
+        </h:form>
+    </div>
+</main>
+<!-- Visual Background Element -->
+<div class="fixed top-0 right-0 -z-10 opacity-10 pointer-events-none">
+    <div class="w-[600px] h-[600px] bg-cover bg-center" data-alt="A macro photography shot of medical cross symbols and blue anatomical DNA strands floating in a pristine, bright clinical environment. The lighting is soft and professional, emphasizing a clean and high-tech healthcare aesthetic with deep blues and whites." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCUOeUu1w6n6gmMs8LRrMZY8j4-Mjm3wUo44aRk1fbRm_Pbl-08cTkNREa5f2lpB8_YFy1e404uLsrcb7CpnK37S0wi7fJGdKCVw__0Cn169jCGN5hpS3ZZbcqFcKzBidsSz647zVQaG0bDXyJVVmLwnAO0ZR40_S3x4mFOCOhWbAm1Ygk0feEpVX5JgDqwImqq5AUOGf4Y3jcS_lfeS1EEKC3OsqKzRucM6bi8tk5tfyiJXBdC0RxbuI3_7xCeGO9jYWPev35z80M')">
+
+    </div>
+</div>
+<!-- Footer from JSON Guide -->
+<footer class="w-full py-xl px-lg mt-auto flex flex-col md:flex-row justify-between items-center gap-md bg-surface-container-lowest border-t border-outline-variant">
+    <div class="flex flex-col gap-1 items-center md:items-start">
+        <span class="font-label-md text-label-md font-bold text-on-surface">M.A.S.S.</span>
+        <p class="font-body-sm text-body-sm text-on-surface-variant text-center md:text-left">© 2024 Medical Appointment Scheduling System (M.A.S.S.). All rights reserved.</p>
+    </div>
+    <div class="flex flex-wrap justify-center gap-md">
+        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Contact Support</a>
+        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Clinic Locations</a>
+    </div>
+</footer>
+<script>
+    // Password strength logic
+    const passwordInput = document.getElementById('password');
+    const strengthBar = document.getElementById('password-strength');
+    const feedbackText = document.getElementById('password-feedback');
+
+    passwordInput.addEventListener('input', () => {
+        const val = passwordInput.value;
+        let strength = 0;
+        if (val.length >= 8) strength += 25;
+        if (val.match(/[a-z]/) &amp;&amp; val.match(/[A-Z]/)) strength += 25;
+        if (val.match(/[0-9]/)) strength += 25;
+        if (val.match(/[^a-zA-Z0-9]/)) strength += 25;
+
+        strengthBar.style.width = strength + '%';
+
+        if (strength &lt;= 25) {
+            strengthBar.className = 'h-full bg-error transition-all duration-300';
+            feedbackText.innerText = 'Contraseña débil';
+            feedbackText.className = 'font-label-sm text-label-sm text-error';
+        } else if (strength &lt;= 75) {
+            strengthBar.className = 'h-full bg-primary-container transition-all duration-300';
+            feedbackText.innerText = 'Contraseña aceptable';
+            feedbackText.className = 'font-label-sm text-label-sm text-primary';
+        } else {
+            strengthBar.className = 'h-full bg-tertiary transition-all duration-300';
+            feedbackText.innerText = 'Contraseña fuerte';
+            feedbackText.className = 'font-label-sm text-label-sm text-tertiary';
+        }
+    });
+
+</script>
+
+
+</body></html>

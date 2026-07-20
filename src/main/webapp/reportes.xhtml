@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>M.A.S.S. - Reportes Estadísticos</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#a9c7ff",
+                        "inverse-primary": "#a9c7ff",
+                        "tertiary-fixed": "#98f994",
+                        "outline": "#727783",
+                        "surface-dim": "#cfdce4",
+                        "on-tertiary-fixed-variant": "#005313",
+                        "inverse-on-surface": "#e6f3fb",
+                        "primary": "#004d99",
+                        "on-tertiary-container": "#9afa95",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#005b15",
+                        "surface-variant": "#d7e4ec",
+                        "surface-container-high": "#ddeaf2",
+                        "surface-container": "#e3f0f8",
+                        "surface-bright": "#f4faff",
+                        "on-primary-container": "#dae5ff",
+                        "tertiary-fixed-dim": "#7ddc7a",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#454747",
+                        "secondary": "#5d5f5f",
+                        "on-secondary-container": "#616363",
+                        "on-surface": "#111d23",
+                        "surface-tint": "#005db7",
+                        "outline-variant": "#c2c6d4",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#1565c0",
+                        "on-surface-variant": "#424752",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#263238",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#dfe0e0",
+                        "on-primary-fixed-variant": "#00468c",
+                        "tertiary-container": "#0f7623",
+                        "surface-container-low": "#e9f6fd",
+                        "secondary-fixed": "#e2e2e2",
+                        "primary-fixed": "#d6e3ff",
+                        "on-background": "#111d23",
+                        "surface-container-highest": "#d7e4ec",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-tertiary-fixed": "#002204",
+                        "background": "#f4faff",
+                        "surface": "#f4faff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#001b3d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "sidebar_width": "280px",
+                        "md": "16px",
+                        "max_container": "1440px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F5F7FA; }
+        .glass-card {
+            background: #FFFFFF;
+            border: 1px solid #E0E4E8;
+            box-shadow: 0px 2px 4px rgba(38, 50, 56, 0.05);
+            transition: all 200ms ease-in-out;
+        }
+        .glass-card:hover {
+            box-shadow: 0px 8px 16px rgba(38, 50, 56, 0.08);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .sidebar-active-pill {
+            position: absolute;
+            left: 0;
+            width: 4px;
+            height: 32px;
+            background-color: #004d99;
+            border-radius: 0 4px 4px 0;
+        }
+        .chart-bar {
+            transition: height 1s ease-out;
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- Sidebar -->
+<aside class="fixed left-0 top-0 h-screen w-sidebar_width bg-surface-container border-r border-outline-variant flex flex-col py-lg z-50">
+    <div class="px-gutter mb-xl">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center">
+                <span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">health_metrics</span>
+            </div>
+            <div>
+                <h1 class="font-headline-sm text-headline-sm font-bold text-primary">M.A.S.S.</h1>
+                <p class="text-label-sm text-on-surface-variant leading-none">Panel de Administración</p>
+            </div>
+        </div>
+    </div>
+    <nav class="flex-1 flex flex-col">
+        <!-- Navigation Items Mapping from JSON Logic -->
+        <a class="relative flex items-center gap-4 px-gutter py-md text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200" href="#">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="font-body-md text-body-md">Tablero</span>
+        </a>
+        <a class="relative flex items-center gap-4 px-gutter py-md text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200" href="#">
+            <span class="material-symbols-outlined">medical_services</span>
+            <span class="font-body-md text-body-md">Doctores</span>
+        </a>
+        <a class="relative flex items-center gap-4 px-gutter py-md text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200" href="#">
+            <span class="material-symbols-outlined">category</span>
+            <span class="font-body-md text-body-md">Especialidades</span>
+        </a>
+        <!-- Active State for Reportes -->
+        <a class="relative flex items-center gap-4 px-gutter py-md text-primary font-bold bg-primary-fixed/10 transition-colors duration-200" href="#">
+            <div class="sidebar-active-pill"></div>
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">assessment</span>
+            <span class="font-body-md text-body-md">Reportes</span>
+        </a>
+        <a class="relative flex items-center gap-4 px-gutter py-md text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200" href="#">
+            <span class="material-symbols-outlined">settings</span>
+            <span class="font-body-md text-body-md">Configuración</span>
+        </a>
+    </nav>
+    <div class="px-gutter pt-lg mt-auto border-t border-outline-variant">
+        <div class="flex items-center gap-3 p-2 rounded-xl bg-surface-container-low">
+            <img class="w-10 h-10 rounded-full object-cover" data-alt="A professional headshot of a senior medical administrator with graying hair, wearing a clean white clinical coat and a subtle smile. The background is a blurred high-end hospital corridor with soft blue and white lighting, emphasizing a clean and reliable clinical environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAf6QxTf5cZhLYGf22vz-D0F-6CG3HlMIL9LNO1X8d_k9p8uz_MakmPEsfy60XaKyZiUAxFaX4nFIiaYwiiZeWwIOG_FCn8TGLTpDlSBFSoVna0AoLFRBD-WTwWkiErV22tHAcezopKudx3M85TMvIA2Z652LHKO_fJL_FP17lvAieYJyPx93G8daj5ln3qHN6dppTA-Z2KPf969Us4twq3-YNtYfjpTp00O5z8j-IwfwAtb4tWlVfVF3nh5AFZJKTR3QpZsA9sIO4"/>
+            <div class="overflow-hidden">
+                <p class="text-label-md text-on-surface font-bold truncate">Dr. Ricardo Alva</p>
+                <p class="text-label-sm text-on-surface-variant truncate">Admin Superior</p>
+            </div>
+        </div>
+    </div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[280px] min-h-screen flex flex-col">
+    <!-- Top Bar -->
+    <header class="sticky top-0 w-full h-16 bg-surface border-b border-outline-variant shadow-sm flex justify-between items-center px-gutter z-40">
+        <div class="flex items-center gap-4 flex-1">
+            <div class="relative w-full max-w-md">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+                <input class="w-full bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 focus:ring-2 focus:ring-primary/20 text-body-sm" placeholder="Buscar reportes o datos..." type="text"/>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <button class="hover:bg-surface-container-high rounded-full p-2 text-on-surface-variant transition-colors">
+                <span class="material-symbols-outlined">help</span>
+            </button>
+            <button class="hover:bg-surface-container-high rounded-full p-2 text-on-surface-variant transition-colors relative">
+                <span class="material-symbols-outlined">notifications</span>
+                <span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+            </button>
+            <button class="hover:bg-surface-container-high rounded-full p-2 text-on-surface-variant transition-colors">
+                <span class="material-symbols-outlined">apps</span>
+            </button>
+        </div>
+    </header>
+    <!-- Content Canvas -->
+    <div class="p-gutter max-w-max_container mx-auto w-full">
+        <!-- Header Section -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-lg mb-xl">
+            <div>
+                <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Reportes Estadísticos</h2>
+                <p class="text-body-lg text-on-surface-variant">Análisis detallado de rendimiento clínico y demanda hospitalaria.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="flex bg-surface-container rounded-lg p-1">
+                    <button class="px-4 py-1.5 bg-white shadow-sm rounded-md text-label-md text-primary font-bold">Mensual</button>
+                    <button class="px-4 py-1.5 text-label-md text-on-surface-variant hover:text-on-surface">Trimestral</button>
+                    <button class="px-4 py-1.5 text-label-md text-on-surface-variant hover:text-on-surface">Anual</button>
+                </div>
+                <button class="flex items-center gap-2 bg-primary text-white px-md py-2 rounded-lg font-label-md hover:bg-primary-container transition-colors">
+                    <span class="material-symbols-outlined text-[20px]">download</span>
+                    Exportar PDF
+                </button>
+            </div>
+        </div>
+        <!-- Bento Grid Dashboard -->
+        <div class="grid grid-cols-12 gap-lg">
+            <!-- KPI Cards -->
+            <div class="col-span-12 lg:col-span-3 glass-card p-lg rounded-xl flex flex-col gap-2">
+                <div class="flex justify-between items-start">
+                    <span class="text-label-sm text-on-surface-variant uppercase tracking-wider">Citas Totales</span>
+                    <span class="text-tertiary font-bold text-label-sm bg-tertiary-fixed-dim/20 px-2 py-0.5 rounded">+12%</span>
+                </div>
+                <div class="text-headline-md font-bold text-on-surface">1,284</div>
+                <div class="w-full h-1 bg-surface-container rounded-full overflow-hidden mt-2">
+                    <div class="h-full bg-primary w-[75%]"></div>
+                </div>
+                <p class="text-body-sm text-on-surface-variant mt-1">Meta mensual: 1,500</p>
+            </div>
+            <div class="col-span-12 lg:col-span-3 glass-card p-lg rounded-xl flex flex-col gap-2">
+                <div class="flex justify-between items-start">
+                    <span class="text-label-sm text-on-surface-variant uppercase tracking-wider">Eficiencia Médica</span>
+                    <span class="text-tertiary font-bold text-label-sm bg-tertiary-fixed-dim/20 px-2 py-0.5 rounded">+4%</span>
+                </div>
+                <div class="text-headline-md font-bold text-on-surface">94.2%</div>
+                <div class="w-full h-1 bg-surface-container rounded-full overflow-hidden mt-2">
+                    <div class="h-full bg-tertiary w-[94%]"></div>
+                </div>
+                <p class="text-body-sm text-on-surface-variant mt-1">Promedio de puntualidad</p>
+            </div>
+            <div class="col-span-12 lg:col-span-3 glass-card p-lg rounded-xl flex flex-col gap-2">
+                <div class="flex justify-between items-start">
+                    <span class="text-label-sm text-on-surface-variant uppercase tracking-wider">Pacientes Nuevos</span>
+                    <span class="text-error font-bold text-label-sm bg-error-container/30 px-2 py-0.5 rounded">-2%</span>
+                </div>
+                <div class="text-headline-md font-bold text-on-surface">312</div>
+                <div class="w-full h-1 bg-surface-container rounded-full overflow-hidden mt-2">
+                    <div class="h-full bg-secondary w-[45%]"></div>
+                </div>
+                <p class="text-body-sm text-on-surface-variant mt-1">vs mes anterior (318)</p>
+            </div>
+            <div class="col-span-12 lg:col-span-3 glass-card p-lg rounded-xl flex flex-col gap-2">
+                <div class="flex justify-between items-start">
+                    <span class="text-label-sm text-on-surface-variant uppercase tracking-wider">Tiempo Promedio</span>
+                    <span class="text-tertiary font-bold text-label-sm bg-tertiary-fixed-dim/20 px-2 py-0.5 rounded">Optimo</span>
+                </div>
+                <div class="text-headline-md font-bold text-on-surface">22 min</div>
+                <div class="w-full h-1 bg-surface-container rounded-full overflow-hidden mt-2">
+                    <div class="h-full bg-primary-container w-[60%]"></div>
+                </div>
+                <p class="text-body-sm text-on-surface-variant mt-1">Por consulta general</p>
+            </div>
+            <!-- Main Chart: Appointment Statistics -->
+            <div class="col-span-12 lg:col-span-8 glass-card p-lg rounded-xl">
+                <div class="flex items-center justify-between mb-lg">
+                    <h3 class="font-headline-sm text-headline-sm text-on-surface">Demanda de Citas por Semana</h3>
+                    <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-primary"></span>
+                            <span class="text-label-sm text-on-surface-variant">Completadas</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-outline-variant"></span>
+                            <span class="text-label-sm text-on-surface-variant">Canceladas</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="h-64 w-full flex items-end justify-between gap-4 px-4 border-b border-outline-variant pb-2">
+                    <!-- Bar Chart Simulation -->
+                    <div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+                        <div class="w-full bg-primary rounded-t h-[60%] relative group">
+                            <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-white text-label-sm px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">142</div>
+                        </div>
+                        <span class="text-label-sm text-on-surface-variant">Sem 1</span>
+                    </div>
+                    <div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+                        <div class="w-full bg-primary rounded-t h-[85%] relative group">
+                            <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-white text-label-sm px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">210</div>
+                        </div>
+                        <span class="text-label-sm text-on-surface-variant">Sem 2</span>
+                    </div>
+                    <div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+                        <div class="w-full bg-primary rounded-t h-[70%] relative group">
+                            <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-white text-label-sm px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">185</div>
+                        </div>
+                        <span class="text-label-sm text-on-surface-variant">Sem 3</span>
+                    </div>
+                    <div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+                        <div class="w-full bg-primary rounded-t h-[95%] relative group">
+                            <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-white text-label-sm px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">245</div>
+                        </div>
+                        <span class="text-label-sm text-on-surface-variant">Sem 4</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Secondary Chart: Specialty Distribution -->
+            <div class="col-span-12 lg:col-span-4 glass-card p-lg rounded-xl flex flex-col">
+                <h3 class="font-headline-sm text-headline-sm text-on-surface mb-lg">Especialidades Top</h3>
+                <div class="flex-1 flex flex-col gap-4">
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-label-md">
+                            <span>Cardiología</span>
+                            <span class="font-bold">35%</span>
+                        </div>
+                        <div class="w-full h-2 bg-surface-container rounded-full">
+                            <div class="h-full bg-primary-container rounded-full" style="width: 35%"></div>
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-label-md">
+                            <span>Pediatría</span>
+                            <span class="font-bold">24%</span>
+                        </div>
+                        <div class="w-full h-2 bg-surface-container rounded-full">
+                            <div class="h-full bg-primary rounded-full" style="width: 24%"></div>
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-label-md">
+                            <span>Dermatología</span>
+                            <span class="font-bold">18%</span>
+                        </div>
+                        <div class="w-full h-2 bg-surface-container rounded-full">
+                            <div class="h-full bg-tertiary-container rounded-full" style="width: 18%"></div>
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-label-md">
+                            <span>Ginecología</span>
+                            <span class="font-bold">12%</span>
+                        </div>
+                        <div class="w-full h-2 bg-surface-container rounded-full">
+                            <div class="h-full bg-secondary rounded-full" style="width: 12%"></div>
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-label-md">
+                            <span>Otros</span>
+                            <span class="font-bold">11%</span>
+                        </div>
+                        <div class="w-full h-2 bg-surface-container rounded-full">
+                            <div class="h-full bg-outline-variant rounded-full" style="width: 11%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Doctor Performance Table -->
+            <div class="col-span-12 glass-card rounded-xl overflow-hidden">
+                <div class="p-lg border-b border-outline-variant flex items-center justify-between">
+                    <h3 class="font-headline-sm text-headline-sm text-on-surface">Rendimiento por Doctor</h3>
+                    <button class="text-primary font-label-md flex items-center gap-1 hover:underline">
+                        Ver todos los doctores
+                        <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                        <tr class="bg-surface-container-low">
+                            <th class="px-lg py-md text-label-sm text-on-surface-variant uppercase">Doctor</th>
+                            <th class="px-lg py-md text-label-sm text-on-surface-variant uppercase">Especialidad</th>
+                            <th class="px-lg py-md text-label-sm text-on-surface-variant uppercase text-center">Consultas</th>
+                            <th class="px-lg py-md text-label-sm text-on-surface-variant uppercase text-center">Calificación</th>
+                            <th class="px-lg py-md text-label-sm text-on-surface-variant uppercase text-right">Estatus</th>
+                        </tr>
+                        </thead>
+                        <tbody class="divide-y divide-outline-variant">
+                        <tr class="hover:bg-surface-container-low/50 transition-colors">
+                            <td class="px-lg py-md">
+                                <div class="flex items-center gap-3">
+                                    <img class="w-8 h-8 rounded-full" data-alt="A portrait of a male doctor in his 40s with a confident expression, wearing professional scrubs and a stethoscope. The image has a clean studio background with soft lighting consistent with a professional medical website aesthetic, primarily using white and soft blue tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlUXfL1aXKRrdqMymPVHKKxq36i_7hWM6H9KZxYCONXM7mztsksD3QtyWec_s94Nu3n-aCOquKS_2wbEqB3tf7CkKrXSQn4hlq3dhdc9_52Ey1-M7sDrMvsjs0sLv4LW94KZgApQPdbpjTHbzWafL6ec5kQEEy1S8ChwQUoBlXJCuMCLSRD63ANW4ExwpKr0jxoDs3CdmWMVn0ov88cjtQkocNPYWRKR42hbZ8-9lwgqbltaClqPYTH8ZE9loJfeqh2faiNhh09Sc"/>
+                                    <span class="text-body-md font-medium text-on-surface">Dr. Elena Martínez</span>
+                                </div>
+                            </td>
+                            <td class="px-lg py-md text-body-md text-on-surface-variant">Cardiología</td>
+                            <td class="px-lg py-md text-center text-body-md font-bold">142</td>
+                            <td class="px-lg py-md text-center">
+                                <div class="flex items-center justify-center gap-1 text-tertiary">
+                                    <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                                    <span class="font-bold">4.9</span>
+                                </div>
+                            </td>
+                            <td class="px-lg py-md text-right">
+                                <span class="px-2 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant text-label-sm font-bold rounded">Sobresaliente</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-surface-container-low/50 transition-colors">
+                            <td class="px-lg py-md">
+                                <div class="flex items-center gap-3">
+                                    <img class="w-8 h-8 rounded-full" data-alt="A portrait of a female doctor in her 30s with professional eyeglasses and a warm smile. She is wearing a white medical lab coat. The setting is a brightly lit modern office with hints of medical equipment in the background, styled with high clarity and soft cool colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjq7olulSp__ljzBWGlmQwM-ufK96YnmPvb6dZiQ-FPzX_fihX0Q1drWRsZYc2ti3u5yQ5faA7bEtKPhlVnR489K2BjCdVKpUd30jSm7VC8Or2oRTSCYiYOFBCLl_3V5l5OR9mFt8PRZvSxgH6_T6a5-sJjjSmAAUJcxGm-X71dRg7TixUgYb7KetnKBZdAzSbEHH2q0qGmcE9cvBGlYbAumQiwgV_PbfcauPSuX3XMpQEcM6vUQ8FOsYxs-mGtj89nUIqPBM1BdQ"/>
+                                    <span class="text-body-md font-medium text-on-surface">Dr. Sergio Torres</span>
+                                </div>
+                            </td>
+                            <td class="px-lg py-md text-body-md text-on-surface-variant">Pediatría</td>
+                            <td class="px-lg py-md text-center text-body-md font-bold">128</td>
+                            <td class="px-lg py-md text-center">
+                                <div class="flex items-center justify-center gap-1 text-tertiary">
+                                    <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                                    <span class="font-bold">4.8</span>
+                                </div>
+                            </td>
+                            <td class="px-lg py-md text-right">
+                                <span class="px-2 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant text-label-sm font-bold rounded">Estable</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-surface-container-low/50 transition-colors">
+                            <td class="px-lg py-md">
+                                <div class="flex items-center gap-3">
+                                    <img class="w-8 h-8 rounded-full" data-alt="A middle-aged doctor with a compassionate look, wearing surgical attire and a protective cap. The image captures a highly detailed close-up with soft cinematic lighting against a dark neutral background, conveying medical expertise and reliability in a premium clinical environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDe1RE_aah0-nEaoS4eCiSPzl7tbmNrR_8dL8NgGRVWc8v9O6yVgyn-Qj9z4QaROZQ9p3dfxRI1-4xNLhXINqjMqBx73msKjWnmaO09UPc2WAxXlI2az3yVKwN7a36K4Pk5ItpDX6bRDu9xgepWSuEYNbbLEdai1NPNzGDrcreBisSkXjg-6-ZuiSzh-Wsf9FdGDzRNHIKy3fnhJQZZ2X1R9wb_9_9IfLdGz46CEmq-AJzinwji4y74CyH2bEg-jWgU6TsNAQoO3OM"/>
+                                    <span class="text-body-md font-medium text-on-surface">Dr. Claudia Rios</span>
+                                </div>
+                            </td>
+                            <td class="px-lg py-md text-body-md text-on-surface-variant">Neurología</td>
+                            <td class="px-lg py-md text-center text-body-md font-bold">94</td>
+                            <td class="px-lg py-md text-center">
+                                <div class="flex items-center justify-center gap-1 text-tertiary">
+                                    <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                                    <span class="font-bold">4.7</span>
+                                </div>
+                            </td>
+                            <td class="px-lg py-md text-right">
+                                <span class="px-2 py-1 bg-surface-container-highest text-on-surface-variant text-label-sm font-bold rounded">Promedio</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Insights Section (Bento Bottom) -->
+            <div class="col-span-12 md:col-span-6 glass-card p-lg rounded-xl bg-primary-fixed/5 border-primary/10">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined text-primary">lightbulb</span>
+                    </div>
+                    <div>
+                        <h4 class="font-label-md text-primary mb-1">Análisis Predictivo</h4>
+                        <p class="text-body-sm text-on-surface-variant">Se proyecta un incremento del 15% en las consultas de pediatría para el próximo mes debido a la temporada estacional. Recomendamos habilitar 2 consultorios adicionales los días Lunes y Martes.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-12 md:col-span-6 glass-card p-lg rounded-xl bg-tertiary-fixed/5 border-tertiary/10">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-full bg-tertiary/10 flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined text-tertiary">check_circle</span>
+                    </div>
+                    <div>
+                        <h4 class="font-label-md text-tertiary mb-1">Optimización de Recursos</h4>
+                        <p class="text-body-sm text-on-surface-variant">La eficiencia en el uso de quirófanos ha mejorado un 8% desde la implementación del nuevo sistema de agendamiento. El tiempo muerto entre cirugías se redujo a 15 minutos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="mt-auto py-lg px-gutter border-t border-outline-variant text-center">
+        <p class="text-label-sm text-on-surface-variant">© 2024 M.A.S.S. Medical Administration Support System. Todos los derechos reservados. Generado para Dr. Ricardo Alva.</p>
+    </footer>
+</main>
+<script>
+    // Micro-interactions and subtle animations
+    document.addEventListener('DOMContentLoaded', () => {
+        // Animate progress bars on load
+        const bars = document.querySelectorAll('.h-full.bg-primary, .h-full.bg-tertiary, .h-full.bg-secondary, .h-full.bg-primary-container');
+        bars.forEach(bar => {
+            const targetWidth = bar.style.width;
+            bar.style.width = '0';
+            setTimeout(() => {
+                bar.style.transition = 'width 1s cubic-bezier(0.4, 0, 0.2, 1)';
+                bar.style.width = targetWidth;
+            }, 100);
+        });
+
+        // Interactive chart bars
+        const chartBars = document.querySelectorAll('.bg-primary.rounded-t');
+        chartBars.forEach(bar => {
+            const targetHeight = bar.style.height;
+            bar.style.height = '0';
+            setTimeout(() => {
+                bar.style.transition = 'height 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                bar.style.height = targetHeight;
+            }, 300);
+        });
+    });
+</script>
+</body></html>

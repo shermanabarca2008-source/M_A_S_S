@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Panel administrador</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 24px; }
+        .card { border: 1px solid #ccc; padding: 16px; margin-bottom: 20px; border-radius: 8px; }
+    </style>
+</h:head>
+<h:body>
+    <h1>Modo administrador</h1>
+    <p>Gestione especialidades, médicos y horarios.</p>
+
+    <div class="card">
+        <h2>Agregar especialidad</h2>
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Nombre" for="nombreEsp" />
+                <h:inputText id="nombreEsp" value="#{administradorBean.nombreEspecialidad}" />
+                <h:outputLabel value="Descripción" for="descEsp" />
+                <h:inputText id="descEsp" value="#{administradorBean.descripcionEspecialidad}" />
+            </h:panelGrid>
+            <h:commandButton value="Guardar especialidad" action="#{administradorBean.agregarEspecialidad}" />
+        </h:form>
+    </div>
+
+    <div class="card">
+        <h2>Agregar médico</h2>
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Nombre del médico" for="nombreMed" />
+                <h:inputText id="nombreMed" value="#{administradorBean.nombreMedico}" />
+            </h:panelGrid>
+            <h:commandButton value="Guardar médico" action="#{administradorBean.agregarMedico}" />
+        </h:form>
+    </div>
+
+    <div class="card">
+        <h2>Especialidades registradas</h2>
+        <h:dataTable value="#{administradorBean.especialidades}" var="esp" border="1">
+            <h:column><f:facet name="header">Nombre</f:facet>#{esp.nombre}</h:column>
+            <h:column><f:facet name="header">Descripción</f:facet>#{esp.descripcion}</h:column>
+        </h:dataTable>
+    </div>
+
+    <div class="card">
+        <h2>Médicos registrados</h2>
+        <h:dataTable value="#{administradorBean.medicos}" var="med" border="1">
+            <h:column><f:facet name="header">Médico</f:facet>#{med.nombreCompleto}</h:column>
+            <h:column><f:facet name="header">Especialidad</f:facet>#{med.especialidad.nombre}</h:column>
+        </h:dataTable>
+    </div>
+
+    <h:link value="Volver al inicio" outcome="index" />
+</h:body>
+</html>
