@@ -1,7 +1,9 @@
-<!DOCTYPE html><html class="light" lang="es"
-                     xmlns="http://www.w3.org/1999/xhtml"
-                     xmlns:h="http://xmlns.jcp.org/jsf/html"
-                     xmlns:f="http://xmlns.jcp.org/jsf/core"><head>
+<!DOCTYPE html>
+<html class="light" lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="jakarta.faces.facelets"><head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>M.A.S.S. - Panel de Administración</title>
@@ -143,30 +145,49 @@
         </div>
     </div>
     <nav class="flex-1 overflow-y-auto px-md space-y-1 custom-scrollbar">
-        <!-- Active Tab -->
-        <a class="flex items-center gap-md px-lg py-md sidebar-active rounded-r-lg transition-all duration-200" href="#">
-            <span class="material-symbols-outlined">dashboard</span>
-            <span class="font-body-md text-body-md">Tablero</span>
-        </a>
+        <nav class="flex-1 overflow-y-auto px-md space-y-1 custom-scrollbar">
 
-        <a class="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200" href="#">
-            <span class="material-symbols-outlined">medical_services</span>
-            <span class="font-body-md text-body-md">Doctores</span>
-        </a>
-        <a class="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200" href="#">
-            <span class="material-symbols-outlined">category</span>
-            <span class="font-body-md text-body-md">Especialidades</span>
-        </a>
+            <h:link outcome="gestionAdmin"
+                    styleClass="flex items-center gap-md px-lg py-md sidebar-active rounded-r-lg transition-all duration-200">
 
-        <a class="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200" href="#">
-            <span class="material-symbols-outlined">assessment</span>
-            <span class="font-body-md text-body-md">Reportes</span>
-        </a>
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-body-md text-body-md">Tablero</span>
 
-        <a class="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200" href="#">
-            <span class="material-symbols-outlined">settings</span>
-            <span class="font-body-md text-body-md">Configuración</span>
-        </a>
+            </h:link>
+
+            <h:link outcome="gestionMedicos"
+                    styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+
+                <span class="material-symbols-outlined">medical_services</span>
+                <span class="font-body-md text-body-md">Doctores</span>
+
+            </h:link>
+
+            <h:link outcome="gestionEspecialidades"
+                    styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+
+                <span class="material-symbols-outlined">category</span>
+                <span class="font-body-md text-body-md">Especialidades</span>
+
+            </h:link>
+
+            <h:link outcome="reportes"
+                    styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+
+                <span class="material-symbols-outlined">assessment</span>
+                <span class="font-body-md text-body-md">Reportes</span>
+
+            </h:link>
+
+            <h:link outcome="configuracion"
+                    styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-body-md text-body-md">Configuración</span>
+
+            </h:link>
+
+        </nav>
     </nav>
     <div class="px-md mt-auto pt-lg border-t border-outline-variant/30">
 
@@ -359,8 +380,8 @@
                                     Cita Cancelada
                                 </td>
                                 <td class="px-lg py-md">
-                                    <div class="font-medium text-on-surface">Marcos Silva</div>
-                                    <div class="text-xs text-on-surface-variant">Dermatología</div>
+                                    <div class="font-medium text-on-surface"> </div>
+                                    <div class="text-xs text-on-surface-variant"> </div>
                                 </td>
                                 <td class="px-lg py-md">Hace 32 min</td>
                                 <td class="px-lg py-md">
@@ -381,8 +402,8 @@
                         <!-- Progress Bar Pattern -->
                         <div>
                             <div class="flex justify-between text-label-md mb-1">
-                                <span class="">Pediatría</span>
-                                <span class="font-bold">42%</span>
+                                <span class=""> </span>
+                                <span class="font-bold"> </span>
                             </div>
                             <div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
                                 <div class="bg-primary h-full rounded-full" style="width: 42%"></div>
@@ -390,8 +411,8 @@
                         </div>
                         <div>
                             <div class="flex justify-between text-label-md mb-1">
-                                <span class="">Ginecología</span>
-                                <span class="font-bold">28%</span>
+                                <span class=""> </span>
+                                <span class="font-bold"> </span>
                             </div>
                             <div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
                                 <div class="bg-primary-container h-full rounded-full" style="width: 28%"></div>
@@ -399,8 +420,8 @@
                         </div>
                         <div>
                             <div class="flex justify-between text-label-md mb-1">
-                                <span class="">Cardiología</span>
-                                <span class="font-bold">15%</span>
+                                <span class=""> </span>
+                                <span class="font-bold"> </span>
                             </div>
                             <div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
                                 <div class="bg-primary-fixed-dim h-full rounded-full" style="width: 15%"></div>
@@ -408,8 +429,8 @@
                         </div>
                         <div>
                             <div class="flex justify-between text-label-md mb-1">
-                                <span class="">Otros</span>
-                                <span class="font-bold">15%</span>
+                                <span class=""> </span>
+                                <span class="font-bold"> </span>
                             </div>
                             <div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
                                 <div class="bg-outline-variant h-full rounded-full" style="width: 15%"></div>
@@ -420,47 +441,50 @@
                         <button class="text-primary font-label-md hover:underline">Análisis Detallado</button>
                     </div>
                 </div>
-                <!-- Top Doctors Card -->
                 <div class="glass-card p-lg rounded-xl">
-                    <h3 class="font-headline-sm text-on-surface mb-lg">Médicos con mayor carga</h3>
-                    <div class="space-y-lg">
-                        <div class="flex items-center gap-md">
-                            <div class="w-12 h-12 rounded-full overflow-hidden bg-outline-variant flex-shrink-0">
-                                <img class="w-full h-full object-cover" data-alt="Portrait of a female senior cardiologist, professional attire, clinic background with subtle medical monitors, clean lighting, high-end medical professional photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmkxmUCt9HC8EqExJQoSCkRVN2D2f-Stm6bWX7j-TN5GUdJbnKrkSfAMkuhY2xIOpiijPpjabdZQI-RD3qrm18DG1jTdA9lAXPEDBdMaleAiMJkoDWlsEHTQW4NBNBpeBVke58grpnLf9JhwRJ_mAGFQb4ZRjMLuKqQWT748UcSxT-j2GT-gL5ReiuNSrLYYPEf2M-QBwPx_3UbnumvrVTOZFUPSZoKhJIqZ49aB0raf7CjPWpCACbpFxAQetiMLUyInxQkUmOLYY"/>
-                            </div>
-                            <div class="flex-1">
-                                <p class="font-bold text-on-surface">Dra. Lucía Santos</p>
-                                <p class="text-xs text-on-surface-variant">Cardiología · 12 Citas hoy</p>
-                            </div>
-                            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                                <span class="material-symbols-outlined text-[18px]">more_vert</span>
-                            </div>
+                    <h3 class="font-headline-sm text-on-surface mb-lg">
+                        Médicos registrados
+                    </h3>
+
+                    <!-- Si no existen médicos -->
+                    <h:panelGroup rendered="#{empty medicoBean.medicos}">
+                        <div class="text-center text-on-surface-variant py-6">
+                            No hay médicos registrados.
                         </div>
-                        <div class="flex items-center gap-md">
-                            <div class="w-12 h-12 rounded-full overflow-hidden bg-outline-variant flex-shrink-0">
-                                <img class="w-full h-full object-cover" data-alt="Portrait of a male middle-aged pediatrician in a friendly clinical environment, wearing professional scrubs, warm and approachable expression, hospital lighting, clean professional aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjxEGaTOfvBxm8u1zc3-E0FPRBNexVQKEtrfesxGbanRcQpj5gn04p4BDUxwzi_vW2En4kL1ey_5nYV2wODcaoffe5fy82iNzq2uQU40q4_SaUsvAwovzfi2XtnI1X9boVmJGfBeIJgoNOwWwgF-rolbVC36d4TEVRBqgizLr5qZltS6h5gvJFR5CEaoYbBq7LE4TOsKYPrlrdcOUTnm1okfcbksScABlOG1VUXVNDmXGhaGKMRfNvm5ATpRv0kP4y1OiVqO5PmeM"/>
-                            </div>
-                            <div class="flex-1">
-                                <p class="font-bold text-on-surface">Dr. Jorge Valdés</p>
-                                <p class="text-xs text-on-surface-variant">Pediatría · 10 Citas hoy</p>
-                            </div>
-                            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                                <span class="material-symbols-outlined text-[18px]">more_vert</span>
-                            </div>
+                    </h:panelGroup>
+
+                    <!-- Si existen médicos -->
+                    <h:panelGroup rendered="#{not empty medicoBean.medicos}">
+                        <div class="space-y-lg">
+
+                            <ui:repeat value="#{medicoBean.medicos}" var="medico">
+
+                                <div class="flex items-center gap-md">
+
+                                    <div class="w-12 h-12 rounded-full overflow-hidden bg-outline-variant flex-shrink-0">
+                                        <img
+                                                class="w-full h-full object-cover"
+                                                src="https://ui-avatars.com/api/?name=#{medico.nombreCompleto}&amp;background=1976D2&amp;color=fff"
+                                                alt="Médico"/>
+                                    </div>
+
+                                    <div class="flex-1">
+                                        <p class="font-bold text-on-surface">
+                                            #{medico.nombreCompleto}
+                                        </p>
+
+                                        <p class="text-xs text-on-surface-variant">
+                                            #{medico.especialidad.nombre}
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                            </ui:repeat>
+
                         </div>
-                        <div class="flex items-center gap-md">
-                            <div class="w-12 h-12 rounded-full overflow-hidden bg-outline-variant flex-shrink-0">
-                                <img class="w-full h-full object-cover" data-alt="Portrait of a young female dermatologist, confident expression, medical office setting, bright and clean clinical style, high-definition portrait photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-Gx2SuDhxLyW9TejCvRy37CHcR8-whFkec_V5QldQA4WGt_EaIqVRTS5n9M3UoF9FWWJm_-Cc0OogWle5BXjn0gSKTPDx_Yd2iGgjNtWTlHpaZITgLysZVnjEiMZWgxPxV7Xckgns1CtM3JN3stzW1h-_Kthc4rvlorXddJSNB4BXT9Fwtb1-Q-_ZOdOKaa5l9byfbuMomZRcLNTkr74tZY5NRU0wDz0Kz1s-u2KojijLoI-MYEZF0n_wsBmB9AZCMdZZaxV1JEc"/>
-                            </div>
-                            <div class="flex-1">
-                                <p class="font-bold text-on-surface">Dra. Mónica Ruiz</p>
-                                <p class="text-xs text-on-surface-variant">Dermatología · 9 Citas hoy</p>
-                            </div>
-                            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                                <span class="material-symbols-outlined text-[18px]">more_vert</span>
-                            </div>
-                        </div>
-                    </div>
+                    </h:panelGroup>
+
                 </div>
                 <!-- Quick Link Card -->
                 <div class="bg-primary rounded-xl p-lg text-on-primary relative overflow-hidden">

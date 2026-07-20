@@ -9,12 +9,6 @@ import unl.edu.ec.M_A_S_S.domain.IndicacionesMedicas;
 import unl.edu.ec.M_A_S_S.domain.Medico;
 import unl.edu.ec.M_A_S_S.domain.Notificacion;
 import unl.edu.ec.M_A_S_S.domain.Paciente;
-import jakarta.faces.component.UIComponent;
-import jakarta.faces.context.FacesContext;
-import jakarta.faces.convert.Converter;
-import jakarta.faces.convert.FacesConverter;
-
-import java.time.LocalDate;
 
 import java.io.Serializable;
 import java.sql.Time;
@@ -46,13 +40,13 @@ public class PacienteBean implements Serializable {
     private String telefono;
     private String correo;
     private String direccion;
-    private LocalDate fechaNacimiento;
+    private String fechaNacimiento;
 
     public String iniciarSesion() {
         if ("admin".equals(cedula) && "admin123".equals(contrasena)) {
             mensaje = "Acceso administrador correcto.";
             error = false;
-            return "admin";
+            return "/gestionAdmin.xhtml?faces-redirect=true";
         }
 
         pacienteActual = null;
@@ -73,34 +67,6 @@ public class PacienteBean implements Serializable {
         mensaje = "Cédula o contraseña incorrecta.";
         error = true;
         return null;
-    }
-
-    @FacesConverter(value = "localDateConverter")
-    public class LocalDateConverter implements Converter<LocalDate> {
-
-        @Override
-        public LocalDate getAsObject(FacesContext context,
-                                     UIComponent component,
-                                     String value) {
-
-            if (value == null || value.isBlank()) {
-                return null;
-            }
-
-            return LocalDate.parse(value);
-        }
-
-        @Override
-        public String getAsString(FacesContext context,
-                                  UIComponent component,
-                                  LocalDate value) {
-
-            if (value == null) {
-                return "";
-            }
-
-            return value.toString();
-        }
     }
 
     public String registrarPaciente() {
@@ -161,9 +127,8 @@ public class PacienteBean implements Serializable {
         nuevo.setCorreo(correo);
         nuevo.setDireccion(direccion);
 
-        if (fechaNacimiento != null) {
-            nuevo.setFechaNacimiento(fechaNacimiento);
-
+        if (fechaNacimiento != null && !fechaNacimiento.isBlank()) {
+            nuevo.setFechaNacimiento(LocalDate.parse(fechaNacimiento));
         }
 
         pacientes.add(nuevo);
@@ -175,7 +140,7 @@ public class PacienteBean implements Serializable {
 
         limpiarFormulario();
 
-        return "index?faces-redirect=true";
+        return "/index.xhtml?faces-redirect=true";
     }
 
     private void limpiarFormulario() {
@@ -458,9 +423,9 @@ public class PacienteBean implements Serializable {
 
     public void setDireccion(String direccion) {this.direccion = direccion;}
 
-    public LocalDate getFechaNacimiento() {return fechaNacimiento;}
+    public String getFechaNacimiento() {return fechaNacimiento;}
 
-    public void setFechaNacimiento(LocalDate fechaNacimiento) { this.fechaNacimiento = fechaNacimiento;}
+    public void setFechaNacimiento(String fechaNacimiento) {this.fechaNacimiento = fechaNacimiento;}
 
-    public Object getTelfono() {return telefono;}
+    public String getTelfono() {return telefono;}
 }

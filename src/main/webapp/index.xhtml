@@ -2,7 +2,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:pt="http://java.sun.com/jsf/facelets"
       class="light" lang="es"><head>
 
 <meta charset="utf-8"/>
@@ -189,7 +189,11 @@
 <label class="font-label-md text-label-md text-on-surface-variant ml-xs" for="cedula">Cédula</label>
 <div class="relative flex items-center input-focus-effect rounded-lg group">
 <span class="material-symbols-outlined absolute left-md text-outline group-focus-within:text-primary transition-colors">badge</span>
-<input class="w-full pl-12 pr-md py-lg bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md focus:outline-none focus:border-primary focus:ring-0 transition-all" id="cedula" name="cedula" placeholder="Ej. 1-2345-6789" type="text"/>
+    <h:inputText
+            id="cedula"
+            value="#{pacienteBean.cedula}"
+            styleClass="w-full pl-12 pr-md py-lg bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md focus:outline-none focus:border-primary focus:ring-0 transition-all"
+            pt:placeholder="Ingrese su cédula"/>
 </div>
 </div>
 <!-- Password Input -->
@@ -197,7 +201,11 @@
 <label class="font-label-md text-label-md text-on-surface-variant ml-xs" for="password">Contraseña</label>
 <div class="relative flex items-center input-focus-effect rounded-lg group">
 <span class="material-symbols-outlined absolute left-md text-outline group-focus-within:text-primary transition-colors">lock</span>
-<input class="w-full pl-12 pr-12 py-lg bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md focus:outline-none focus:border-primary focus:ring-0 transition-all" id="password" name="password" placeholder="••••••••" type="password"/>
+    <h:inputSecret
+            id="password"
+            value="#{pacienteBean.contrasena}"
+            styleClass="w-full pl-12 pr-12 py-lg bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md focus:outline-none focus:border-primary focus:ring-0 transition-all"
+            pt:placeholder="Ingrese su contraseña"/>
 <button class="absolute right-md text-outline hover:text-on-surface transition-colors" onclick="togglePasswordVisibility()" type="button">
 <span class="material-symbols-outlined" id="visibility_icon">visibility</span>
 </button>
@@ -207,7 +215,7 @@
 <div class="flex items-center justify-between">
 <label class="flex items-center space-x-sm cursor-pointer group">
 <div class="relative flex items-center">
-<input class="peer h-5 w-5 rounded border-outline-variant text-primary focus:ring-primary/20 cursor-pointer" type="checkbox"/>
+    <input class="peer h-5 w-5 rounded border-outline-variant text-primary focus:ring-primary/20 cursor-pointer" type="checkbox"/>
 </div>
 <span class="font-label-md text-label-md text-on-surface-variant group-hover:text-on-surface transition-colors">Recordarme</span>
 </label>

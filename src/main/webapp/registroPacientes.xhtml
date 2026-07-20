@@ -222,7 +222,6 @@
                                     id="fecha_nacimiento"
                                     type="date"
                                     value="#{pacienteBean.fechaNacimiento}"
-                                    converter="localDateConverter"
                                     required="true"
                                     styleClass="form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"/>
                         </div>
@@ -263,6 +262,16 @@
                                             pt:placeholder="usuario@ejemplo.com"
                                             styleClass="w-full pl-10 form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"
                                             />
+                            </div>
+                            <div class="flex flex-col gap-1.5">
+                                <label class="font-label-md text-label-md text-on-surface-variant" for="direccion">Dirección</label>
+                                <h:inputText
+                                        id="direccion"
+                                        name="direccion"
+                                        value="#{pacienteBean.direccion}"
+                                        required="true"
+                                        pt:placeholder="Ingrese su dirección"
+                                        styleClass="form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"/>
                             </div>
                         </div>
                     </div>
@@ -309,16 +318,14 @@
                 </label>
             </div>
                 <div class="flex flex-col md:flex-row items-center gap-md w-full md:w-auto">
-                        <h:commandButton
-                                value="Registrarme"
-                                action="#{pacienteBean.registrarPaciente}"
-                                styleClass="w-full md:w-64 py-4 px-xl bg-primary text-white font-headline-sm rounded-xl shadow-lg"/>
+                    <h:commandButton
+                            value="Registrarme"
+                            action="#{pacienteBean.registrarPaciente}"
+                            styleClass="w-full md:w-64 py-4 px-xl bg-primary text-white font-headline-sm rounded-xl shadow-lg"/>
 
-                        <h:commandButton
-                                value="Cancelar"
-                                action="index?faces-redirect=true"
-                                immediate="true"
-                                styleClass="w-full md:w-auto px-xl py-4 font-label-md"/>
+                    <h:link
+                            value="Cancelar"
+                            outcome="/index"/>
             </div>
         </h:form>
     </div>

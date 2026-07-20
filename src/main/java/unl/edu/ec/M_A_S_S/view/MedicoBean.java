@@ -29,117 +29,80 @@ public class MedicoBean implements Serializable {
     public void init() {
 
         medicos = new ArrayList<>();
-
         medicoActual = new Medico();
-
     }
 
     public void registrarMedico() {
 
-        if (medicoActual.getNombreCompleto() == null ||
-                medicoActual.getNombreCompleto().trim().isEmpty()) {
-
+        if (medicoActual.getNombreCompleto() == null || medicoActual.getNombreCompleto().trim().isEmpty()) {
             mensaje = "Ingrese el nombre del médico.";
             error = true;
             return;
         }
 
         if (medicoActual.getEspecialidad() == null) {
-
             mensaje = "Seleccione una especialidad.";
             error = true;
             return;
         }
-
         for (Medico medico : medicos) {
 
-            if (medico.getNombreCompleto().equalsIgnoreCase(
-                    medicoActual.getNombreCompleto())) {
-
+            if (medico.getNombreCompleto().equalsIgnoreCase(medicoActual.getNombreCompleto())) {
                 mensaje = "El médico ya existe.";
                 error = true;
                 return;
             }
         }
-
         medicos.add(medicoActual);
-
         mensaje = "Médico registrado correctamente.";
         error = false;
-
         medicoActual = new Medico();
-
     }
 
     public void buscarMedico() {
-
         for (Medico medico : medicos) {
-
-            if (medico.getNombreCompleto()
-                    .equalsIgnoreCase(nombreBusqueda)) {
-
+            if (medico.getNombreCompleto().equalsIgnoreCase(nombreBusqueda)) {
                 medicoActual = medico;
-
                 mensaje = "Médico encontrado.";
                 error = false;
                 return;
             }
-
         }
-
         mensaje = "No existe el médico.";
         error = true;
-
     }
 
     public void actualizarMedico() {
-
         mensaje = "Información actualizada correctamente.";
         error = false;
-
     }
 
     public void eliminarMedico(Medico medico) {
-
         medicos.remove(medico);
-
         mensaje = "Médico eliminado correctamente.";
         error = false;
 
     }
 
     public void agregarHorario(HorarioMedico horario) {
-
         medicoActual.gestionarDisponibilidad(horario);
-
         mensaje = "Horario agregado.";
         error = false;
-
     }
 
     public void registrarIndicacion(IndicacionesMedicas indicacion) {
-
         medicoActual.registrarIndicacion(indicacion);
-
         mensaje = "Indicación registrada.";
         error = false;
-
     }
 
     public void agregarCita(Cita cita) {
-
         medicoActual.agregarCita(cita);
-
         mensaje = "Cita asignada.";
         error = false;
-
     }
 
-    public void limpiarFormulario() {
-
-        medicoActual = new Medico();
-
-    }
+    public void limpiarFormulario() {medicoActual = new Medico();}
 
     public Medico getMedicoActual() {
         return medicoActual;
@@ -172,5 +135,4 @@ public class MedicoBean implements Serializable {
     public boolean isError() {
         return error;
     }
-
 }
