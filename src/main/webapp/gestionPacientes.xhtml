@@ -253,39 +253,55 @@
                     <img class="w-full h-full object-cover" data-alt="Interior of a modern, clean medical office with a large window showing soft daylight, a contemporary examination table, and high-end medical equipment in the background. The color palette is composed of soft whites, light blues, and grays for a calm clinical atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8QKoFSy-IJcOFJBU0HUVpCD1tiUvE1DQ7cXa0YgADROjyVKupfSKRcbbrBHSgbUSIXieBS9t0NALdC3z5-4Osq5eYznXDrATPWuV1msFHSS96XlCrzqzryBesW_cBiz4RbZiILSBnMafX83AtP1Xj19vhzBPbsimjLKm_-ZubkAB3aRLSUfMMkZLyKzKYGahyQihx65fkROSWNp1EChmYol-jMaGCSdcNqvS4uNMZCpBc0k_I14RcuGWMcq-Cb3dCsmHe20pol9E"/>
                 </div>
             </article>
-            <!-- "Acciones Rápidas" Grid -->
-            <section>
-                <h3 class="font-headline-sm text-headline-sm mb-md text-on-surface">Acciones Rápidas</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
-                    <button class="bento-card p-lg rounded-xl flex flex-col items-center justify-center text-center gap-md hover:bg-primary/5">
-                        <div class="w-12 h-12 bg-primary-fixed-dim rounded-full flex items-center justify-center text-primary">
-                            <span class="material-symbols-outlined">add_circle</span>
-                        </div>
-                        <div>
-                            <p class="font-label-md text-label-md">Agendar Cita</p>
-                            <p class="font-body-sm text-body-sm text-on-surface-variant">Nueva consulta</p>
-                        </div>
-                    </button>
-                    <button class="bento-card p-lg rounded-xl flex flex-col items-center justify-center text-center gap-md hover:bg-primary/5">
-                        <div class="w-12 h-12 bg-surface-container-highest rounded-full flex items-center justify-center text-on-surface">
-                            <span class="material-symbols-outlined">folder_shared</span>
-                        </div>
-                        <div>
-                            <p class="font-label-md text-label-md">Ver Historial</p>
-                            <p class="font-body-sm text-body-sm text-on-surface-variant">Expedientes pasados</p>
-                        </div>
-                    </button>
-                    <button class="bento-card p-lg rounded-xl flex flex-col items-center justify-center text-center gap-md hover:bg-primary/5">
-                        <div class="w-12 h-12 bg-tertiary-container text-on-tertiary rounded-full flex items-center justify-center">
-                            <span class="material-symbols-outlined">download</span>
-                        </div>
-                        <div>
-                            <p class="font-label-md text-label-md">Descargar Órdenes</p>
-                            <p class="font-body-sm text-body-sm text-on-surface-variant">Recetas y Labs</p>
-                        </div>
-                    </button>
+
+            <h:commandLink
+                    action="#{pacienteBean.agendarCita}"
+                    styleClass="bento-card p-lg rounded-xl flex flex-col items-center justify-center text-center gap-md hover:bg-primary/5">
+
+                <div class="w-12 h-12 bg-primary-fixed-dim rounded-full flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined">add_circle</span>
                 </div>
-            </section>
+
+                <div>
+                    <p class="font-label-md text-label-md">Agendar Cita</p>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">
+                        Nueva consulta
+                    </p>
+                </div>
+
+            </h:commandLink>
+            <h:commandLink
+                    action="#{pacienteBean.verHistorial}"
+                    styleClass="bento-card p-lg rounded-xl flex flex-col items-center justify-center text-center gap-md hover:bg-primary/5">
+
+                <div class="w-12 h-12 bg-surface-container-highest rounded-full flex items-center justify-center text-on-surface">
+                    <span class="material-symbols-outlined">folder_shared</span>
+                </div>
+
+                <div>
+                    <p class="font-label-md text-label-md">Ver Historial</p>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">
+                        Expedientes pasados
+                    </p>
+                </div>
+
+            </h:commandLink>
+            <h:commandLink
+                    action="#{pacienteBean.cancelarCita()}"
+                    styleClass="bento-card p-lg rounded-xl flex flex-col items-center justify-center text-center gap-md hover:bg-primary/5">
+
+                <div class="w-12 h-12 bg-tertiary-container text-on-tertiary rounded-full flex items-center justify-center">
+                    <span class="material-symbols-outlined">download</span>
+                </div>
+
+                <div>
+                    <p class="font-label-md text-label-md">Descargar Órdenes</p>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">
+                        Recetas y Labs
+                    </p>
+                </div>
+
+            </h:commandLink>
             <!-- "Últimas Órdenes" List -->
             <section>
                 <div class="flex items-center justify-between mb-md">

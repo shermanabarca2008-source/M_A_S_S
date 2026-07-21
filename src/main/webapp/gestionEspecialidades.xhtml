@@ -1,7 +1,8 @@
-<!DOCTYPE html><html class="light" lang="es"
+<!DOCTYPE html><html class="light" lang="es" style=""
                      xmlns="http://www.w3.org/1999/xhtml"
                      xmlns:h="http://xmlns.jcp.org/jsf/html"
-                     xmlns:f="http://xmlns.jcp.org/jsf/core"><head>
+                     xmlns:f="http://xmlns.jcp.org/jsf/core"
+                     xmlns:ui="jakarta.faces.facelets"><head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -141,7 +142,6 @@
     </div>
 </div>
     <nav class="flex-1 overflow-y-auto px-md space-y-1 custom-scrollbar">
-
         <h:link outcome="gestionAdmin"
                 styleClass="flex items-center gap-md px-lg py-md sidebar-active rounded-r-lg transition-all duration-200">
 
@@ -149,7 +149,6 @@
             <span class="font-body-md text-body-md">Tablero</span>
 
         </h:link>
-
         <h:link outcome="gestionMedicos"
                 styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
 
@@ -157,15 +156,12 @@
             <span class="font-body-md text-body-md">Doctores</span>
 
         </h:link>
-
         <h:link outcome="gestionEspecialidades"
                 styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
-
             <span class="material-symbols-outlined">category</span>
             <span class="font-body-md text-body-md">Especialidades</span>
 
         </h:link>
-
         <h:link outcome="reportes"
                 styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
 
@@ -173,7 +169,6 @@
             <span class="font-body-md text-body-md">Reportes</span>
 
         </h:link>
-
         <h:link outcome="configuracion"
                 styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
 
@@ -181,7 +176,6 @@
             <span class="font-body-md text-body-md">Configuración</span>
 
         </h:link>
-
     </nav>
     <div class="px-gutter pt-lg mt-auto border-t border-outline-variant">
         <div class="flex items-center gap-3 p-2 rounded-xl bg-surface-container-low">
@@ -214,7 +208,7 @@
                 <p class="text-[10px] text-on-surface-variant">Super Administrador</p>
             </div>
             <div class="w-10 h-10 rounded-full border border-primary overflow-hidden">
-                <img class="w-full h-full object-cover" data-alt="Professional studio portrait of a medical administrator wearing a crisp white lab coat, smiling confidently against a soft blue clinical background. High resolution, professional lighting, corporate medical photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBraimVnEqUwS2RVK3-FiMIAcuwtXHJUEcBrl5ZUcDkQnObMPqG8WxaoJATWsAtSXwfQLqc1mgfxz-3pObKE2U05uBqKQY0TLRJ1PPfYr_wwG-wJuS6kgLAqVCDukuT3vnAUEb9QYFiPbzgi3cHAty1Ac9gIvqrgTXjaqD7QbAuQb6tqfoahXuQur5KAYFGZfYRWeT4pMWOjCV2HfEFF6Q3AAlIwDCKRt7Je_JfIZ6IRPWTIohzPUBE7kjmoV6nodukHr4-8qH8G5Q"/>
+                <img class="w-full h-full object-cover" data-alt="Professional studio portrait of a medical administrator wearing a crisp white lab coat, smiling confidently against a soft blue clinical background. High resolution, professional lighting, corporate medical photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBraimVnEqUwS2RVK3-FiMIAcuwtXHJUEcBrl5ZUcDkQnObMPqG8WxaoJATWsAtSXwfQLqc1mgfxz-3pObKE2U05uBqKQY0TLRJ1PPfYr_wwG-wJuS6kgLAqVCDukuT3vnAUEb9QYFiPbzgi3cHAty1Ac9gIvqrgTXjaqD7QbAuQb6tqfoahXuQur5KAYFGZfYRWeT4pMWOjCV2HfEFF6Q3AAlIwDCKRt7Je_JfIZ6IRPWTIohzPUBE7kjmoV6nodukHr4-8qH8G5Q">
             </div>
         </div>
     </div>
@@ -246,78 +240,21 @@
                 <p class="text-headline-md font-bold text-on-surface">24</p>
             </div>
         </div>
-        <div class="card-elevation p-lg rounded-xl card-hover flex flex-col justify-between" style="transform: translateY(0px); transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);">
-            <div class="flex justify-between items-start">
-                <div class="p-2 bg-tertiary/10 rounded-lg">
-                    <span class="material-symbols-outlined text-tertiary" data-icon="groups">groups</span>
-                </div>
-                <span class="text-on-surface-variant font-label-sm">Promedio</span>
-            </div>
-            <div class="mt-4">
-                <p class="text-on-surface-variant text-label-md uppercase tracking-wider">Médicos por Especialidad</p>
-                <p class="text-headline-md font-bold text-on-surface">Avg. 10</p>
-            </div>
-        </div>
-        <div class="card-elevation p-lg rounded-xl card-hover flex flex-col justify-between" style="transform: translateY(0px); transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);">
-            <div class="flex justify-between items-start">
-                <div class="p-2 bg-on-primary-fixed-variant/10 rounded-lg">
-                    <span class="material-symbols-outlined text-on-primary-fixed-variant" data-icon="event_available">event_available</span>
-                </div>
-                <div class="flex items-center gap-1 text-on-surface-variant">
-                    <span class="material-symbols-outlined text-xs" data-icon="trending_up">trending_up</span>
-                    <span class="font-label-sm">Categorizado</span>
-                </div>
-            </div>
-            <div class="mt-4">
-                <p class="text-on-surface-variant text-label-md uppercase tracking-wider">Citas del Mes</p>
-                <p class="text-headline-md font-bold text-on-surface">1,452</p>
-            </div>
-        </div>
-        <div class="card-elevation p-lg rounded-xl card-hover flex flex-col justify-between" style="transform: translateY(0px); transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);">
-            <div class="flex justify-between items-start">
-                <div class="p-2 bg-green-100 rounded-lg">
-                    <span class="material-symbols-outlined text-green-700" data-icon="check_circle">check_circle</span>
-                </div>
-                <span class="px-2 py-1 bg-green-50 text-green-700 rounded text-[10px] font-bold uppercase">En línea</span>
-            </div>
-            <div class="mt-4">
-                <p class="text-on-surface-variant text-label-md uppercase tracking-wider">Estado del Servicio</p>
-                <p class="text-headline-md font-bold text-green-700 uppercase tracking-tight">Óptimo</p>
-            </div>
-        </div>
+
+
+
     </div>
     <!-- Filters Section -->
-    <div class="card-elevation rounded-xl p-md mb-gutter flex flex-wrap items-center gap-4" style="transform: translateY(0px); transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);">
-        <div class="flex items-center gap-2 border border-outline-variant rounded-lg px-3 py-2 bg-surface-container-low min-w-[200px]">
-            <span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="filter_list">filter_list</span>
-            <select class="bg-transparent border-none focus:ring-0 text-body-sm w-full outline-none appearance-none">
-                <option>Departamento: Todos</option>
-                <option>Medicina Interna</option>
-                <option>Materno-Infantil</option>
-                <option>Quirúrgico</option>
-            </select>
-        </div>
-        <div class="flex items-center gap-2 border border-outline-variant rounded-lg px-3 py-2 bg-surface-container-low min-w-[150px]">
-            <select class="bg-transparent border-none focus:ring-0 text-body-sm w-full outline-none appearance-none">
-                <option>Estado: Todos</option>
-                <option>Activo</option>
-                <option>Inactivo</option>
-            </select>
-        </div>
-        <button class="ml-auto flex items-center gap-2 text-primary font-label-md px-4 py-2 hover:bg-primary/5 rounded-lg transition-colors">
-            <span class="material-symbols-outlined text-sm" data-icon="restart_alt">restart_alt</span>
-            Limpiar Filtros
-        </button>
-    </div>
+
     <!-- Data Table -->
     <div class="card-elevation rounded-xl overflow-hidden mb-lg" style="transform: translateY(0px); transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);">
         <table class="w-full text-left border-collapse">
             <thead class="bg-surface-container-low border-b border-outline-variant">
             <tr>
                 <th class="px-lg py-4 font-label-md text-on-surface-variant">Nombre de Especialidad</th>
-                <th class="px-lg py-4 font-label-md text-on-surface-variant">Departamento</th>
+
                 <th class="px-lg py-4 font-label-md text-on-surface-variant text-center">Nº Doctores</th>
-                <th class="px-lg py-4 font-label-md text-on-surface-variant">Estado</th>
+
                 <th class="px-lg py-4 font-label-md text-on-surface-variant text-right">Acciones</th>
             </tr>
             </thead>
@@ -331,18 +268,11 @@
                         <span class="font-body-md font-semibold text-on-surface">Cardiología</span>
                     </div>
                 </td>
-                <td class="px-lg py-4">
-                    <span class="px-3 py-1 bg-surface-container rounded-full text-body-sm">Medicina Interna</span>
-                </td>
+
                 <td class="px-lg py-4 text-center">
                     <span class="font-body-md">15</span>
                 </td>
-                <td class="px-lg py-4">
-<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold">
-<span class="w-1.5 h-1.5 rounded-full bg-green-700"></span>
-                                Activo
-                            </span>
-                </td>
+
                 <td class="px-lg py-4 text-right">
                     <div class="flex justify-end gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
                         <button class="p-1 hover:text-primary" title="Editar"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
@@ -360,18 +290,11 @@
                         <span class="font-body-md font-semibold text-on-surface">Pediatría</span>
                     </div>
                 </td>
-                <td class="px-lg py-4">
-                    <span class="px-3 py-1 bg-surface-container rounded-full text-body-sm">Materno-Infantil</span>
-                </td>
+
                 <td class="px-lg py-4 text-center">
                     <span class="font-body-md">22</span>
                 </td>
-                <td class="px-lg py-4">
-<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold">
-<span class="w-1.5 h-1.5 rounded-full bg-green-700"></span>
-                                Activo
-                            </span>
-                </td>
+
                 <td class="px-lg py-4 text-right">
                     <div class="flex justify-end gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
                         <button class="p-1 hover:text-primary" title="Editar"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
@@ -389,18 +312,11 @@
                         <span class="font-body-md font-semibold text-on-surface">Dermatología</span>
                     </div>
                 </td>
-                <td class="px-lg py-4">
-                    <span class="px-3 py-1 bg-surface-container rounded-full text-body-sm">Medicina Interna</span>
-                </td>
+
                 <td class="px-lg py-4 text-center">
                     <span class="font-body-md">8</span>
                 </td>
-                <td class="px-lg py-4">
-<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold">
-<span class="w-1.5 h-1.5 rounded-full bg-green-700"></span>
-                                Activo
-                            </span>
-                </td>
+
                 <td class="px-lg py-4 text-right">
                     <div class="flex justify-end gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
                         <button class="p-1 hover:text-primary" title="Editar"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
@@ -418,18 +334,11 @@
                         <span class="font-body-md font-semibold text-on-surface">Neurología</span>
                     </div>
                 </td>
-                <td class="px-lg py-4">
-                    <span class="px-3 py-1 bg-surface-container rounded-full text-body-sm">Medicina Interna</span>
-                </td>
+
                 <td class="px-lg py-4 text-center">
                     <span class="font-body-md">12</span>
                 </td>
-                <td class="px-lg py-4">
-<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-bold">
-<span class="w-1.5 h-1.5 rounded-full bg-red-700"></span>
-                                Inactivo
-                            </span>
-                </td>
+
                 <td class="px-lg py-4 text-right">
                     <div class="flex justify-end gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
                         <button class="p-1 hover:text-primary" title="Editar"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
@@ -447,18 +356,11 @@
                         <span class="font-body-md font-semibold text-on-surface">Ginecología</span>
                     </div>
                 </td>
-                <td class="px-lg py-4">
-                    <span class="px-3 py-1 bg-surface-container rounded-full text-body-sm">Materno-Infantil</span>
-                </td>
+
                 <td class="px-lg py-4 text-center">
                     <span class="font-body-md">18</span>
                 </td>
-                <td class="px-lg py-4">
-<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold">
-<span class="w-1.5 h-1.5 rounded-full bg-green-700"></span>
-                                Activo
-                            </span>
-                </td>
+
                 <td class="px-lg py-4 text-right">
                     <div class="flex justify-end gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
                         <button class="p-1 hover:text-primary" title="Editar"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
@@ -473,19 +375,7 @@
     <!-- Pagination -->
     <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pb-xl">
         <p class="text-body-sm text-on-surface-variant">Mostrando 1 a 5 de 24 especialidades</p>
-        <div class="flex items-center gap-1">
-            <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container text-on-surface-variant disabled:opacity-30" disabled="">
-                <span class="material-symbols-outlined">chevron_left</span>
-            </button>
-            <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-white font-label-md">1</button>
-            <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container font-label-md">2</button>
-            <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container font-label-md">3</button>
-            <span class="px-2">...</span>
-            <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container font-label-md">5</button>
-            <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container text-on-surface-variant">
-                <span class="material-symbols-outlined">chevron_right</span>
-            </button>
-        </div>
+
     </div>
 </main>
 <script>
@@ -509,6 +399,8 @@
         searchInput.parentElement.classList.remove('ring-2', 'ring-primary/20');
     });
 </script>
+
+
 
 
 

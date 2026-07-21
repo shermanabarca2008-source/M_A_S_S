@@ -83,15 +83,13 @@ public class EspecialidadBean implements Serializable {
         mensaje = "No existe la especialidad.";
         error = true;
     }
-
-    // Actualizar
+    
     public void actualizarEspecialidad() {
 
         mensaje = "Especialidad actualizada correctamente.";
         error = false;
     }
 
-    // Eliminar
     public void eliminarEspecialidad(Especialidad especialidad) {
 
         especialidades.remove(especialidad);
@@ -100,15 +98,10 @@ public class EspecialidadBean implements Serializable {
         error = false;
     }
 
-    // Limpiar formulario
     public void limpiarFormulario() {
 
         especialidadActual = new Especialidad();
     }
-
-    // ==========================
-    // Getters y Setters
-    // ==========================
 
     public Especialidad getEspecialidadActual() {
         return especialidadActual;

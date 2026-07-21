@@ -193,6 +193,12 @@ public class PacienteBean implements Serializable {
         return null;
     }
 
+    public String verHistorial() {
+        mensaje = "Función Ver Historial en desarrollo.";
+        error = false;
+        return null;
+    }
+
     public String cancelarCita() {
         if (pacienteActual == null || citaSeleccionada == null) {
             mensaje = "Seleccione una cita para cancelar.";
