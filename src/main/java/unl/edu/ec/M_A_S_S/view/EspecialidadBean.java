@@ -25,15 +25,6 @@ public class EspecialidadBean implements Serializable {
     public void init() {
         especialidades = new ArrayList<>();
         especialidadActual = new Especialidad();
-
-        // Datos de ejemplo
-        especialidades.add(new Especialidad(
-                "Cardiología",
-                "Especialidad encargada del corazón"));
-
-        especialidades.add(new Especialidad(
-                "Pediatría",
-                "Atención médica infantil"));
     }
 
     // Registrar especialidad

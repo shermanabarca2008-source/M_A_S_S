@@ -1,8 +1,7 @@
 package unl.edu.ec.M_A_S_S.view;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.SessionScoped;
-import jakarta.faces.view.ViewScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import unl.edu.ec.M_A_S_S.domain.Administrador;
 import unl.edu.ec.M_A_S_S.domain.Especialidad;
@@ -10,10 +9,9 @@ import unl.edu.ec.M_A_S_S.domain.Medico;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.ArrayList;
 
 @Named
-@SessionScoped
+@ApplicationScoped
 
 public class AdministradorBean implements Serializable {
 
@@ -53,21 +51,8 @@ public class AdministradorBean implements Serializable {
     }
 
     @PostConstruct
-    private void cargarDatosIniciales() {
-        Especialidad medicinaGeneral = new Especialidad("Medicina General", "Atención primaria");
-        Especialidad pediatria = new Especialidad("Pediatría", "Atención infantil");
-
-        administrador.gestionarEspecialidad(medicinaGeneral);
-        administrador.gestionarEspecialidad(pediatria);
-
-        Medico medico1 = new Medico("Dra. Ana Torres", medicinaGeneral);
-        Medico medico2 = new Medico("Dr. Luis Pérez", pediatria);
-
-        medicinaGeneral.agregarMedico(medico1);
-        pediatria.agregarMedico(medico2);
-
-        administrador.gestionarMedico(medico1);
-        administrador.gestionarMedico(medico2);
+    private void init() {
+        administrador = new Administrador();
     }
 
     public void agregarEspecialidad() {
