@@ -27,7 +27,9 @@ public class PacienteBean implements Serializable {
     @Inject
     private AdministradorBean administradorBean;
 
-    private final List<Paciente> pacientes = new ArrayList<>();
+    @Inject
+    private PacienteRepositorioBean pacienteRepositorioBean;
+
     private String cedula;
     private String contrasena;
     private String mensaje;
@@ -38,6 +40,7 @@ public class PacienteBean implements Serializable {
     private String horarioSeleccionado;
     private String citaSeleccionada;
     private String tabActiva = "agendar";
+    private Cita ultimaCitaAgendada;
     private String nombres;
     private String apellidos;
     private String telefono;
@@ -52,14 +55,7 @@ public class PacienteBean implements Serializable {
             return "/gestionAdmin.xhtml?faces-redirect=true";
         }
 
-        pacienteActual = null;
-        for (Paciente paciente : pacientes) {
-            if (cedula != null && cedula.equals(paciente.getCedula())
-                    && contrasena != null && contrasena.equals(paciente.getContrasena())) {
-                pacienteActual = paciente;
-                break;
-            }
-        }
+        pacienteActual = pacienteRepositorioBean.buscarPorCredenciales(cedula, contrasena);
 
         if (pacienteActual != null) {
             mensaje = "Bienvenido " + pacienteActual.getNombreCompleto() + ".";
@@ -103,21 +99,17 @@ public class PacienteBean implements Serializable {
         }
 
         // Verificar que la cédula no exista
-        for (Paciente paciente : pacientes) {
-            if (cedula.equals(paciente.getCedula())) {
-                mensaje = "Ya existe un paciente registrado con esa cédula.";
-                error = true;
-                return null;
-            }
+        if (pacienteRepositorioBean.existeCedula(cedula)) {
+            mensaje = "Ya existe un paciente registrado con esa cédula.";
+            error = true;
+            return null;
         }
 
         // Verificar que el correo no exista
-        for (Paciente paciente : pacientes) {
-            if (correo.equalsIgnoreCase(paciente.getCorreo())) {
-                mensaje = "El correo electrónico ya está registrado.";
-                error = true;
-                return null;
-            }
+        if (pacienteRepositorioBean.existeCorreo(correo)) {
+            mensaje = "El correo electrónico ya está registrado.";
+            error = true;
+            return null;
         }
 
         Paciente nuevo = new Paciente();
@@ -134,7 +126,7 @@ public class PacienteBean implements Serializable {
             nuevo.setFechaNacimiento(LocalDate.parse(fechaNacimiento));
         }
 
-        pacientes.add(nuevo);
+        pacienteRepositorioBean.registrar(nuevo);
 
         pacienteActual = nuevo;
 
@@ -191,9 +183,14 @@ public class PacienteBean implements Serializable {
         cita.setNotificacion(new Notificacion("Cita agendada correctamente", new Date(), cita));
         cita.getNotificacion().enviarNotificacion();
 
+        ultimaCitaAgendada = cita;
         mensaje = "Cita agendada correctamente.";
         error = false;
-        return null;
+        return "confirmacion?faces-redirect=true";
+    }
+
+    public Cita getUltimaCitaAgendada() {
+        return ultimaCitaAgendada;
     }
 
     public String verHistorial() {
@@ -226,6 +223,20 @@ public class PacienteBean implements Serializable {
         return null;
     }
 
+    public void cancelarCita(Cita cita) {
+        if (cita == null) {
+            mensaje = "Seleccione una cita para cancelar.";
+            error = true;
+            return;
+        }
+        cita.cancelar();
+        if (cita.getNotificacion() != null) {
+            cita.getNotificacion().enviarNotificacion();
+        }
+        mensaje = "Cita cancelada correctamente.";
+        error = false;
+    }
+
     public String seleccionarTab(String tab) {
         this.tabActiva = tab;
         return null;
@@ -236,7 +247,7 @@ public class PacienteBean implements Serializable {
     }
 
     public List<Paciente> getPacientes() {
-        return pacientes;
+        return pacienteRepositorioBean.getPacientes();
     }
 
     public List<Especialidad> getEspecialidades() {

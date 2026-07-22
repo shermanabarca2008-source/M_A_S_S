@@ -1,7 +1,6 @@
 package unl.edu.ec.M_A_S_S.view;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import unl.edu.ec.M_A_S_S.domain.HorarioMedico;
 import unl.edu.ec.M_A_S_S.domain.Medico;
@@ -13,13 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Named
-@SessionScoped
+@ApplicationScoped
 public class HorarioMedicoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private List<HorarioMedico> horarios;
-    private HorarioMedico horarioSeleccionado;
     private Medico medicoSeleccionado;
     private LocalDate fechaDisponible;
     private LocalTime horaInicio;
@@ -27,9 +24,16 @@ public class HorarioMedicoBean implements Serializable {
     private String mensaje;
     private boolean error;
 
-    @PostConstruct
-    public void init() {
-        horarios = new ArrayList<>();
+    public void seleccionarMedico(Medico medico) {
+        medicoSeleccionado = medico;
+        limpiarCampos();
+        mensaje = null;
+        error = false;
+    }
+
+    public String irAHorarios(Medico medico) {
+        seleccionarMedico(medico);
+        return "gestionHorarios?faces-redirect=true";
     }
 
     public void registrarHorario() {
@@ -52,20 +56,9 @@ public class HorarioMedicoBean implements Serializable {
         }
 
         HorarioMedico nuevo = new HorarioMedico(fechaDisponible, horaInicio, horaFin, true);
-        horarios.add(nuevo);
         medicoSeleccionado.gestionarDisponibilidad(nuevo);
-        horarioSeleccionado = nuevo;
         mostrarExito("Horario registrado correctamente.");
         limpiarCampos();
-    }
-
-    public void reservarHorario(HorarioMedico horario) {
-        if (horario == null || !horario.isDisponible()) {
-            mostrarError("El horario seleccionado no está disponible.");
-            return;
-        }
-        horario.reservarHorario();
-        mostrarExito("Horario reservado correctamente.");
     }
 
     public void liberarHorario(HorarioMedico horario) {
@@ -78,34 +71,18 @@ public class HorarioMedicoBean implements Serializable {
     }
 
     public void eliminarHorario(HorarioMedico horario) {
-        if (horario == null || !horarios.remove(horario)) {
+        if (medicoSeleccionado == null || horario == null || !medicoSeleccionado.getHorarios().remove(horario)) {
             mostrarError("No se pudo eliminar el horario.");
             return;
-        }
-        if (medicoSeleccionado != null) {
-            medicoSeleccionado.getHorarios().remove(horario);
-        }
-        if (horario == horarioSeleccionado) {
-            horarioSeleccionado = null;
         }
         mostrarExito("Horario eliminado correctamente.");
     }
 
-    public List<HorarioMedico> getHorariosDisponibles() {
-        List<HorarioMedico> disponibles = new ArrayList<>();
-        for (HorarioMedico horario : horarios) {
-            if (horario.isDisponible()) {
-                disponibles.add(horario);
-            }
+    public List<HorarioMedico> getHorariosMedicoSeleccionado() {
+        if (medicoSeleccionado == null) {
+            return new ArrayList<>();
         }
-        return disponibles;
-    }
-
-    public void limpiarFormulario() {
-        horarioSeleccionado = null;
-        limpiarCampos();
-        mensaje = null;
-        error = false;
+        return medicoSeleccionado.getHorarios();
     }
 
     private boolean existeCruce() {
@@ -133,22 +110,6 @@ public class HorarioMedicoBean implements Serializable {
     private void mostrarError(String texto) {
         mensaje = texto;
         error = true;
-    }
-
-    public List<HorarioMedico> getHorarios() {
-        return horarios;
-    }
-
-    public void setHorarios(List<HorarioMedico> horarios) {
-        this.horarios = horarios;
-    }
-
-    public HorarioMedico getHorarioSeleccionado() {
-        return horarioSeleccionado;
-    }
-
-    public void setHorarioSeleccionado(HorarioMedico horarioSeleccionado) {
-        this.horarioSeleccionado = horarioSeleccionado;
     }
 
     public Medico getMedicoSeleccionado() {

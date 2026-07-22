@@ -1,7 +1,8 @@
 <!DOCTYPE html><html lang="es"
                      xmlns="http://www.w3.org/1999/xhtml"
                      xmlns:h="http://xmlns.jcp.org/jsf/html"
-                     xmlns:f="http://xmlns.jcp.org/jsf/core"><head>
+                     xmlns:f="http://xmlns.jcp.org/jsf/core"
+                     xmlns:ui="jakarta.faces.facelets"><head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>M.A.S.S. - Gestión de Médicos</title>
@@ -159,6 +160,14 @@
 
         </h:link>
 
+        <h:link outcome="gestionHorarios"
+                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+
+            <span class="material-symbols-outlined">event_available</span>
+            <span class="font-body-md text-body-md">Horarios</span>
+
+        </h:link>
+
         <h:link outcome="gestionEspecialidades"
                 styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
 
@@ -175,7 +184,7 @@
 
         </h:link>
 
-        <h:link outcome="configuracion"
+        <h:link outcome="configuracionSistema"
                 styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
 
             <span class="material-symbols-outlined">settings</span>
@@ -221,10 +230,10 @@
                 <h2 class="font-headline-lg text-headline-lg text-on-surface">Gestión de Médicos</h2>
                 <p class="font-body-md text-body-md text-on-surface-variant">Administra el personal médico, sus horarios y disponibilidad.</p>
             </div>
-            <button class="bg-primary text-white font-label-md text-label-md px-lg py-3 rounded-lg flex items-center gap-2 hover:bg-primary-container transition-all shadow-md">
+            <h:link outcome="aggMedico" styleClass="bg-primary text-white font-label-md text-label-md px-lg py-3 rounded-lg flex items-center gap-2 hover:bg-primary-container transition-all shadow-md">
                 <span class="material-symbols-outlined">person_add</span>
                 Añadir Nuevo Médico
-            </button>
+            </h:link>
         </div>
         <!-- Stats Row -->
 
@@ -232,158 +241,83 @@
 
         <!-- Table Section -->
         <div class="bg-white rounded-xl border border-outline-variant clinical-shadow overflow-hidden">
+            <h:form id="formMedicos">
             <table class="w-full text-left border-collapse">
                 <thead class="bg-surface-container-low border-b border-outline-variant">
                 <tr>
                     <th class="px-lg py-4 font-label-md text-label-md text-on-surface">Médico</th>
                     <th class="px-lg py-4 font-label-md text-label-md text-on-surface">Especialidad</th>
-                    <th class="px-lg py-4 font-label-md text-label-md text-on-surface text-center">Exp.</th>
-                    <th class="px-lg py-4 font-label-md text-label-md text-on-surface">Rating</th>
-                    <th class="px-lg py-4 font-label-md text-label-md text-on-surface">Estado</th>
+                    <th class="px-lg py-4 font-label-md text-label-md text-on-surface text-center">Horarios</th>
                     <th class="px-lg py-4 font-label-md text-label-md text-on-surface text-right">Acciones</th>
                 </tr>
                 </thead>
                 <tbody class="divide-y divide-outline-variant">
-                <!-- Row 1 -->
+                <ui:repeat value="#{administradorBean.medicos}" var="medico">
                 <tr class="hover:bg-surface-container-lowest transition-colors duration-200">
+                    <ui:fragment rendered="#{administradorBean.modoEdicion and administradorBean.medicoSeleccionado eq medico}">
+                    <td class="px-lg py-4" colspan="2">
+                        <h:inputText value="#{administradorBean.nombreMedicoEdicion}" styleClass="border border-outline-variant rounded-lg px-2 py-1 mr-2"/>
+                        <h:selectOneMenu value="#{administradorBean.especialidadSeleccionadaEdicion}" styleClass="border border-outline-variant rounded-lg px-2 py-1">
+                            <f:selectItems value="#{administradorBean.especialidades}" var="e" itemValue="#{e.nombre}" itemLabel="#{e.nombre}"/>
+                        </h:selectOneMenu>
+                    </td>
+                    <td class="px-lg py-4 text-center">
+                        <h:commandLink styleClass="font-body-md text-body-md text-primary hover:underline" action="#{horarioMedicoBean.irAHorarios(medico)}">
+                            <h:outputText value="#{medico.horarios.size()}"/>
+                        </h:commandLink>
+                    </td>
+                    <td class="px-lg py-4 text-right">
+                        <div class="flex items-center justify-end gap-2">
+                            <h:commandLink value="Guardar" styleClass="text-primary font-label-md" action="#{administradorBean.guardarEdicionMedico}">
+                                <f:ajax execute="@form" render="@form"/>
+                            </h:commandLink>
+                            <h:commandLink value="Cancelar" styleClass="text-secondary font-label-md" action="#{administradorBean.cancelarEdicion}">
+                                <f:ajax execute="@none" render="@form"/>
+                            </h:commandLink>
+                        </div>
+                    </td>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{not (administradorBean.modoEdicion and administradorBean.medicoSeleccionado eq medico)}">
                     <td class="px-lg py-4">
                         <div class="flex items-center gap-4">
-                            <img class="w-12 h-12 rounded-full object-cover" data-alt="A portrait of a male cardiologist in his early 40s, wearing a white medical coat with a stethoscope around his neck. He has a friendly and professional smile. The background is a clean, modern clinical setting with soft blue and white lighting, emphasizing a high-end medical environment and clinical precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfL71hesfaszzXzYgumjyCe8aXddAXGZqZRMSBtDaTQoWllMhd5hJ6cgVhNQnpySQDxyjqJPSYna722f_U6H3jxzpoFSuvXA7n9DhkuGOH1Sgd27rc2-9j7tkqNzbFbCIYN_Za94YVTrrRbc8zFp0JQf2Q87PH90T0625DbhUxt7JDr-supdTAehne7TxNqiPJINzOeKUc8Oibpxrse88M9DMNsB9CXSV47TGGe7yuXgWZpHwGFOonSZhYKH5fAvi8LavSDfAX5H4"/>
+                            <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+                                <span class="material-symbols-outlined">person</span>
+                            </div>
                             <div>
-                                <p class="font-label-md text-label-md text-on-surface">Dr. Alejandro Rivera</p>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant">ID: MED-4592</p>
+                                <p class="font-label-md text-label-md text-on-surface">#{medico.nombreCompleto}</p>
                             </div>
                         </div>
                     </td>
                     <td class="px-lg py-4">
-                        <span class="font-body-md text-body-md text-on-surface-variant">Cardiología</span>
+                        <span class="font-body-md text-body-md text-on-surface-variant">#{medico.especialidad.nombre}</span>
                     </td>
                     <td class="px-lg py-4 text-center">
-                        <span class="font-body-md text-body-md text-on-surface">12 años</span>
-                    </td>
-                    <td class="px-lg py-4">
-                        <div class="flex items-center gap-1 text-[#FFB300]">
-                            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="font-label-md text-label-md text-on-surface">4.9</span>
-                        </div>
-                    </td>
-                    <td class="px-lg py-4">
-                        <span class="px-3 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-label-sm font-bold">Activo</span>
+                        <h:commandLink styleClass="font-body-md text-body-md text-primary hover:underline" action="#{horarioMedicoBean.irAHorarios(medico)}">
+                            <h:outputText value="#{medico.horarios.size()}"/>
+                        </h:commandLink>
                     </td>
                     <td class="px-lg py-4 text-right">
                         <div class="flex items-center justify-end gap-2">
-                            <button class="p-2 text-primary hover:bg-primary-fixed/20 rounded-lg transition-all" title="Ver Horario"><span class="material-symbols-outlined">calendar_month</span></button>
-                            <button class="p-2 text-secondary hover:bg-secondary-container rounded-lg transition-all" title="Editar"><span class="material-symbols-outlined">edit</span></button>
-                            <button class="p-2 text-error hover:bg-error-container/30 rounded-lg transition-all" title="Eliminar"><span class="material-symbols-outlined">delete</span></button>
+                            <h:commandLink styleClass="p-2 text-secondary hover:bg-secondary-container rounded-lg transition-all inline-block" title="Editar"
+                                           action="#{administradorBean.seleccionarMedicoParaEditar(medico)}">
+                                <span class="material-symbols-outlined">edit</span>
+                                <f:ajax execute="@none" render="@form"/>
+                            </h:commandLink>
+                            <h:commandLink styleClass="p-2 text-error hover:bg-error-container/30 rounded-lg transition-all inline-block" title="Eliminar"
+                                           action="#{administradorBean.eliminarMedico(medico)}">
+                                <span class="material-symbols-outlined">delete</span>
+                                <f:ajax execute="@none" render="@form"/>
+                            </h:commandLink>
                         </div>
                     </td>
+                    </ui:fragment>
                 </tr>
-                <!-- Row 2 -->
-                <tr class="hover:bg-surface-container-lowest transition-colors duration-200">
-                    <td class="px-lg py-4">
-                        <div class="flex items-center gap-4">
-                            <img class="w-12 h-12 rounded-full object-cover" data-alt="A portrait of a female pediatrician in her late 30s, wearing a modern white lab coat. She has a welcoming and gentle expression. The setting is a brightly lit pediatric wing of a high-end hospital, with soft pastel blue accents and a clean, sterile but friendly clinical atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSfoBf03-rlW_eaAh20N-kAf-f8rIYHghYRxJphosFJoEtqC_dU2XyIOKDypKDcsjGexGoGpaMVzyDamcVirST9Bb_1I-ekNRb7th5zioUPfHHpdFROhNOB41CivFi82UPpJ55TsLiMKPo9soLxljOIxU1VQaIXz4zX47zM4ithqmMmneNweKCatxdoWl7bGDieK7WIVGCqPk_TqbmF8D7yy_IRQUk2GoD_3yRByJNWC_HZCi7IIlaD2MJ-QaiEduJKLdRfYmFZS0"/>
-                            <div>
-                                <p class="font-label-md text-label-md text-on-surface">Dra. Elena Martínez</p>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant">ID: MED-2108</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-lg py-4">
-                        <span class="font-body-md text-body-md text-on-surface-variant">Pediatría</span>
-                    </td>
-                    <td class="px-lg py-4 text-center">
-                        <span class="font-body-md text-body-md text-on-surface">8 años</span>
-                    </td>
-                    <td class="px-lg py-4">
-                        <div class="flex items-center gap-1 text-[#FFB300]">
-                            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="font-label-md text-label-md text-on-surface">4.8</span>
-                        </div>
-                    </td>
-                    <td class="px-lg py-4">
-                        <span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold">En Consulta</span>
-                    </td>
-                    <td class="px-lg py-4 text-right">
-                        <div class="flex items-center justify-end gap-2">
-                            <button class="p-2 text-primary hover:bg-primary-fixed/20 rounded-lg transition-all" title="Ver Horario"><span class="material-symbols-outlined">calendar_month</span></button>
-                            <button class="p-2 text-secondary hover:bg-secondary-container rounded-lg transition-all" title="Editar"><span class="material-symbols-outlined">edit</span></button>
-                            <button class="p-2 text-error hover:bg-error-container/30 rounded-lg transition-all" title="Eliminar"><span class="material-symbols-outlined">delete</span></button>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Row 3 -->
-                <tr class="hover:bg-surface-container-lowest transition-colors duration-200">
-                    <td class="px-lg py-4">
-                        <div class="flex items-center gap-4">
-                            <img class="w-12 h-12 rounded-full object-cover" data-alt="A portrait of a senior male neurologist with silver hair, wearing a white coat and glasses. He projects wisdom and authority. Behind him is a blurred image of a modern MRI station in a high-tech medical facility. The lighting is sophisticated and calm, emphasizing expertise and professional trust." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbMBn_M13rBN4Sy-1VdQZE2SP9O0NNKyco5rNrNJ2Jlu9q1C8tEv9gp_oUpU36oZJk0WZdOpDAttFKW4Py7wSPaIxY4ILV8xjrvQRUpjfHfFEM4keaP46mnDZurz35cRzBCdJ3HpAF2OEAh0oQ86t4EJ9ryaurcOzv40EoUicGxIZ-tfb9zIPcagXz727yORILeYft6vKg-Nas935_NiSief8f05yXjAKs0qDpkuuhMz3D2d9_U-dbEE70VFq4jQrH-mon2pPO59U"/>
-                            <div>
-                                <p class="font-label-md text-label-md text-on-surface">Dr. Roberto Sánchez</p>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant">ID: MED-9932</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-lg py-4">
-                        <span class="font-body-md text-body-md text-on-surface-variant">Neurología</span>
-                    </td>
-                    <td class="px-lg py-4 text-center">
-                        <span class="font-body-md text-body-md text-on-surface">25 años</span>
-                    </td>
-                    <td class="px-lg py-4">
-                        <div class="flex items-center gap-1 text-[#FFB300]">
-                            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="font-label-md text-label-md text-on-surface">5.0</span>
-                        </div>
-                    </td>
-                    <td class="px-lg py-4">
-                        <span class="px-3 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-label-sm font-bold">Activo</span>
-                    </td>
-                    <td class="px-lg py-4 text-right">
-                        <div class="flex items-center justify-end gap-2">
-                            <button class="p-2 text-primary hover:bg-primary-fixed/20 rounded-lg transition-all" title="Ver Horario"><span class="material-symbols-outlined">calendar_month</span></button>
-                            <button class="p-2 text-secondary hover:bg-secondary-container rounded-lg transition-all" title="Editar"><span class="material-symbols-outlined">edit</span></button>
-                            <button class="p-2 text-error hover:bg-error-container/30 rounded-lg transition-all" title="Eliminar"><span class="material-symbols-outlined">delete</span></button>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Row 4 -->
-                <tr class="hover:bg-surface-container-lowest transition-colors duration-200">
-                    <td class="px-lg py-4">
-                        <div class="flex items-center gap-4">
-                            <img class="w-12 h-12 rounded-full object-cover" data-alt="A portrait of a young female dermatologist with a bright and clear complexion, wearing a white medical professional's coat. The setting is a minimalist, very clean dermatology clinic with high-end clinical lighting. The style is professional and sophisticated, mirroring a high-stakes, reliable medical environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7EOwq-AXwl4ITqC5tg_BaTD_uMkQSF4zLWblb0Mxk_Xs5R47gasQZhZlaE9XayVUuJeImPTqqJ4AzL68zvVdEqxbs54EIopfMvIWltB_caSBmlV3BQjNhvmnMbOvKIrmOa9ODceb30AAzX2q0nfVEYN-1MW4Wfl-weAJTYlqVrCqUzbSXiC_v8tpDcKGK-bJJNJDRc0V8zLUcacU1jZ0ItO9OcVMQezdXJNYyJRb83RywBYIYp3SwEbSjvKaMzuTi9-XjZEIT1Bc"/>
-                            <div>
-                                <p class="font-label-md text-label-md text-on-surface">Dra. Claudia Vaca</p>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant">ID: MED-5612</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-lg py-4">
-                        <span class="font-body-md text-body-md text-on-surface-variant">Dermatología</span>
-                    </td>
-                    <td class="px-lg py-4 text-center">
-                        <span class="font-body-md text-body-md text-on-surface">5 años</span>
-                    </td>
-                    <td class="px-lg py-4">
-                        <div class="flex items-center gap-1 text-[#FFB300]">
-                            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
-                            <span class="font-label-md text-label-md text-on-surface">4.7</span>
-                        </div>
-                    </td>
-                    <td class="px-lg py-4">
-                        <span class="px-3 py-1 rounded-full bg-error-container/20 text-on-error-container font-label-sm text-label-sm font-bold">Inactivo</span>
-                    </td>
-                    <td class="px-lg py-4 text-right">
-                        <div class="flex items-center justify-end gap-2">
-                            <button class="p-2 text-primary hover:bg-primary-fixed/20 rounded-lg transition-all" title="Ver Horario"><span class="material-symbols-outlined">calendar_month</span></button>
-                            <button class="p-2 text-secondary hover:bg-secondary-container rounded-lg transition-all" title="Editar"><span class="material-symbols-outlined">edit</span></button>
-                            <button class="p-2 text-error hover:bg-error-container/30 rounded-lg transition-all" title="Eliminar"><span class="material-symbols-outlined">delete</span></button>
-                        </div>
-                    </td>
-                </tr>
+                </ui:repeat>
                 </tbody>
             </table>
             <!-- Pagination -->
-            <div class="px-lg py-4 flex items-center justify-between border-t border-outline-variant bg-surface-container-lowest"><p class="font-body-md text-body-md text-on-surface-variant w-full text-center">Total de médicos registrados: 248</p></div>
+            <div class="px-lg py-4 flex items-center justify-between border-t border-outline-variant bg-surface-container-lowest"><p class="font-body-md text-body-md text-on-surface-variant w-full text-center">Total de médicos registrados: #{administradorBean.medicos.size()}</p></div>
+            </h:form>
         </div>
     </div>
     <!-- Footer -->

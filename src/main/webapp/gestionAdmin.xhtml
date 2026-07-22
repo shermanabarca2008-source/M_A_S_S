@@ -163,6 +163,14 @@
 
             </h:link>
 
+            <h:link outcome="gestionHorarios"
+                    styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+
+                <span class="material-symbols-outlined">event_available</span>
+                <span class="font-body-md text-body-md">Horarios</span>
+
+            </h:link>
+
             <h:link outcome="gestionEspecialidades"
                     styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
 
@@ -179,7 +187,7 @@
 
             </h:link>
 
-            <h:link outcome="configuracion"
+            <h:link outcome="configuracionSistema"
                     styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
 
                 <span class="material-symbols-outlined">settings</span>
@@ -265,7 +273,7 @@
                         </span>
                 </div>
                 <p class="text-label-sm text-on-surface-variant uppercase tracking-wider">Total Médicos</p>
-                <p class="text-headline-md font-bold">156</p>
+                <p class="text-headline-md font-bold">#{administradorBean.medicos.size()}</p>
             </div>
             <!-- Card 3 -->
             <div class="glass-card p-lg rounded-xl border-l-4 border-primary">
@@ -447,17 +455,17 @@
                     </h3>
 
                     <!-- Si no existen médicos -->
-                    <h:panelGroup rendered="#{empty medicoBean.medicos}">
+                    <h:panelGroup rendered="#{empty administradorBean.medicos}">
                         <div class="text-center text-on-surface-variant py-6">
                             No hay médicos registrados.
                         </div>
                     </h:panelGroup>
 
                     <!-- Si existen médicos -->
-                    <h:panelGroup rendered="#{not empty medicoBean.medicos}">
+                    <h:panelGroup rendered="#{not empty administradorBean.medicos}">
                         <div class="space-y-lg">
 
-                            <ui:repeat value="#{medicoBean.medicos}" var="medico">
+                            <ui:repeat value="#{administradorBean.medicos}" var="medico">
 
                                 <div class="flex items-center gap-md">
 

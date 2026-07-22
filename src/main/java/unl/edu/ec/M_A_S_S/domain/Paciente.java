@@ -21,6 +21,9 @@ public class Paciente implements Serializable {
     private String contrasena;
     private LocalDate fechaNacimiento;
     private String telefono;
+    private String nombres;
+    private String apellidos;
+    private String direccion;
 
     // Relación con Cita (un paciente puede tener varias citas)
     private List<Cita> citas;
@@ -168,19 +171,41 @@ public class Paciente implements Serializable {
                 '}';
     }
 
+    public String getNombres() {
+        return nombres;
+    }
+
     public void setNombres(String nombres) {
+        this.nombres = nombres;
+        actualizarNombreCompleto();
+    }
+
+    public String getApellidos() {
+        return apellidos;
     }
 
     public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+        actualizarNombreCompleto();
     }
 
     public void setCorreo(String correo) {
+        this.correoElectronico = correo;
+    }
+
+    public String getDireccion() {
+        return direccion;
     }
 
     public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getCorreo() {
         return correoElectronico;
+    }
+
+    private void actualizarNombreCompleto() {
+        this.nombreCompleto = ((nombres != null ? nombres : "") + " " + (apellidos != null ? apellidos : "")).trim();
     }
 }

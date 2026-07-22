@@ -184,108 +184,29 @@
         <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Elija el área médica en la que requiere atención para mostrarle los profesionales disponibles.</p>
     </div>
     <!-- Specialty Bento Grid -->
+    <h:form>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter mb-xl">
-        <!-- Card: Medicina General -->
-        <div class="specialty-card group cursor-pointer bg-surface p-xl rounded-xl border border-outline-variant shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center hover:border-primary active:scale-95">
+        <ui:repeat value="#{pacienteBean.especialidades}" var="esp">
+        <h:commandLink styleClass="specialty-card group cursor-pointer bg-surface p-xl rounded-xl border border-outline-variant shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center hover:border-primary active:scale-95"
+                       action="selecMedico?faces-redirect=true">
+            <f:setPropertyActionListener target="#{pacienteBean.especialidadSeleccionada}" value="#{esp.nombre}"/>
             <div class="w-16 h-16 rounded-full bg-primary-container/10 text-primary flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors duration-300">
                 <span class="material-symbols-outlined text-4xl">medical_services</span>
             </div>
-            <h3 class="font-headline-sm text-headline-sm mb-xs">Medicina General</h3>
-            <p class="text-label-sm font-label-sm text-on-surface-variant">Consultas preventivas y salud integral</p>
-        </div>
-        <!-- Card: Cardiología -->
-        <div class="specialty-card group cursor-pointer bg-surface p-xl rounded-xl border border-outline-variant shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center hover:border-primary active:scale-95">
-            <div class="w-16 h-16 rounded-full bg-primary-container/10 text-primary flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors duration-300">
-                <span class="material-symbols-outlined text-4xl">cardiology</span>
-            </div>
-            <h3 class="font-headline-sm text-headline-sm mb-xs">Cardiología</h3>
-            <p class="text-label-sm font-label-sm text-on-surface-variant">Cuidado del corazón y sistema vascular</p>
-        </div>
-        <!-- Card: Pediatría -->
-        <div class="specialty-card group cursor-pointer bg-surface p-xl rounded-xl border border-outline-variant shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center hover:border-primary active:scale-95">
-            <div class="w-16 h-16 rounded-full bg-primary-container/10 text-primary flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors duration-300">
-                <span class="material-symbols-outlined text-4xl">child_care</span>
-            </div>
-            <h3 class="font-headline-sm text-headline-sm mb-xs">Pediatría</h3>
-            <p class="text-label-sm font-label-sm text-on-surface-variant">Atención médica especializada para niños</p>
-        </div>
-        <!-- Card: Dermatología -->
-        <div class="specialty-card group cursor-pointer bg-surface p-xl rounded-xl border border-outline-variant shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center hover:border-primary active:scale-95">
-            <div class="w-16 h-16 rounded-full bg-primary-container/10 text-primary flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors duration-300">
-                <span class="material-symbols-outlined text-4xl">dermatology</span>
-            </div>
-            <h3 class="font-headline-sm text-headline-sm mb-xs">Dermatología</h3>
-            <p class="text-label-sm font-label-sm text-on-surface-variant">Cuidado de la piel, cabello y uñas</p>
-        </div>
-        <!-- Card: Ginecología -->
-        <div class="specialty-card group cursor-pointer bg-surface p-xl rounded-xl border border-outline-variant shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center hover:border-primary active:scale-95">
-            <div class="w-16 h-16 rounded-full bg-primary-container/10 text-primary flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors duration-300">
-                <span class="material-symbols-outlined text-4xl">female</span>
-            </div>
-            <h3 class="font-headline-sm text-headline-sm mb-xs">Ginecología</h3>
-            <p class="text-label-sm font-label-sm text-on-surface-variant">Salud reproductiva femenina</p>
-        </div>
-        <!-- Card: Traumatología -->
-        <div class="specialty-card group cursor-pointer bg-surface p-xl rounded-xl border border-outline-variant shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center hover:border-primary active:scale-95">
-            <div class="w-16 h-16 rounded-full bg-primary-container/10 text-primary flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors duration-300">
-                <span class="material-symbols-outlined text-4xl">orthopedics</span>
-            </div>
-            <h3 class="font-headline-sm text-headline-sm mb-xs">Traumatología</h3>
-            <p class="text-label-sm font-label-sm text-on-surface-variant">Lesiones óseas y musculares</p>
-        </div>
-        <!-- Card: Neurología -->
-        <div class="specialty-card group cursor-pointer bg-surface p-xl rounded-xl border border-outline-variant shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center hover:border-primary active:scale-95">
-            <div class="w-16 h-16 rounded-full bg-primary-container/10 text-primary flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors duration-300">
-                <span class="material-symbols-outlined text-4xl">neurology</span>
-            </div>
-            <h3 class="font-headline-sm text-headline-sm mb-xs">Neurología</h3>
-            <p class="text-label-sm font-label-sm text-on-surface-variant">Cuidado del cerebro y sistema nervioso</p>
-        </div>
-        <!-- Card: Oftalmología -->
-        <div class="specialty-card group cursor-pointer bg-surface p-xl rounded-xl border border-outline-variant shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center hover:border-primary active:scale-95">
-            <div class="w-16 h-16 rounded-full bg-primary-container/10 text-primary flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors duration-300">
-                <span class="material-symbols-outlined text-4xl">visibility</span>
-            </div>
-            <h3 class="font-headline-sm text-headline-sm mb-xs">Oftalmología</h3>
-            <p class="text-label-sm font-label-sm text-on-surface-variant">Diagnóstico y cirugía ocular</p>
-        </div>
+            <h3 class="font-headline-sm text-headline-sm mb-xs">#{esp.nombre}</h3>
+            <p class="text-label-sm font-label-sm text-on-surface-variant">#{esp.descripcion}</p>
+        </h:commandLink>
+        </ui:repeat>
     </div>
     <!-- Action Footer -->
     <div class="flex justify-between items-center max-w-4xl mx-auto pt-lg border-t border-outline-variant">
-        <button class="px-lg py-sm font-label-md text-label-md text-primary border border-primary rounded-lg hover:bg-primary/5 transition-all duration-200 flex items-center gap-sm">
+        <h:link outcome="index" styleClass="px-lg py-sm font-label-md text-label-md text-primary border border-primary rounded-lg hover:bg-primary/5 transition-all duration-200 flex items-center gap-sm">
             <span class="material-symbols-outlined text-sm">arrow_back</span>
             Cancelar
-        </button>
-        <button class="px-lg py-sm font-label-md text-label-md bg-secondary-fixed text-on-secondary-fixed opacity-50 cursor-not-allowed rounded-lg transition-all duration-200 flex items-center gap-sm" disabled="" id="nextBtn">
-            Siguiente Paso
-            <span class="material-symbols-outlined text-sm">arrow_forward</span>
-        </button>
+        </h:link>
     </div>
+    </h:form>
 </main>
 <!-- SideNavBar (Shared Component - Hidden on Desktop Layout by instructions, but integrated if needed) -->
 <!-- Not rendered as per 'Main Content' instruction to focus on Step 1 Selection UI -->
-<script>
-    // Simple Interaction Logic
-    const cards = document.querySelectorAll('.specialty-card');
-    const nextBtn = document.getElementById('nextBtn');
-
-    cards.forEach(card => {
-        card.addEventListener('click', () => {
-            // Remove active state from all
-            cards.forEach(c => {
-                c.classList.remove('ring-2', 'ring-primary', 'bg-primary-container/5');
-                c.classList.add('bg-surface');
-            });
-
-            // Add active state to selected
-            card.classList.add('ring-2', 'ring-primary', 'bg-primary-container/5');
-            card.classList.remove('bg-surface');
-
-            // Enable button
-            nextBtn.disabled = false;
-            nextBtn.classList.remove('bg-secondary-fixed', 'text-on-secondary-fixed', 'opacity-50', 'cursor-not-allowed');
-            nextBtn.classList.add('bg-primary', 'text-on-primary', 'shadow-md', 'hover:bg-primary-container');
-        });
-    });
-</script>
 </body></html>

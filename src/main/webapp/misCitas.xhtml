@@ -234,31 +234,31 @@
                 </button>
             </div>
         </div>
-        <!-- Bento Grid Section: Próximas Citas -->
+        <!-- Bento Grid Section: Mis Citas -->
         <section class="mb-xl">
             <div class="flex items-center justify-between mb-lg">
                 <div class="flex items-center gap-sm">
                     <div class="w-2 h-8 bg-primary rounded-full"></div>
-                    <h2 class="font-headline-sm text-headline-sm">Próximas Citas</h2>
+                    <h2 class="font-headline-sm text-headline-sm">Mis Citas</h2>
                 </div>
-                <span class="bg-primary-container text-on-primary-container px-md py-xs rounded-full font-label-sm text-label-sm">2 Pendientes</span>
+                <span class="bg-primary-container text-on-primary-container px-md py-xs rounded-full font-label-sm text-label-sm">#{pacienteBean.pacienteActual.citas.size()} registrada(s)</span>
             </div>
+            <h:form>
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-lg">
-                <!-- Appointment Card 1 -->
+                <ui:repeat value="#{pacienteBean.pacienteActual.citas}" var="cita">
                 <div class="glass-card rounded-xl p-lg flex flex-col hover:elevation-2 transition-all group relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-md">
-<span class="flex items-center gap-xs bg-tertiary-container/10 text-tertiary-container px-sm py-xs rounded-full font-label-sm text-label-sm">
-<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-                                Confirmada
-                            </span>
+                        <span class="flex items-center gap-xs bg-tertiary-container/10 text-tertiary-container px-sm py-xs rounded-full font-label-sm text-label-sm">
+                            #{cita.estado}
+                        </span>
                     </div>
                     <div class="flex items-center gap-md mb-lg">
-                        <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-surface-container-highest">
-                            <img class="w-full h-full object-cover" data-alt="A portrait of a male specialist doctor in his late 40s with a kind, professional demeanor. He is wearing dark blue surgical scrubs and a white coat. The background is a blurred modern clinic interior with natural light and soft blue accents. The visual style is high-definition clinical photography, clean and bright." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBldbv6ifd7Cg4z2X-eZbgKwwaGrx1bIutjMeHyIu5X3HIfMZEH6des0V6UV-QwzmWj-6nQ6j_8zqdHujyrIhVzmZ3RSSDVaF2g0r95_plxOYPcIKcDYNW4sn_srD5U9Em8acy4e2UHGFrx5lWqSRp8LrNl-7AvGfRECTiAmSOrMpHDHxw1zl2aqS76bvRr0Ai24ENazCINUws8vEffLjDyeSGEBor3sglrgM9qAks_d_ZCkKz9hiPz"/>
+                        <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-surface-container-highest bg-surface-container-high flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined">person</span>
                         </div>
                         <div>
-                            <h3 class="font-headline-sm text-headline-sm text-on-surface">Dr. Ricardo Alarcón</h3>
-                            <p class="font-label-md text-label-md text-primary">Cardiología Clínica</p>
+                            <h3 class="font-headline-sm text-headline-sm text-on-surface">#{cita.medico.nombreCompleto}</h3>
+                            <p class="font-label-md text-label-md text-primary">#{cita.medico.especialidad.nombre}</p>
                         </div>
                     </div>
                     <div class="space-y-md flex-1">
@@ -268,86 +268,24 @@
                             </div>
                             <div>
                                 <p class="font-label-sm text-label-sm text-on-surface-variant">Fecha y Hora</p>
-                                <p class="font-body-md text-body-md font-bold">15 de Octubre, 2024 — 09:30 AM</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-md">
-                            <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
-                                <span class="material-symbols-outlined">meeting_room</span>
-                            </div>
-                            <div>
-                                <p class="font-label-sm text-label-sm text-on-surface-variant">Consultorio</p>
-                                <p class="font-body-md text-body-md font-bold">Piso 4, Ala Norte — Sala 402</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-md">
-                            <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
-                                <span class="material-symbols-outlined">medical_information</span>
-                            </div>
-                            <div>
-                                <p class="font-label-sm text-label-sm text-on-surface-variant">Motivo</p>
-                                <p class="font-body-md text-body-md">Chequeo anual y revisión de presión arterial</p>
+                                <p class="font-body-md text-body-md font-bold">
+                                    <h:outputText value="#{cita.fecha}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+                                    —
+                                    <h:outputText value="#{cita.hora}"><f:convertDateTime pattern="HH:mm" /></h:outputText>
+                                </p>
                             </div>
                         </div>
                     </div>
                     <div class="mt-xl flex items-center gap-sm">
-                        <button class="flex-1 py-sm rounded-lg border border-outline-variant text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low transition-all">Reagendar</button>
-                        <button class="flex-1 py-sm rounded-lg border border-error/30 text-error font-label-md text-label-md hover:bg-error-container/20 transition-all">Cancelar</button>
+                        <h:commandLink value="Cancelar" styleClass="flex-1 py-sm rounded-lg border border-error/30 text-error font-label-md text-label-md hover:bg-error-container/20 transition-all text-center"
+                                       action="#{pacienteBean.cancelarCita(cita)}">
+                            <f:ajax execute="@form" render="@form"/>
+                        </h:commandLink>
                     </div>
                 </div>
-                <!-- Appointment Card 2 -->
-                <div class="glass-card rounded-xl p-lg flex flex-col hover:elevation-2 transition-all group relative overflow-hidden">
-                    <div class="absolute top-0 right-0 p-md">
-<span class="flex items-center gap-xs bg-secondary-container text-on-secondary-container px-sm py-xs rounded-full font-label-sm text-label-sm">
-<span class="material-symbols-outlined text-xs">pending</span>
-                                Pendiente
-                            </span>
-                    </div>
-                    <div class="flex items-center gap-md mb-lg">
-                        <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-surface-container-highest">
-                            <img class="w-full h-full object-cover" data-alt="A close-up professional headshot of a female doctor in her 30s. She is smiling warmly, wearing a white medical lab coat and a minimalist silver necklace. The background is a clean, bright medical office with high-end equipment softly out of focus. Lighting is cinematic and professional, using cool blue tones to match the M.A.S.S. brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4iz5mpaVwPgGajJfFd9J8h98ec9AxgcprPCdbK4Zrmf2FuNYPqs6NeDht0UBqyZvsPdW4PZpUUGgsb2G2YcmLLMf2FPE9NyQswTV_9pKh2ZVVW21oKfUf97SCc89nlGw07Sj0IAFy9pzXl6dyLWd-NAzADlUZHKK5eVC5g3d4Zj_6Is_wI5ZkzdTQo1vercHp_9BICnKV_VM1PVJqxYvmveYXWLAVnh-SSjFpEwyRL777cj1AmZhx"/>
-                        </div>
-                        <div>
-                            <h3 class="font-headline-sm text-headline-sm text-on-surface">Dra. Elena Martínez</h3>
-                            <p class="font-label-md text-label-md text-primary">Dermatología</p>
-                        </div>
-                    </div>
-                    <div class="space-y-md flex-1">
-                        <div class="flex items-center gap-md">
-                            <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
-                                <span class="material-symbols-outlined">calendar_today</span>
-                            </div>
-                            <div>
-                                <p class="font-label-sm text-label-sm text-on-surface-variant">Fecha y Hora</p>
-                                <p class="font-body-md text-body-md font-bold">22 de Octubre, 2024 — 11:15 AM</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-md">
-                            <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
-                                <span class="material-symbols-outlined">meeting_room</span>
-                            </div>
-                            <div>
-                                <p class="font-label-sm text-label-sm text-on-surface-variant">Consultorio</p>
-                                <p class="font-body-md text-body-md font-bold">Piso 2, Módulo B — Sala 215</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-md">
-                            <div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
-                                <span class="material-symbols-outlined">medical_information</span>
-                            </div>
-                            <div>
-                                <p class="font-label-sm text-label-sm text-on-surface-variant">Motivo</p>
-                                <p class="font-body-md text-body-md">Seguimiento de tratamiento tópico</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-xl flex items-center gap-sm">
-                        <button class="flex-1 py-sm rounded-lg border border-outline-variant text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low transition-all">Reagendar</button>
-                        <button class="flex-1 py-sm rounded-lg border border-error/30 text-error font-label-md text-label-md hover:bg-error-container/20 transition-all">Cancelar</button>
-                    </div>
-                </div>
-                <!-- Empty State / Add New Card -->
-                <div class="border-2 border-dashed border-outline-variant rounded-xl p-lg flex flex-col items-center justify-center gap-md hover:bg-surface-container-low hover:border-primary transition-all cursor-pointer">
+                </ui:repeat>
+                <!-- Add New Card -->
+                <h:link outcome="aggCitas" styleClass="border-2 border-dashed border-outline-variant rounded-xl p-lg flex flex-col items-center justify-center gap-md hover:bg-surface-container-low hover:border-primary transition-all cursor-pointer">
                     <div class="w-16 h-16 rounded-full bg-surface-container-highest flex items-center justify-center text-primary">
                         <span class="material-symbols-outlined text-4xl">add_circle</span>
                     </div>
@@ -355,135 +293,9 @@
                         <h3 class="font-headline-sm text-headline-sm text-on-surface">Agendar otra cita</h3>
                         <p class="font-body-sm text-body-sm text-on-surface-variant px-lg">¿Necesitas ver a otro especialista? Encuentra horarios disponibles.</p>
                     </div>
-                </div>
+                </h:link>
             </div>
-        </section>
-        <!-- Table Section: Citas Pasadas -->
-        <section>
-            <div class="flex items-center justify-between mb-lg">
-                <div class="flex items-center gap-sm">
-                    <div class="w-2 h-8 bg-secondary rounded-full"></div>
-                    <h2 class="font-headline-sm text-headline-sm">Citas Pasadas</h2>
-                </div>
-                <div class="flex items-center gap-md">
-                    <div class="relative">
-                        <span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant text-md">search</span>
-                        <input class="pl-xl pr-md py-sm bg-surface-container-low border-outline-variant rounded-full text-body-sm focus:ring-primary focus:border-primary border-none w-64" placeholder="Buscar por doctor..." type="text"/>
-                    </div>
-                </div>
-            </div>
-            <div class="glass-card rounded-xl overflow-hidden">
-                <div class="overflow-x-auto custom-scrollbar">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                        <tr class="bg-surface-container-high/50 border-b border-outline-variant">
-                            <th class="px-lg py-md font-label-md text-label-md text-on-surface-variant">Doctor &amp; Especialidad</th>
-                            <th class="px-lg py-md font-label-md text-label-md text-on-surface-variant">Fecha</th>
-                            <th class="px-lg py-md font-label-md text-label-md text-on-surface-variant">Motivo</th>
-                            <th class="px-lg py-md font-label-md text-label-md text-on-surface-variant">Estado</th>
-                            <th class="px-lg py-md font-label-md text-label-md text-on-surface-variant">Acciones</th>
-                        </tr>
-                        </thead>
-                        <tbody class="divide-y divide-outline-variant/30">
-                        <tr class="hover:bg-surface-container-low transition-colors group">
-                            <td class="px-lg py-md">
-                                <div class="flex items-center gap-md">
-                                    <div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-primary font-bold">SR</div>
-                                    <div>
-                                        <p class="font-label-md text-label-md text-on-surface">Dr. Sergio Ramírez</p>
-                                        <p class="font-label-sm text-label-sm text-on-surface-variant">Medicina General</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-lg py-md">
-                                <p class="font-body-sm text-body-sm">12 Sept, 2024</p>
-                                <p class="font-label-sm text-label-sm text-on-surface-variant">08:00 AM</p>
-                            </td>
-                            <td class="px-lg py-md">
-                                <p class="font-body-sm text-body-sm max-w-[240px] truncate">Control post-operatorio ambulatorio</p>
-                            </td>
-                            <td class="px-lg py-md">
-                                <span class="px-md py-xs rounded-full bg-surface-variant text-on-surface-variant font-label-sm text-label-sm">Completada</span>
-                            </td>
-                            <td class="px-lg py-md">
-                                <button class="text-primary hover:underline font-label-md text-label-md flex items-center gap-xs">
-                                    <span class="material-symbols-outlined text-md">description</span>
-                                    Ver Resumen
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-surface-container-low transition-colors group">
-                            <td class="px-lg py-md">
-                                <div class="flex items-center gap-md">
-                                    <div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-primary font-bold">LG</div>
-                                    <div>
-                                        <p class="font-label-md text-label-md text-on-surface">Dra. Lucía Galindo</p>
-                                        <p class="font-label-sm text-label-sm text-on-surface-variant">Nutrición</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-lg py-md">
-                                <p class="font-body-sm text-body-sm">28 Ago, 2024</p>
-                                <p class="font-label-sm text-label-sm text-on-surface-variant">16:30 PM</p>
-                            </td>
-                            <td class="px-lg py-md">
-                                <p class="font-body-sm text-body-sm max-w-[240px] truncate">Ajuste de plan alimenticio trimestral</p>
-                            </td>
-                            <td class="px-lg py-md">
-                                <span class="px-md py-xs rounded-full bg-surface-variant text-on-surface-variant font-label-sm text-label-sm">Completada</span>
-                            </td>
-                            <td class="px-lg py-md">
-                                <button class="text-primary hover:underline font-label-md text-label-md flex items-center gap-xs">
-                                    <span class="material-symbols-outlined text-md">description</span>
-                                    Ver Resumen
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-surface-container-low transition-colors group">
-                            <td class="px-lg py-md">
-                                <div class="flex items-center gap-md">
-                                    <div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-primary font-bold">MA</div>
-                                    <div>
-                                        <p class="font-label-md text-label-md text-on-surface">Dr. Mario Aranda</p>
-                                        <p class="font-label-sm text-label-sm text-on-surface-variant">Oftalmología</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-lg py-md">
-                                <p class="font-body-sm text-body-sm">05 Jul, 2024</p>
-                                <p class="font-label-sm text-label-sm text-on-surface-variant">10:00 AM</p>
-                            </td>
-                            <td class="px-lg py-md">
-                                <p class="font-body-sm text-body-sm max-w-[240px] truncate">Examen visual de rutina</p>
-                            </td>
-                            <td class="px-lg py-md">
-                                <span class="px-md py-xs rounded-full bg-error-container/20 text-error font-label-sm text-label-sm">No Asistió</span>
-                            </td>
-                            <td class="px-lg py-md">
-                                <button class="text-on-surface-variant opacity-50 font-label-md text-label-md flex items-center gap-xs cursor-not-allowed">
-                                    <span class="material-symbols-outlined text-md">description</span>
-                                    No disponible
-                                </button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="p-md bg-surface-container-low border-t border-outline-variant flex justify-between items-center">
-                    <p class="font-label-sm text-label-sm text-on-surface-variant">Mostrando 3 de 15 registros</p>
-                    <div class="flex gap-xs">
-                        <button class="p-xs rounded-lg hover:bg-surface-container-high text-on-surface-variant transition-all">
-                            <span class="material-symbols-outlined">chevron_left</span>
-                        </button>
-                        <button class="w-8 h-8 rounded-lg bg-primary text-on-primary font-label-sm text-label-sm">1</button>
-                        <button class="w-8 h-8 rounded-lg hover:bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">2</button>
-                        <button class="w-8 h-8 rounded-lg hover:bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">3</button>
-                        <button class="p-xs rounded-lg hover:bg-surface-container-high text-on-surface-variant transition-all">
-                            <span class="material-symbols-outlined">chevron_right</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            </h:form>
         </section>
     </div>
     <!-- Footer -->

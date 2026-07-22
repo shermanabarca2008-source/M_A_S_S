@@ -4,7 +4,8 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="jakarta.faces.facelets"><head>
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:pt="jakarta.faces.passthrough"><head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Añadir Nuevo Médico - M.A.S.S.</title>
@@ -174,50 +175,36 @@
                     <h1 class="font-headline-md text-headline-md text-on-surface">Añadir Nuevo Médico</h1>
                     <p class="font-body-md text-body-md text-on-surface-variant mt-1">Complete los detalles del profesional para registrarlo en el sistema.</p>
                 </div>
-                <form class="space-y-lg" onsubmit="event.preventDefault();">
+                <h:form styleClass="space-y-lg">
                     <!-- Full Name -->
                     <div class="space-y-xs">
                         <label class="font-label-md text-label-md text-on-surface" for="nombre">Nombre Completo</label>
-                        <input class="w-full px-md py-sm rounded-lg border border-outline-variant bg-surface-container-lowest text-body-md form-input-focus transition-standard" id="nombre" name="nombre" placeholder="ej. Dr. Juan Pérez" type="text"/>
+                        <h:inputText id="nombre" value="#{administradorBean.nombreMedico}"
+                                     styleClass="w-full px-md py-sm rounded-lg border border-outline-variant bg-surface-container-lowest text-body-md form-input-focus transition-standard"
+                                     pt:placeholder="ej. Dr. Juan Pérez"/>
                     </div>
                     <!-- Specialty -->
                     <div class="space-y-xs">
                         <label class="font-label-md text-label-md text-on-surface" for="especialidad">Seleccionar Especialidad</label>
                         <div class="relative">
-                            <select class="w-full px-md py-sm rounded-lg border border-outline-variant bg-surface-container-lowest text-body-md form-input-focus appearance-none transition-standard" id="especialidad" name="especialidad">
-                                <option disabled="" selected="" value="">Seleccione una especialidad</option>
-                                <option value="cardiologia">Cardiología</option>
-                                <option value="pediatria">Pediatría</option>
-                                <option value="neurologia">Neurología</option>
-                                <option value="dermatologia">Dermatología</option>
-                                <option value="traumatologia">Traumatología</option>
-                                <option value="medicina_general">Medicina General</option>
-                            </select>
+                            <h:selectOneMenu id="especialidad" value="#{administradorBean.especialidadNuevoMedico}"
+                                              styleClass="w-full px-md py-sm rounded-lg border border-outline-variant bg-surface-container-lowest text-body-md form-input-focus appearance-none transition-standard">
+                                <f:selectItem itemValue="" itemLabel="Seleccione una especialidad" itemDisabled="true"/>
+                                <f:selectItems value="#{administradorBean.especialidades}" var="esp" itemValue="#{esp.nombre}" itemLabel="#{esp.nombre}"/>
+                            </h:selectOneMenu>
                             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
                         </div>
                     </div>
-                    <!-- License Number -->
-                    <div class="space-y-xs">
-                        <label class="font-label-md text-label-md text-on-surface" for="colegiado">Número de Cédula</label>
-                        <input class="w-full px-md py-sm rounded-lg border border-outline-variant bg-surface-container-lowest text-body-md form-input-focus transition-standard" id="colegiado" name="colegiado" placeholder="ej. 282812345" type="text"/>
-                    </div>
-                    <!-- Email -->
-                    <div class="space-y-xs">
-                        <label class="font-label-md text-label-md text-on-surface" for="email">Correo Electrónico</label>
-                        <input class="w-full px-md py-sm rounded-lg border border-outline-variant bg-surface-container-lowest text-body-md form-input-focus transition-standard" id="email" name="email" placeholder="doctor@ejemplo.com" type="email"/>
-                    </div>
+                    <h:outputText value="#{administradorBean.mensajeAdmin}" styleClass="text-error font-label-md block"
+                                  rendered="#{not empty administradorBean.mensajeAdmin and administradorBean.errorAdmin}"/>
                     <!-- Actions -->
                     <div class="pt-xl flex flex-col sm:flex-row gap-md">
-                        <button class="flex-1 bg-primary-container text-on-primary hover:bg-primary transition-standard px-lg py-md rounded-lg font-label-md text-label-md flex items-center justify-center gap-sm shadow-sm active:scale-95" type="submit">
-                            <span class="material-symbols-outlined text-[20px]">save</span>
-                            Guardar Médico
-                        </button>
-                        <button class="flex-1 border border-outline text-secondary hover:bg-surface-container transition-standard px-lg py-md rounded-lg font-label-md text-label-md flex items-center justify-center gap-sm active:scale-95" type="button">
-                            <span class="material-symbols-outlined text-[20px]">close</span>
-                            Cancelar
-                        </button>
+                        <h:commandButton value="Guardar Médico" action="#{administradorBean.agregarMedico}"
+                                         styleClass="flex-1 bg-primary-container text-on-primary hover:bg-primary transition-standard px-lg py-md rounded-lg font-label-md text-label-md flex items-center justify-center gap-sm shadow-sm active:scale-95"/>
+                        <h:link outcome="gestionMedicos" value="Cancelar"
+                                styleClass="flex-1 border border-outline text-secondary hover:bg-surface-container transition-standard px-lg py-md rounded-lg font-label-md text-label-md flex items-center justify-center gap-sm active:scale-95"/>
                     </div>
-                </form>
+                </h:form>
             </div>
             <!-- Visual Asset Area -->
             <div class="hidden md:block w-72 bg-surface-container p-xl flex flex-col justify-center items-center gap-lg border-l border-outline-variant">
@@ -251,27 +238,6 @@
     </div>
 </footer>
 <script>
-    // Micro-interaction for form feedback
-    const primaryBtn = document.querySelector('button[type="submit"]');
-    primaryBtn.addEventListener('click', (e) => {
-        const originalContent = primaryBtn.innerHTML;
-        primaryBtn.innerHTML = `&lt;span class="material-symbols-outlined animate-spin">sync&lt;/span> Procesando...`;
-        primaryBtn.disabled = true;
-
-        setTimeout(() => {
-            primaryBtn.innerHTML = `&lt;span class="material-symbols-outlined">check_circle&lt;/span> Registrado`;
-            primaryBtn.classList.replace('bg-primary-container', 'bg-tertiary-container');
-            primaryBtn.classList.replace('text-on-primary', 'text-on-tertiary');
-
-            setTimeout(() => {
-                primaryBtn.innerHTML = originalContent;
-                primaryBtn.classList.replace('bg-tertiary-container', 'bg-primary-container');
-                primaryBtn.classList.replace('text-on-tertiary', 'text-on-primary');
-                primaryBtn.disabled = false;
-            }, 2000);
-        }, 1200);
-    });
-
     // Add hover effects for inputs
     document.querySelectorAll('input, select').forEach(el => {
         el.addEventListener('mouseenter', () => el.classList.add('bg-surface-container-lowest'));

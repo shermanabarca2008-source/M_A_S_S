@@ -165,178 +165,33 @@
             <div class="h-full bg-primary-container w-1/2 transition-all duration-700 ease-out"></div>
         </div>
     </section>
-    <!-- Main Interaction Area: Bento Style Split Layout -->
-    <section class="grid grid-cols-1 lg:grid-cols-12 gap-lg min-h-[600px]">
-        <!-- Left: Calendar Section (Paso 3) -->
-        <div class="lg:col-span-7 bg-surface-container-lowest rounded-xl border border-outline-variant elevation-l1 overflow-hidden flex flex-col">
-            <div class="p-lg border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
-                <div class="flex items-center gap-sm">
-                    <span class="material-symbols-outlined text-primary">calendar_month</span>
-                    <h2 class="text-headline-sm font-headline-sm text-on-surface">Octubre 2023</h2>
-                </div>
-                <div class="flex gap-xs">
-                    <button class="p-xs rounded-lg hover:bg-surface-variant transition-colors border border-outline-variant text-on-surface-variant">
-                        <span class="material-symbols-outlined">chevron_left</span>
-                    </button>
-                    <button class="p-xs rounded-lg hover:bg-surface-variant transition-colors border border-outline-variant text-on-surface-variant">
-                        <span class="material-symbols-outlined">chevron_right</span>
-                    </button>
-                </div>
-            </div>
-            <div class="p-lg flex-1">
-                <div class="calendar-grid mb-sm">
-                    <!-- Days of week -->
-                    <div class="text-center text-label-sm font-label-sm text-on-secondary-container py-sm">LUN</div>
-                    <div class="text-center text-label-sm font-label-sm text-on-secondary-container py-sm">MAR</div>
-                    <div class="text-center text-label-sm font-label-sm text-on-secondary-container py-sm">MIÉ</div>
-                    <div class="text-center text-label-sm font-label-sm text-on-secondary-container py-sm">JUE</div>
-                    <div class="text-center text-label-sm font-label-sm text-on-secondary-container py-sm">VIE</div>
-                    <div class="text-center text-label-sm font-label-sm text-on-secondary-container py-sm">SÁB</div>
-                    <div class="text-center text-label-sm font-label-sm text-on-secondary-container py-sm">DOM</div>
-                </div>
-                <div class="calendar-grid gap-xs">
-                    <!-- Example empty space for start of month -->
-                    <div class="calendar-day text-outline opacity-30">25</div>
-                    <div class="calendar-day text-outline opacity-30">26</div>
-                    <div class="calendar-day text-outline opacity-30">27</div>
-                    <div class="calendar-day text-outline opacity-30">28</div>
-                    <div class="calendar-day text-outline opacity-30">29</div>
-                    <div class="calendar-day text-outline opacity-30">30</div>
-                    <!-- Real Days -->
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">1</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">2</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">3</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">4</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">5</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">6</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">7</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">8</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">9</div>
-                    <div class="calendar-day rounded-lg bg-primary text-on-primary font-bold shadow-md">10</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">11</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">12</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">13</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">14</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">15</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">16</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">17</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">18</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">19</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">20</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">21</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">22</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">23</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">24</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">25</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">26</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">27</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">28</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">29</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">30</div>
-                    <div class="calendar-day rounded-lg hover:bg-surface-container-high text-on-surface font-medium">31</div>
-                </div>
-            </div>
-            <div class="p-md bg-surface-container border-t border-outline-variant flex gap-md">
-                <div class="flex items-center gap-xs">
-                    <div class="w-3 h-3 rounded-full bg-primary"></div>
-                    <span class="text-label-sm text-on-surface-variant">Seleccionado</span>
-                </div>
-                <div class="flex items-center gap-xs">
-                    <div class="w-3 h-3 rounded-full bg-surface-container-high border border-outline"></div>
-                    <span class="text-label-sm text-on-surface-variant">Disponible</span>
-                </div>
-                <div class="flex items-center gap-xs">
-                    <div class="w-3 h-3 rounded-full bg-surface-dim opacity-40"></div>
-                    <span class="text-label-sm text-on-surface-variant">No disponible</span>
-                </div>
-            </div>
+    <!-- Main Interaction Area -->
+    <h:form>
+    <section class="bg-surface-container-lowest rounded-xl border border-outline-variant elevation-l1 p-lg">
+        <div class="flex items-center gap-sm mb-lg">
+            <span class="material-symbols-outlined text-primary">schedule</span>
+            <h2 class="text-headline-sm font-headline-sm text-on-surface">Horarios disponibles con #{pacienteBean.medicoSeleccionado}</h2>
         </div>
-        <!-- Right: Time Selection Section (Paso 4) -->
-        <div class="lg:col-span-5 flex flex-col gap-lg">
-            <div class="bg-surface-container-lowest rounded-xl border border-outline-variant elevation-l1 p-lg flex flex-col gap-lg flex-1">
-                <div class="flex flex-col gap-xs">
-                    <h2 class="text-headline-sm font-headline-sm text-on-surface flex items-center gap-sm">
-                        <span class="material-symbols-outlined text-primary">schedule</span>
-                        Selecciona Horario
-                    </h2>
-                    <p class="text-label-md text-on-surface-variant">Para el Martes, 10 de Octubre</p>
-                </div>
-                <!-- Morning Section -->
-                <div class="flex flex-col gap-md">
-                    <div class="flex items-center gap-sm">
-                        <span class="material-symbols-outlined text-tertiary">wb_sunny</span>
-                        <h3 class="text-label-md text-on-surface-variant font-bold">MAÑANA</h3>
-                    </div>
-                    <div class="grid grid-cols-3 gap-sm">
-                        <button class="time-slot px-sm py-md text-label-md font-bold rounded-lg border border-outline-variant hover:border-primary hover:text-primary transition-all active:bg-primary-fixed">08:00 AM</button>
-                        <button class="time-slot px-sm py-md text-label-md font-bold rounded-lg border border-outline-variant hover:border-primary hover:text-primary transition-all active:bg-primary-fixed">09:30 AM</button>
-                        <button class="time-slot px-sm py-md text-label-md font-bold rounded-lg border border-primary bg-primary-container text-white shadow-md">11:00 AM</button>
-                    </div>
-                </div>
-                <!-- Afternoon Section -->
-                <div class="flex flex-col gap-md">
-                    <div class="flex items-center gap-sm">
-                        <span class="material-symbols-outlined text-primary-fixed-dim">light_mode</span>
-                        <h3 class="text-label-md text-on-surface-variant font-bold">TARDE</h3>
-                    </div>
-                    <div class="grid grid-cols-3 gap-sm">
-                        <button class="time-slot px-sm py-md text-label-md font-bold rounded-lg border border-outline-variant hover:border-primary hover:text-primary transition-all">01:30 PM</button>
-                        <button class="time-slot px-sm py-md text-label-md font-bold rounded-lg border border-outline-variant hover:border-primary hover:text-primary transition-all">03:00 PM</button>
-                        <button class="time-slot px-sm py-md text-label-md font-bold rounded-lg border border-outline-variant hover:border-primary hover:text-primary transition-all">04:30 PM</button>
-                    </div>
-                </div>
-                <!-- Night Section -->
-                <div class="flex flex-col gap-md">
-                    <div class="flex items-center gap-sm">
-                        <span class="material-symbols-outlined text-on-primary-fixed">dark_mode</span>
-                        <h3 class="text-label-md text-on-surface-variant font-bold">NOCHE</h3>
-                    </div>
-                    <div class="grid grid-cols-3 gap-sm">
-                        <button class="time-slot px-sm py-md text-label-md font-bold rounded-lg border border-outline-variant hover:border-primary hover:text-primary transition-all">06:00 PM</button>
-                        <button class="time-slot px-sm py-md text-label-md font-bold rounded-lg border border-outline-variant hover:border-primary hover:text-primary transition-all">07:30 PM</button>
-                        <button class="time-slot px-sm py-md text-label-md font-bold rounded-lg opacity-30 border border-outline-variant cursor-not-allowed bg-surface-dim" disabled="">09:00 PM</button>
-                    </div>
-                </div>
-            </div>
-            <!-- Action Bar -->
-            <div class="flex gap-md items-center justify-between">
-                <button class="px-xl py-md rounded-full border border-primary text-primary font-bold flex items-center gap-sm hover:bg-primary/5 transition-colors">
-                    <span class="material-symbols-outlined">arrow_back</span>
-                    Anterior
-                </button>
-                <button class="px-xl py-md rounded-full bg-primary text-white font-bold flex items-center gap-sm hover:bg-primary-container shadow-lg transition-all transform active:scale-95">
-                    Siguiente
-                    <span class="material-symbols-outlined">arrow_forward</span>
-                </button>
-            </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-sm">
+            <ui:repeat value="#{pacienteBean.horariosDisponibles}" var="hor">
+            <h:commandLink styleClass="time-slot px-sm py-md text-label-md font-bold rounded-lg border border-outline-variant hover:border-primary hover:text-primary transition-all flex flex-col items-center"
+                           action="resumen?faces-redirect=true">
+                <f:setPropertyActionListener target="#{pacienteBean.horarioSeleccionado}" value="#{hor.fechaDisponible} #{hor.horaInicio}"/>
+                <span>#{hor.fechaDisponible}</span>
+                <span>#{hor.horaInicio} - #{hor.horaFin}</span>
+            </h:commandLink>
+            </ui:repeat>
         </div>
+        <p class="text-body-sm text-on-surface-variant mt-lg">Sin horarios disponibles: seleccione otro médico si no hay opciones listadas.</p>
     </section>
-    <!-- Summary Floating Card (Fluent Influence) -->
-    <section class="mt-lg glass-effect p-lg rounded-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-md elevation-l1">
-        <div class="flex items-center gap-lg">
-            <div class="w-16 h-16 rounded-xl bg-primary-fixed flex items-center justify-center">
-                <span class="material-symbols-outlined text-primary text-headline-md">medical_services</span>
-            </div>
-            <div>
-                <h4 class="text-label-md font-bold text-on-surface">Consulta General</h4>
-                <p class="text-body-sm text-on-surface-variant">Dr. Alejandro Méndez</p>
-                <div class="flex gap-md mt-xs">
-<span class="text-label-sm flex items-center gap-xs text-primary font-bold">
-<span class="material-symbols-outlined text-[16px]">calendar_today</span>
-                            10 Oct, 2023
-                        </span>
-                    <span class="text-label-sm flex items-center gap-xs text-primary font-bold">
-<span class="material-symbols-outlined text-[16px]">schedule</span>
-                            11:00 AM
-                        </span>
-                </div>
-            </div>
-        </div>
-        <div class="text-right w-full md:w-auto">
-            <p class="text-label-sm text-on-surface-variant">Precio Estimado</p>
-            <p class="text-headline-sm font-bold text-on-surface">$45.00</p>
-        </div>
-    </section>
+    <!-- Action Bar -->
+    <div class="flex gap-md items-center justify-between mt-lg">
+        <h:link outcome="selecMedico" styleClass="px-xl py-md rounded-full border border-primary text-primary font-bold flex items-center gap-sm hover:bg-primary/5 transition-colors">
+            <span class="material-symbols-outlined">arrow_back</span>
+            Anterior
+        </h:link>
+    </div>
+    </h:form>
 </main>
 <!-- SideNavBar (Predicted but filtered for desktop layout consistency) -->
 <aside class="fixed left-0 top-0 h-full w-sidebar_width bg-surface-container border-r border-outline-variant hidden lg:flex flex-col p-md z-40">

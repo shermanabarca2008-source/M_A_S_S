@@ -245,7 +245,7 @@
     </header>
     <!-- Records Table / Bento List -->
     <div class="flex-1 space-y-md animate-fade-in" style="animation-delay: 0.2s;">
-        <!-- Record Card 1 -->
+        <ui:repeat value="#{pacienteBean.pacienteActual.citas}" var="cita">
         <div class="bg-white border border-outline-variant rounded-xl p-lg flex flex-col md:flex-row items-center gap-lg hover:shadow-md transition-all group border-l-4 border-l-primary">
             <div class="flex-shrink-0 w-16 h-16 bg-surface-container-high rounded-full flex items-center justify-center text-primary">
                 <span class="material-symbols-outlined text-[32px]">monitor_heart</span>
@@ -253,260 +253,35 @@
             <div class="flex-1 grid grid-cols-1 md:grid-cols-4 gap-md w-full">
                 <div>
                     <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Fecha</p>
-                    <p class="font-body-md font-semibold">12 de Oct, 2023</p>
-                    <p class="text-[12px] text-on-surface-variant">10:30 AM</p>
+                    <p class="font-body-md font-semibold">
+                        <h:outputText value="#{cita.fecha}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+                    </p>
+                    <p class="text-[12px] text-on-surface-variant">
+                        <h:outputText value="#{cita.hora}"><f:convertDateTime pattern="HH:mm" /></h:outputText>
+                    </p>
                 </div>
                 <div>
                     <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Médico</p>
-                    <p class="font-body-md font-semibold text-primary">Dr. Julian Casablancas</p>
-                    <p class="text-[12px] text-on-surface-variant">Cardiología</p>
+                    <p class="font-body-md font-semibold text-primary">#{cita.medico.nombreCompleto}</p>
+                    <p class="text-[12px] text-on-surface-variant">#{cita.medico.especialidad.nombre}</p>
                 </div>
                 <div class="md:col-span-2">
-                    <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Diagnóstico Principal</p>
-                    <p class="font-body-md line-clamp-2">Hipertensión arterial controlada. Continuar con tratamiento habitual y dieta baja en sodio.</p>
+                    <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Indicaciones</p>
+                    <ui:fragment rendered="#{empty cita.indicaciones}">
+                        <p class="font-body-md line-clamp-2 text-on-surface-variant">Sin indicaciones registradas.</p>
+                    </ui:fragment>
+                    <ui:repeat value="#{cita.indicaciones}" var="ind">
+                        <p class="font-body-md line-clamp-2">#{ind.diagnostico} — #{ind.tratamiento}</p>
+                    </ui:repeat>
                 </div>
-            </div>
-            <div class="flex-shrink-0 flex flex-row md:flex-col gap-sm w-full md:w-auto">
-                <button class="flex-1 px-lg py-2.5 bg-primary-container text-on-primary-container rounded-full font-label-md hover:bg-primary transition-all hover:text-white flex items-center justify-center gap-2" onclick="openDetailModal()">
-                    Ver detalle
-                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-                </button>
             </div>
         </div>
-        <!-- Record Card 2 -->
-        <div class="bg-white border border-outline-variant rounded-xl p-lg flex flex-col md:flex-row items-center gap-lg hover:shadow-md transition-all group">
-            <div class="flex-shrink-0 w-16 h-16 bg-surface-container-high rounded-full flex items-center justify-center text-tertiary">
-                <span class="material-symbols-outlined text-[32px]">biotech</span>
-            </div>
-            <div class="flex-1 grid grid-cols-1 md:grid-cols-4 gap-md w-full">
-                <div>
-                    <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Fecha</p>
-                    <p class="font-body-md font-semibold">28 de Sep, 2023</p>
-                    <p class="text-[12px] text-on-surface-variant">09:15 AM</p>
-                </div>
-                <div>
-                    <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Médico</p>
-                    <p class="font-body-md font-semibold text-primary">Dra. Elena White</p>
-                    <p class="text-[12px] text-on-surface-variant">Medicina General</p>
-                </div>
-                <div class="md:col-span-2">
-                    <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Diagnóstico Principal</p>
-                    <p class="font-body-md line-clamp-2">Revisión anual de laboratorio. Valores dentro de los rangos normales. Déficit leve de Vitamina D.</p>
-                </div>
-            </div>
-            <div class="flex-shrink-0 w-full md:w-auto">
-                <button class="w-full px-lg py-2.5 bg-surface-container-high text-on-surface-variant rounded-full font-label-md hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2" onclick="openDetailModal()">
-                    Ver detalle
-                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-                </button>
-            </div>
-        </div>
-        <!-- Record Card 3 -->
-        <div class="bg-white border border-outline-variant rounded-xl p-lg flex flex-col md:flex-row items-center gap-lg hover:shadow-md transition-all group">
-            <div class="flex-shrink-0 w-16 h-16 bg-surface-container-high rounded-full flex items-center justify-center text-secondary">
-                <span class="material-symbols-outlined text-[32px]">dermatology</span>
-            </div>
-            <div class="flex-1 grid grid-cols-1 md:grid-cols-4 gap-md w-full">
-                <div>
-                    <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Fecha</p>
-                    <p class="font-body-md font-semibold">15 de Ago, 2023</p>
-                    <p class="text-[12px] text-on-surface-variant">04:45 PM</p>
-                </div>
-                <div>
-                    <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Médico</p>
-                    <p class="font-body-md font-semibold text-primary">Dr. Samuel Moreno</p>
-                    <p class="text-[12px] text-on-surface-variant">Dermatología</p>
-                </div>
-                <div class="md:col-span-2">
-                    <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Diagnóstico Principal</p>
-                    <p class="font-body-md line-clamp-2">Dermatitis atópica estacional. Se receta crema hidratante específica y antihistamínico.</p>
-                </div>
-            </div>
-            <div class="flex-shrink-0 w-full md:w-auto">
-                <button class="w-full px-lg py-2.5 bg-surface-container-high text-on-surface-variant rounded-full font-label-md hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2" onclick="openDetailModal()">
-                    Ver detalle
-                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-                </button>
-            </div>
-        </div>
-        <!-- Record Card 4 -->
-        <div class="bg-white border border-outline-variant rounded-xl p-lg flex flex-col md:flex-row items-center gap-lg hover:shadow-md transition-all group">
-            <div class="flex-shrink-0 w-16 h-16 bg-surface-container-high rounded-full flex items-center justify-center text-error">
-                <span class="material-symbols-outlined text-[32px]">emergency</span>
-            </div>
-            <div class="flex-1 grid grid-cols-1 md:grid-cols-4 gap-md w-full">
-                <div>
-                    <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Fecha</p>
-                    <p class="font-body-md font-semibold">02 de Jul, 2023</p>
-                    <p class="text-[12px] text-on-surface-variant">11:20 PM</p>
-                </div>
-                <div>
-                    <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Médico</p>
-                    <p class="font-body-md font-semibold text-primary">Guardia Médica</p>
-                    <p class="text-[12px] text-on-surface-variant">Emergencias</p>
-                </div>
-                <div class="md:col-span-2">
-                    <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Diagnóstico Principal</p>
-                    <p class="font-body-md line-clamp-2">Traumatismo leve en tobillo derecho por caída. Radiografía negativa para fractura. Reposo 48hs.</p>
-                </div>
-            </div>
-            <div class="flex-shrink-0 w-full md:w-auto">
-                <button class="w-full px-lg py-2.5 bg-surface-container-high text-on-surface-variant rounded-full font-label-md hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2" onclick="openDetailModal()">
-                    Ver detalle
-                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-                </button>
-            </div>
-        </div>
+        </ui:repeat>
+        <ui:fragment rendered="#{empty pacienteBean.pacienteActual.citas}">
+            <p class="text-center text-on-surface-variant py-xl">No hay citas registradas todavía.</p>
+        </ui:fragment>
     </div>
-    <!-- Paging Footer -->
-    <footer class="mt-xl py-lg flex flex-col md:flex-row items-center justify-between gap-md border-t border-outline-variant animate-fade-in" style="animation-delay: 0.3s;">
-        <p class="font-body-sm text-on-surface-variant">Mostrando 4 de 24 registros encontrados</p>
-        <div class="flex items-center gap-sm">
-            <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-low transition-colors">
-                <span class="material-symbols-outlined">chevron_left</span>
-            </button>
-            <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-white font-label-md">1</button>
-            <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-low transition-colors">2</button>
-            <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-low transition-colors">3</button>
-            <span class="px-2">...</span>
-            <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-low transition-colors">6</button>
-            <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container-low transition-colors">
-                <span class="material-symbols-outlined">chevron_right</span>
-            </button>
-        </div>
-    </footer>
 </main>
-<!-- Detailed View Modal -->
-<div class="fixed inset-0 z-[100] flex items-center justify-center p-md opacity-0 pointer-events-none transition-all duration-300" id="detailModal">
-    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeDetailModal()"></div>
-    <div class="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]">
-        <header class="bg-primary-container p-lg flex justify-between items-center text-on-primary-container">
-            <div class="flex items-center gap-md">
-                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                    <span class="material-symbols-outlined text-[32px]">medical_information</span>
-                </div>
-                <div>
-                    <h3 class="font-headline-sm text-headline-sm">Detalle de Consulta</h3>
-                    <p class="text-sm opacity-80">Referencia: #MASS-2023-10-12</p>
-                </div>
-            </div>
-            <button class="p-2 hover:bg-white/10 rounded-full transition-colors" onclick="closeDetailModal()">
-                <span class="material-symbols-outlined">close</span>
-            </button>
-        </header>
-        <div class="flex-1 overflow-y-auto p-lg custom-scrollbar">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-xl">
-                <!-- Column 1: Info & Doctor -->
-                <div class="space-y-lg">
-                    <section>
-                        <h4 class="font-label-md text-primary mb-md flex items-center gap-2">
-                            <span class="material-symbols-outlined text-[18px]">person</span>
-                            Profesional
-                        </h4>
-                        <div class="bg-surface-container p-md rounded-xl">
-                            <p class="font-bold text-lg">Dr. Julian Casablancas</p>
-                            <p class="text-on-surface-variant">Cardiólogo (MN 123456)</p>
-                            <p class="text-sm mt-2 text-primary cursor-pointer hover:underline">Ver perfil del médico</p>
-                        </div>
-                    </section>
-                    <section>
-                        <h4 class="font-label-md text-primary mb-md flex items-center gap-2">
-                            <span class="material-symbols-outlined text-[18px]">event</span>
-                            Datos de Consulta
-                        </h4>
-                        <div class="space-y-sm">
-                            <div class="flex justify-between border-b border-outline-variant py-1">
-                                <span class="text-on-surface-variant text-sm">Fecha</span>
-                                <span class="font-semibold text-sm">12/10/2023</span>
-                            </div>
-                            <div class="flex justify-between border-b border-outline-variant py-1">
-                                <span class="text-on-surface-variant text-sm">Hora</span>
-                                <span class="font-semibold text-sm">10:30 AM</span>
-                            </div>
-                            <div class="flex justify-between border-b border-outline-variant py-1">
-                                <span class="text-on-surface-variant text-sm">Lugar</span>
-                                <span class="font-semibold text-sm">Sede Central - Consultorio 4</span>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-                <!-- Column 2 & 3: Clinical Content -->
-                <div class="md:col-span-2 space-y-lg">
-                    <section>
-                        <h4 class="font-label-md text-primary mb-md flex items-center gap-2">
-                            <span class="material-symbols-outlined text-[18px]">description</span>
-                            Evolución y Diagnóstico
-                        </h4>
-                        <div class="bg-surface-container-low p-lg rounded-xl border-l-4 border-primary">
-                            <p class="font-body-md text-on-surface leading-relaxed">
-                                Paciente acude a control de rutina para seguimiento de hipertensión. Refiere buena adherencia al tratamiento indicado anteriormente (Enalapril 10mg). No reporta síntomas de cefalea ni mareos.
-                                <br/><br/>
-                                <strong>Exploración física:</strong> TA 130/85 mmHg. Ritmo cardíaco regular. R1 y R2 normofonéticos. No se observan edemas en miembros inferiores.
-                                <br/><br/>
-                                <strong>Diagnóstico:</strong> Hipertensión esencial (primaria) - Compensada.
-                            </p>
-                        </div>
-                    </section>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
-                        <section>
-                            <h4 class="font-label-md text-primary mb-md flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[18px]">medication</span>
-                                Tratamiento / Receta
-                            </h4>
-                            <div class="p-md rounded-xl border border-outline-variant bg-white">
-                                <ul class="space-y-3">
-                                    <li class="flex items-start gap-3">
-                                        <span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
-                                        <div>
-                                            <p class="font-semibold text-sm">Enalapril 10mg</p>
-                                            <p class="text-[12px] text-on-surface-variant">1 comprimido cada 12 horas.</p>
-                                        </div>
-                                    </li>
-                                    <li class="flex items-start gap-3">
-                                        <span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
-                                        <div>
-                                            <p class="font-semibold text-sm">Nebivolol 5mg</p>
-                                            <p class="text-[12px] text-on-surface-variant">1 comprimido en el desayuno.</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </section>
-                        <section>
-                            <h4 class="font-label-md text-primary mb-md flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[18px]">attachment</span>
-                                Estudios Adjuntos
-                            </h4>
-                            <div class="space-y-2">
-                                <div class="flex items-center justify-between p-2 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors cursor-pointer group">
-                                    <div class="flex items-center gap-2">
-                                        <span class="material-symbols-outlined text-error">picture_as_pdf</span>
-                                        <span class="text-sm font-medium">Electrocardiograma.pdf</span>
-                                    </div>
-                                    <span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary">download</span>
-                                </div>
-                                <div class="flex items-center justify-between p-2 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors cursor-pointer group">
-                                    <div class="flex items-center gap-2">
-                                        <span class="material-symbols-outlined text-error">picture_as_pdf</span>
-                                        <span class="text-sm font-medium">Laboratorio_Oct23.pdf</span>
-                                    </div>
-                                    <span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary">download</span>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer class="p-lg bg-surface-container-low border-t border-outline-variant flex justify-end gap-md">
-            <button class="px-lg py-2 text-on-surface-variant font-label-md hover:bg-surface-container transition-colors rounded-lg" onclick="closeDetailModal()">Cerrar</button>
-            <button class="px-lg py-2 bg-primary text-white font-label-md rounded-lg flex items-center gap-2 shadow-md hover:brightness-110 active:scale-95 transition-all">
-                <span class="material-symbols-outlined text-[20px]">print</span>
-                Imprimir Informe
-            </button>
-        </footer>
-    </div>
-</div>
 <!-- Mobile Bottom Navigation -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-outline-variant z-50 flex items-center justify-around h-16 px-4">
     <a class="flex flex-col items-center text-on-surface-variant gap-1" href="#">
@@ -536,22 +311,6 @@
         sidebar.classList.toggle('hidden');
         sidebar.classList.toggle('flex');
         sidebar.classList.toggle('-translate-x-full');
-    }
-
-    function openDetailModal() {
-        const modal = document.getElementById('detailModal');
-        modal.classList.remove('opacity-0', 'pointer-events-none');
-        modal.querySelector('.transform').classList.remove('scale-95');
-        modal.querySelector('.transform').classList.add('scale-100');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeDetailModal() {
-        const modal = document.getElementById('detailModal');
-        modal.classList.add('opacity-0', 'pointer-events-none');
-        modal.querySelector('.transform').classList.remove('scale-100');
-        modal.querySelector('.transform').classList.add('scale-95');
-        document.body.style.overflow = 'auto';
     }
 
     // Add some interaction effects to record cards

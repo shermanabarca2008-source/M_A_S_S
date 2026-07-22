@@ -255,8 +255,8 @@
                 </div>
             </article>
 
-            <h:commandLink
-                    action="#{pacienteBean.agendarCita}"
+            <h:link
+                    outcome="aggCitas"
                     styleClass="bento-card p-lg rounded-xl flex flex-col items-center justify-center text-center gap-md hover:bg-primary/5">
 
                 <div class="w-12 h-12 bg-primary-fixed-dim rounded-full flex items-center justify-center text-primary">
@@ -270,9 +270,9 @@
                     </p>
                 </div>
 
-            </h:commandLink>
-            <h:commandLink
-                    action="#{pacienteBean.verHistorial}"
+            </h:link>
+            <h:link
+                    outcome="historialMedico"
                     styleClass="bento-card p-lg rounded-xl flex flex-col items-center justify-center text-center gap-md hover:bg-primary/5">
 
                 <div class="w-12 h-12 bg-surface-container-highest rounded-full flex items-center justify-center text-on-surface">
@@ -286,9 +286,9 @@
                     </p>
                 </div>
 
-            </h:commandLink>
-            <h:commandLink
-                    action="#{pacienteBean.cancelarCita()}"
+            </h:link>
+            <h:link
+                    outcome="historialMedico"
                     styleClass="bento-card p-lg rounded-xl flex flex-col items-center justify-center text-center gap-md hover:bg-primary/5">
 
                 <div class="w-12 h-12 bg-tertiary-container text-on-tertiary rounded-full flex items-center justify-center">
@@ -302,7 +302,7 @@
                     </p>
                 </div>
 
-            </h:commandLink>
+            </h:link>
             <!-- "Últimas Órdenes" List -->
             <section>
                 <div class="flex items-center justify-between mb-md">

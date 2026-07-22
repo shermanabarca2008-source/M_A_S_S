@@ -161,16 +161,10 @@
                 </div>
                 <div class="flex flex-col text-center md:text-left gap-xs">
                     <span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Médico Especialista</span>
-                    <h2 class="font-headline-md text-headline-md text-on-background">Dra. Elena Rodríguez</h2>
+                    <h2 class="font-headline-md text-headline-md text-on-background">#{pacienteBean.medicoSeleccionado}</h2>
                     <div class="flex items-center justify-center md:justify-start gap-sm">
                         <span class="material-symbols-outlined text-primary text-[20px]">medical_services</span>
-                        <span class="font-body-md text-body-md text-on-surface-variant">Cardiología Clínica</span>
-                    </div>
-                </div>
-                <div class="md:ml-auto flex flex-col items-center md:items-end">
-                    <div class="bg-tertiary-fixed text-on-tertiary-fixed px-md py-xs rounded-full flex items-center gap-xs">
-                        <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
-                        <span class="font-label-md text-label-md">Médico Verificado</span>
+                        <span class="font-body-md text-body-md text-on-surface-variant">#{pacienteBean.especialidadSeleccionada}</span>
                     </div>
                 </div>
             </div>
@@ -183,37 +177,17 @@
                     </div>
                     <div class="flex flex-col">
                         <span class="font-label-sm text-label-sm text-on-surface-variant">Fecha y Hora</span>
-                        <span class="font-body-md text-body-md font-bold">Lunes, 24 Octubre • 10:30 AM</span>
+                        <span class="font-body-md text-body-md font-bold">#{pacienteBean.horarioSeleccionado}</span>
                     </div>
                 </div>
-                <!-- Location -->
-                <div class="bg-surface-container-low p-md rounded-lg flex gap-md items-center border border-outline-variant">
-                    <div class="bg-primary-container text-on-primary-container p-sm rounded-lg flex items-center justify-center">
-                        <span class="material-symbols-outlined">location_on</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="font-label-sm text-label-sm text-on-surface-variant">Consultorio</span>
-                        <span class="font-body-md text-body-md font-bold">Piso 4, Ala Sur • Cons. 402</span>
-                    </div>
-                </div>
-                <!-- Duration -->
-                <div class="bg-surface-container-low p-md rounded-lg flex gap-md items-center border border-outline-variant">
-                    <div class="bg-primary-container text-on-primary-container p-sm rounded-lg flex items-center justify-center">
-                        <span class="material-symbols-outlined">schedule</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="font-label-sm text-label-sm text-on-surface-variant">Duración Estimada</span>
-                        <span class="font-body-md text-body-md font-bold">45 Minutos</span>
-                    </div>
-                </div>
-                <!-- Modality -->
+                <!-- Paciente -->
                 <div class="bg-surface-container-low p-md rounded-lg flex gap-md items-center border border-outline-variant">
                     <div class="bg-primary-container text-on-primary-container p-sm rounded-lg flex items-center justify-center">
                         <span class="material-symbols-outlined">person</span>
                     </div>
                     <div class="flex flex-col">
-                        <span class="font-label-sm text-label-sm text-on-surface-variant">Tipo de Cita</span>
-                        <span class="font-body-md text-body-md font-bold">Consulta Presencial</span>
+                        <span class="font-label-sm text-label-sm text-on-surface-variant">Paciente</span>
+                        <span class="font-body-md text-body-md font-bold">#{pacienteBean.pacienteActual.nombreCompleto}</span>
                     </div>
                 </div>
             </div>
@@ -224,17 +198,15 @@
                     Por favor, llegue 15 minutos antes de su cita para completar el registro en recepción. No olvide traer sus estudios previos si los tiene.
                 </p>
             </div>
+            <h:outputText value="#{pacienteBean.mensaje}" styleClass="text-error font-label-md"
+                          rendered="#{not empty pacienteBean.mensaje and pacienteBean.error}"/>
             <!-- Actions -->
-            <div class="flex flex-col md:flex-row gap-md mt-sm">
-                <button class="flex-1 bg-primary text-on-primary py-md px-xl rounded-lg font-label-md text-label-md hover:brightness-110 active:opacity-90 transition-all duration-200 flex items-center justify-center gap-md shadow-sm">
-                    Confirmar Cita
-                    <span class="material-symbols-outlined">check_circle</span>
-                </button>
-                <button class="flex-none md:w-48 bg-transparent border border-primary text-primary py-md px-xl rounded-lg font-label-md text-label-md hover:bg-primary/5 active:opacity-80 transition-all duration-200 flex items-center justify-center gap-md">
-                    <span class="material-symbols-outlined">arrow_back</span>
-                    Volver
-                </button>
-            </div>
+            <h:form styleClass="flex flex-col md:flex-row gap-md mt-sm">
+                <h:commandButton value="Confirmar Cita" action="#{pacienteBean.agendarCita}"
+                                 styleClass="flex-1 bg-primary text-on-primary py-md px-xl rounded-lg font-label-md text-label-md hover:brightness-110 active:opacity-90 transition-all duration-200 flex items-center justify-center gap-md shadow-sm"/>
+                <h:link outcome="horario" value="Volver"
+                        styleClass="flex-none md:w-48 bg-transparent border border-primary text-primary py-md px-xl rounded-lg font-label-md text-label-md hover:bg-primary/5 active:opacity-80 transition-all duration-200 flex items-center justify-center gap-md"/>
+            </h:form>
         </div>
         <!-- Footer Help Text -->
         <div class="flex justify-center items-center gap-sm text-on-secondary-container">

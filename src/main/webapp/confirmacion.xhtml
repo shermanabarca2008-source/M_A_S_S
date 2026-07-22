@@ -159,49 +159,35 @@
             </div>
             <div class="space-y-md relative z-10">
                 <div>
-                    <p class="text-label-sm uppercase tracking-wider text-on-surface-variant mb-xs">Código de Cita</p>
-                    <p class="font-headline-sm text-headline-sm text-primary flex items-center gap-sm">
-                        #MS-8829-XP
-                        <button class="hover:text-primary-container transition-colors cursor-pointer active:opacity-80">
-                            <span class="material-symbols-outlined text-body-md">content_copy</span>
-                        </button>
-                    </p>
+                    <p class="text-label-sm uppercase tracking-wider text-on-surface-variant mb-xs">Paciente</p>
+                    <p class="font-label-md text-label-md text-on-background">#{pacienteBean.ultimaCitaAgendada.paciente.nombreCompleto}</p>
                 </div>
                 <div>
-                    <p class="text-label-sm uppercase tracking-wider text-on-surface-variant mb-xs">Paciente</p>
-                    <p class="font-label-md text-label-md text-on-background">Alejandro Rodrigo Valdivia</p>
+                    <p class="text-label-sm uppercase tracking-wider text-on-surface-variant mb-xs">Médico</p>
+                    <p class="font-label-md text-label-md text-on-background">#{pacienteBean.ultimaCitaAgendada.medico.nombreCompleto}</p>
                 </div>
             </div>
             <div class="space-y-md relative z-10">
                 <div>
                     <p class="text-label-sm uppercase tracking-wider text-on-surface-variant mb-xs">Fecha y Hora</p>
-                    <p class="font-label-md text-label-md text-on-background">14 de Octubre, 2023 — 10:30 AM</p>
+                    <p class="font-label-md text-label-md text-on-background">
+                        <h:outputText value="#{pacienteBean.ultimaCitaAgendada.fecha}"><f:convertDateTime pattern="dd 'de' MMMM, yyyy" /></h:outputText>
+                        —
+                        <h:outputText value="#{pacienteBean.ultimaCitaAgendada.hora}"><f:convertDateTime pattern="HH:mm" /></h:outputText>
+                    </p>
                 </div>
                 <div>
                     <p class="text-label-sm uppercase tracking-wider text-on-surface-variant mb-xs">Especialidad</p>
-                    <p class="font-label-md text-label-md text-on-background">Cardiología Clínica</p>
-                </div>
-            </div>
-            <div class="md:col-span-2 pt-md border-t border-outline-variant flex items-start gap-md">
-                <div class="bg-primary-fixed-dim p-sm rounded-lg">
-                    <span class="material-symbols-outlined text-primary">location_on</span>
-                </div>
-                <div>
-                    <p class="text-label-sm text-on-surface-variant">Ubicación</p>
-                    <p class="text-body-sm text-on-background">Centro Médico San Lucas, Torre B, Piso 4 - Consultorio 402</p>
+                    <p class="font-label-md text-label-md text-on-background">#{pacienteBean.ultimaCitaAgendada.medico.especialidad.nombre}</p>
                 </div>
             </div>
         </div>
         <!-- Action Buttons -->
         <div class="flex flex-col md:flex-row gap-md justify-center items-center pt-md">
-            <button class="w-full md:w-auto px-xl py-md bg-primary text-on-primary font-label-md rounded-lg shadow-md hover:bg-primary-container transition-all duration-200 flex items-center justify-center gap-sm active:opacity-80">
-                <span class="material-symbols-outlined">download</span>
-                Descargar Comprobante
-            </button>
-            <button class="w-full md:w-auto px-xl py-md border border-primary text-primary font-label-md rounded-lg hover:bg-primary hover:text-on-primary transition-all duration-200 flex items-center justify-center gap-sm active:opacity-80">
+            <h:link outcome="paciente" styleClass="w-full md:w-auto px-xl py-md bg-primary text-on-primary font-label-md rounded-lg shadow-md hover:bg-primary-container transition-all duration-200 flex items-center justify-center gap-sm active:opacity-80">
                 <span class="material-symbols-outlined">home</span>
                 Volver al Inicio
-            </button>
+            </h:link>
         </div>
         <!-- Footer Note -->
         <p class="text-body-sm text-on-surface-variant italic">

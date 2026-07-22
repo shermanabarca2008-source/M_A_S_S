@@ -156,6 +156,12 @@
             <span class="font-body-md text-body-md">Doctores</span>
 
         </h:link>
+        <h:link outcome="gestionHorarios"
+                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+            <span class="material-symbols-outlined">event_available</span>
+            <span class="font-body-md text-body-md">Horarios</span>
+
+        </h:link>
         <h:link outcome="gestionEspecialidades"
                 styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
             <span class="material-symbols-outlined">category</span>
@@ -169,7 +175,7 @@
             <span class="font-body-md text-body-md">Reportes</span>
 
         </h:link>
-        <h:link outcome="configuracion"
+        <h:link outcome="configuracionSistema"
                 styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
 
             <span class="material-symbols-outlined">settings</span>
@@ -223,10 +229,9 @@
         </div>
     </div>
 
-    <h:form>
+    <h:form id="formEspecialidad">
 
         <h:commandButton value="Nueva Especialidad"
-
         styleClass="bg-primary text-white px-6 py-3 rounded-lg font-label-md flex items-center gap-2 shadow-sm hover:bg-primary-container transition-all active:scale-95">
             <f:ajax listener="#{administradorBean.mostrarFormulario}"
                     render="panelFormulario"/>
@@ -234,23 +239,32 @@
 
         <h:panelGroup id="panelFormulario">
 
-            <h:panelGrid columns="2" rendered="#{administradorBean.agregarEspecialidad()}">
+            <h:panelGrid columns="2" styleClass="mt-4 gap-3" rendered="#{administradorBean.formularioVisible}">
 
                 <h:outputText value="Nombre de especialidad"/>
-                <h:inputText value="#{administradorBean.agregarEspecialidad()}"/>
-            
-            <div class="flex flex-col md:flex-row items-center gap-md w-full md:w-auto">
-                <h:commandButton
-                        value="Registrarme"
-                        action="#{pacienteBean.registrarPaciente}"
-                        styleClass="w-full md:w-64 py-4 px-xl bg-primary text-white font-headline-sm rounded-xl shadow-lg"/>
+                <h:inputText value="#{administradorBean.nombreEspecialidad}"
+                             styleClass="border border-outline-variant rounded-lg px-3 py-2"/>
 
-                <h:link
-                        value="Cancelar"
-                        outcome="/gestionEspecialidades"/>
-            </div>
+                <h:outputText value="Descripción"/>
+                <h:inputText value="#{administradorBean.descripcionEspecialidad}"
+                             styleClass="border border-outline-variant rounded-lg px-3 py-2"/>
+
+                <h:outputText value=""/>
+                <div class="flex items-center gap-md">
+                    <h:commandButton value="Guardar" styleClass="px-lg py-2 bg-primary text-white rounded-lg font-label-md">
+                        <f:ajax execute="@form" listener="#{administradorBean.agregarEspecialidad}" render="@form panelFormulario"/>
+                    </h:commandButton>
+                    <h:commandButton value="Cancelar" styleClass="px-lg py-2 border border-primary text-primary rounded-lg font-label-md">
+                        <f:ajax execute="@none" listener="#{administradorBean.ocultarFormulario}" render="panelFormulario"/>
+                    </h:commandButton>
+                </div>
 
             </h:panelGrid>
+
+            <h:outputText value="#{administradorBean.mensajeAdmin}" styleClass="text-error font-label-md block mt-2"
+                          rendered="#{not empty administradorBean.mensajeAdmin and administradorBean.errorAdmin}"/>
+            <h:outputText value="#{administradorBean.mensajeAdmin}" styleClass="text-tertiary font-label-md block mt-2"
+                          rendered="#{not empty administradorBean.mensajeAdmin and not administradorBean.errorAdmin}"/>
 
         </h:panelGroup>
 
@@ -265,7 +279,7 @@
             </div>
             <div class="mt-4">
                 <p class="text-on-surface-variant text-label-md uppercase tracking-wider">Total Especialidades</p>
-                <p class="text-headline-md font-bold text-on-surface">24</p>
+                <p class="text-headline-md font-bold text-on-surface">#{administradorBean.especialidades.size()}</p>
             </div>
         </div>
 
@@ -276,6 +290,7 @@
 
     <!-- Data Table -->
     <div class="card-elevation rounded-xl overflow-hidden mb-lg" style="transform: translateY(0px); transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);">
+        <h:form id="formTablaEspecialidades">
         <table class="w-full text-left border-collapse">
             <thead class="bg-surface-container-low border-b border-outline-variant">
             <tr>
@@ -287,122 +302,39 @@
             </tr>
             </thead>
             <tbody class="divide-y divide-outline-variant">
+            <ui:repeat value="#{administradorBean.especialidades}" var="esp">
             <tr class="hover:bg-surface-container-low transition-colors group">
                 <td class="px-lg py-4">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded bg-primary/5 flex items-center justify-center">
                             <span class="material-symbols-outlined text-primary" data-icon="monitor_heart">monitor_heart</span>
                         </div>
-                        <span class="font-body-md font-semibold text-on-surface">Cardiología</span>
+                        <span class="font-body-md font-semibold text-on-surface">#{esp.nombre}</span>
                     </div>
                 </td>
 
                 <td class="px-lg py-4 text-center">
-                    <span class="font-body-md">15</span>
+                    <span class="font-body-md">#{esp.medicos.size()}</span>
                 </td>
 
                 <td class="px-lg py-4 text-right">
                     <div class="flex justify-end gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
-                        <button class="p-1 hover:text-primary" title="Editar"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
-                        <button class="p-1 hover:text-primary" title="Ver Sub-especialidades"><span class="material-symbols-outlined" data-icon="visibility">visibility</span></button>
-                        <button class="p-1 hover:text-error" title="Eliminar"><span class="material-symbols-outlined" data-icon="delete">delete</span></button>
+                        <h:commandLink styleClass="p-1 hover:text-error" title="Eliminar"
+                                       action="#{administradorBean.eliminarEspecialidad(esp)}">
+                            <span class="material-symbols-outlined" data-icon="delete">delete</span>
+                            <f:ajax execute="@form" render="@form"/>
+                        </h:commandLink>
                     </div>
                 </td>
             </tr>
-            <tr class="hover:bg-surface-container-low transition-colors group">
-                <td class="px-lg py-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded bg-primary/5 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-primary" data-icon="child_care">child_care</span>
-                        </div>
-                        <span class="font-body-md font-semibold text-on-surface">Pediatría</span>
-                    </div>
-                </td>
-
-                <td class="px-lg py-4 text-center">
-                    <span class="font-body-md">22</span>
-                </td>
-
-                <td class="px-lg py-4 text-right">
-                    <div class="flex justify-end gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
-                        <button class="p-1 hover:text-primary" title="Editar"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
-                        <button class="p-1 hover:text-primary" title="Ver Sub-especialidades"><span class="material-symbols-outlined" data-icon="visibility">visibility</span></button>
-                        <button class="p-1 hover:text-error" title="Eliminar"><span class="material-symbols-outlined" data-icon="delete">delete</span></button>
-                    </div>
-                </td>
-            </tr>
-            <tr class="hover:bg-surface-container-low transition-colors group">
-                <td class="px-lg py-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded bg-primary/5 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-primary" data-icon="vaccines">vaccines</span>
-                        </div>
-                        <span class="font-body-md font-semibold text-on-surface">Dermatología</span>
-                    </div>
-                </td>
-
-                <td class="px-lg py-4 text-center">
-                    <span class="font-body-md">8</span>
-                </td>
-
-                <td class="px-lg py-4 text-right">
-                    <div class="flex justify-end gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
-                        <button class="p-1 hover:text-primary" title="Editar"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
-                        <button class="p-1 hover:text-primary" title="Ver Sub-especialidades"><span class="material-symbols-outlined" data-icon="visibility">visibility</span></button>
-                        <button class="p-1 hover:text-error" title="Eliminar"><span class="material-symbols-outlined" data-icon="delete">delete</span></button>
-                    </div>
-                </td>
-            </tr>
-            <tr class="hover:bg-surface-container-low transition-colors group">
-                <td class="px-lg py-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded bg-primary/5 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-primary" data-icon="psychiatry">psychiatry</span>
-                        </div>
-                        <span class="font-body-md font-semibold text-on-surface">Neurología</span>
-                    </div>
-                </td>
-
-                <td class="px-lg py-4 text-center">
-                    <span class="font-body-md">12</span>
-                </td>
-
-                <td class="px-lg py-4 text-right">
-                    <div class="flex justify-end gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
-                        <button class="p-1 hover:text-primary" title="Editar"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
-                        <button class="p-1 hover:text-primary" title="Ver Sub-especialidades"><span class="material-symbols-outlined" data-icon="visibility">visibility</span></button>
-                        <button class="p-1 hover:text-error" title="Eliminar"><span class="material-symbols-outlined" data-icon="delete">delete</span></button>
-                    </div>
-                </td>
-            </tr>
-            <tr class="hover:bg-surface-container-low transition-colors group border-none">
-                <td class="px-lg py-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded bg-primary/5 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-primary" data-icon="female">female</span>
-                        </div>
-                        <span class="font-body-md font-semibold text-on-surface">Ginecología</span>
-                    </div>
-                </td>
-
-                <td class="px-lg py-4 text-center">
-                    <span class="font-body-md">18</span>
-                </td>
-
-                <td class="px-lg py-4 text-right">
-                    <div class="flex justify-end gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
-                        <button class="p-1 hover:text-primary" title="Editar"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
-                        <button class="p-1 hover:text-primary" title="Ver Sub-especialidades"><span class="material-symbols-outlined" data-icon="visibility">visibility</span></button>
-                        <button class="p-1 hover:text-error" title="Eliminar"><span class="material-symbols-outlined" data-icon="delete">delete</span></button>
-                    </div>
-                </td>
-            </tr>
+            </ui:repeat>
             </tbody>
         </table>
+        </h:form>
     </div>
     <!-- Pagination -->
     <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pb-xl">
-        <p class="text-body-sm text-on-surface-variant">Mostrando 1 a 5 de 24 especialidades</p>
+        <p class="text-body-sm text-on-surface-variant">Mostrando #{administradorBean.especialidades.size()} especialidades</p>
 
     </div>
 </main>

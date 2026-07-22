@@ -1,0 +1,337 @@
+<!DOCTYPE html><html lang="es"
+                     xmlns="http://www.w3.org/1999/xhtml"
+                     xmlns:h="http://xmlns.jcp.org/jsf/html"
+                     xmlns:f="http://xmlns.jcp.org/jsf/core"
+                     xmlns:ui="jakarta.faces.facelets"><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>M.A.S.S. - Gestión de Horarios</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#424752",
+                        "on-error-container": "#93000a",
+                        "on-secondary-container": "#616363",
+                        "surface-dim": "#cfdce4",
+                        "primary-container": "#1565c0",
+                        "on-surface": "#111d23",
+                        "on-tertiary-fixed-variant": "#005313",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#dae5ff",
+                        "tertiary-container": "#0f7623",
+                        "tertiary": "#005b15",
+                        "outline-variant": "#c2c6d4",
+                        "tertiary-fixed": "#98f994",
+                        "secondary": "#5d5f5f",
+                        "on-tertiary-container": "#9afa95",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "on-primary-fixed-variant": "#00468c",
+                        "surface-variant": "#d7e4ec",
+                        "surface-bright": "#f4faff",
+                        "secondary-container": "#dfe0e0",
+                        "background": "#f4faff",
+                        "primary-fixed": "#d6e3ff",
+                        "on-background": "#111d23",
+                        "inverse-on-surface": "#e6f3fb",
+                        "secondary-fixed": "#e2e2e2",
+                        "tertiary-fixed-dim": "#7ddc7a",
+                        "primary": "#004d99",
+                        "surface-container": "#e3f0f8",
+                        "surface-tint": "#005db7",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#263238",
+                        "surface-container-highest": "#d7e4ec",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "error-container": "#ffdad6",
+                        "surface": "#f4faff",
+                        "on-secondary-fixed-variant": "#454747",
+                        "on-primary-fixed": "#001b3d",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#002204",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "surface-container-high": "#ddeaf2",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#a9c7ff",
+                        "surface-container-low": "#e9f6fd",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#727783"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "max_container": "1440px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "sm": "8px",
+                        "sidebar_width": "280px",
+                        "md": "16px",
+                        "gutter": "24px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f4faff; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .clinical-shadow {
+            box-shadow: 0px 2px 4px rgba(38, 50, 56, 0.05);
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- Side Navigation Bar -->
+<aside class="fixed left-0 top-0 h-screen w-[280px] bg-surface-container border-r border-outline-variant flex flex-col py-lg z-50">
+    <div class="px-lg mb-xl flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white">
+            <span class="material-symbols-outlined text-2xl">medical_services</span>
+        </div>
+        <div>
+            <h1 class="font-headline-sm text-headline-sm font-bold text-primary">M.A.S.S.</h1>
+            <p class="text-[11px] uppercase tracking-wider text-on-surface-variant font-bold">Panel de Administración</p>
+        </div>
+    </div>
+    <nav class="flex-1 space-y-1 px-md">
+        <h:link outcome="gestionAdmin"
+                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="font-body-md text-body-md">Tablero</span>
+        </h:link>
+
+        <h:link outcome="gestionMedicos"
+                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+            <span class="material-symbols-outlined">medical_services</span>
+            <span class="font-body-md text-body-md">Doctores</span>
+        </h:link>
+
+        <h:link outcome="gestionHorarios"
+                styleClass="flex items-center gap-md px-lg py-md sidebar-active rounded-r-lg transition-all duration-200"
+                style="border-left: 4px solid #004d99; background-color: rgba(0, 77, 153, 0.1); color: #004d99; font-weight: 700;">
+            <span class="material-symbols-outlined">event_available</span>
+            <span class="font-body-md text-body-md">Horarios</span>
+        </h:link>
+
+        <h:link outcome="gestionEspecialidades"
+                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+            <span class="material-symbols-outlined">category</span>
+            <span class="font-body-md text-body-md">Especialidades</span>
+        </h:link>
+
+        <h:link outcome="reportes"
+                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+            <span class="material-symbols-outlined">assessment</span>
+            <span class="font-body-md text-body-md">Reportes</span>
+        </h:link>
+
+        <h:link outcome="configuracionSistema"
+                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+            <span class="material-symbols-outlined">settings</span>
+            <span class="font-body-md text-body-md">Configuración</span>
+        </h:link>
+    </nav>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="ml-[280px] min-h-screen flex flex-col">
+    <!-- Top Nav Bar -->
+    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-outline-variant h-16 flex items-center justify-between px-gutter clinical-shadow">
+        <div class="flex items-center gap-4 flex-1 max-w-xl">
+            <h2 class="font-headline-sm text-headline-sm text-on-surface">Gestión de Horarios</h2>
+        </div>
+    </header>
+    <!-- Content Canvas -->
+    <div class="p-gutter max-w-max_container mx-auto w-full flex-1">
+        <div class="mb-xl">
+            <h2 class="font-headline-lg text-headline-lg text-on-surface">Disponibilidad de Médicos</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">Selecciona un médico para registrar y administrar sus horarios de atención.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+            <!-- Doctor list -->
+            <div class="bg-white rounded-xl border border-outline-variant clinical-shadow overflow-hidden lg:col-span-1">
+                <h:form id="formSeleccionMedico">
+                    <div class="px-lg py-4 border-b border-outline-variant">
+                        <p class="font-label-md text-label-md text-on-surface">Médicos registrados</p>
+                    </div>
+                    <ul class="divide-y divide-outline-variant max-h-[560px] overflow-y-auto">
+                        <ui:repeat value="#{administradorBean.medicos}" var="medico">
+                            <li>
+                                <h:commandLink action="#{horarioMedicoBean.seleccionarMedico(medico)}"
+                                               styleClass="w-full flex items-center gap-3 px-lg py-3 text-left hover:bg-surface-container-low transition-colors #{horarioMedicoBean.medicoSeleccionado eq medico ? 'bg-surface-container-low' : ''}">
+                                    <div class="w-9 h-9 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+                                        <span class="material-symbols-outlined text-[18px]">person</span>
+                                    </div>
+                                    <span>
+                                        <p class="font-label-md text-label-md text-on-surface">#{medico.nombreCompleto}</p>
+                                        <p class="font-body-sm text-body-sm text-on-surface-variant">#{medico.especialidad.nombre}</p>
+                                    </span>
+                                    <f:ajax execute="@this" render="@form panelHorarios"/>
+                                </h:commandLink>
+                            </li>
+                        </ui:repeat>
+                        <ui:fragment rendered="#{empty administradorBean.medicos}">
+                        <li class="px-lg py-6 text-center">
+                            <p class="font-body-md text-body-md text-on-surface-variant">No hay médicos registrados todavía.</p>
+                        </li>
+                        </ui:fragment>
+                    </ul>
+                </h:form>
+            </div>
+
+            <!-- Horarios panel -->
+            <div class="lg:col-span-2 space-y-gutter">
+                <h:panelGroup id="panelHorarios" layout="block">
+                <ui:fragment rendered="#{horarioMedicoBean.medicoSeleccionado eq null}">
+                    <div class="bg-white rounded-xl border border-outline-variant clinical-shadow p-xl text-center">
+                        <span class="material-symbols-outlined text-outline text-[40px]">calendar_month</span>
+                        <p class="font-body-md text-body-md text-on-surface-variant mt-2">Selecciona un médico de la lista para ver y registrar sus horarios.</p>
+                    </div>
+                </ui:fragment>
+
+                <ui:fragment rendered="#{horarioMedicoBean.medicoSeleccionado ne null}">
+                    <!-- New horario form -->
+                    <div class="bg-white rounded-xl border border-outline-variant clinical-shadow p-lg">
+                        <p class="font-label-md text-label-md text-on-surface mb-md">
+                            Nuevo horario para <span class="text-primary">#{horarioMedicoBean.medicoSeleccionado.nombreCompleto}</span>
+                        </p>
+                        <h:form id="formHorario">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+                                <div class="space-y-xs">
+                                    <label class="font-label-md text-label-md text-on-surface">Fecha</label>
+                                    <h:inputText value="#{horarioMedicoBean.fechaDisponible}" type="date"
+                                                 styleClass="w-full px-md py-sm rounded-lg border border-outline-variant">
+                                        <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
+                                    </h:inputText>
+                                </div>
+                                <div class="space-y-xs">
+                                    <label class="font-label-md text-label-md text-on-surface">Hora inicio</label>
+                                    <h:inputText value="#{horarioMedicoBean.horaInicio}" type="time"
+                                                 styleClass="w-full px-md py-sm rounded-lg border border-outline-variant">
+                                        <f:convertDateTime type="localTime" pattern="HH:mm"/>
+                                    </h:inputText>
+                                </div>
+                                <div class="space-y-xs">
+                                    <label class="font-label-md text-label-md text-on-surface">Hora fin</label>
+                                    <h:inputText value="#{horarioMedicoBean.horaFin}" type="time"
+                                                 styleClass="w-full px-md py-sm rounded-lg border border-outline-variant">
+                                        <f:convertDateTime type="localTime" pattern="HH:mm"/>
+                                    </h:inputText>
+                                </div>
+                            </div>
+                            <h:outputText value="#{horarioMedicoBean.mensaje}" styleClass="text-error font-label-md block mt-3"
+                                          rendered="#{not empty horarioMedicoBean.mensaje and horarioMedicoBean.error}"/>
+                            <h:outputText value="#{horarioMedicoBean.mensaje}" styleClass="text-tertiary font-label-md block mt-3"
+                                          rendered="#{not empty horarioMedicoBean.mensaje and not horarioMedicoBean.error}"/>
+                            <div class="mt-md">
+                                <h:commandButton value="Registrar Horario" styleClass="bg-primary text-white font-label-md px-lg py-2 rounded-lg hover:bg-primary-container transition-all">
+                                    <f:ajax execute="@form" render="@form panelHorarios"/>
+                                </h:commandButton>
+                            </div>
+                        </h:form>
+                    </div>
+
+                    <!-- Existing horarios table -->
+                    <div class="bg-white rounded-xl border border-outline-variant clinical-shadow overflow-hidden">
+                        <h:form id="formListaHorarios">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-surface-container-low border-b border-outline-variant">
+                            <tr>
+                                <th class="px-lg py-3 font-label-md text-label-md text-on-surface">Fecha</th>
+                                <th class="px-lg py-3 font-label-md text-label-md text-on-surface">Hora</th>
+                                <th class="px-lg py-3 font-label-md text-label-md text-on-surface text-center">Estado</th>
+                                <th class="px-lg py-3 font-label-md text-label-md text-on-surface text-right">Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody class="divide-y divide-outline-variant">
+                            <ui:repeat value="#{horarioMedicoBean.horariosMedicoSeleccionado}" var="horario">
+                                <tr class="hover:bg-surface-container-lowest transition-colors">
+                                    <td class="px-lg py-3">
+                                        <h:outputText value="#{horario.fechaDisponible}">
+                                            <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </td>
+                                    <td class="px-lg py-3">
+                                        <h:outputText value="#{horario.horaInicio}"><f:convertDateTime type="localTime" pattern="HH:mm"/></h:outputText>
+                                        -
+                                        <h:outputText value="#{horario.horaFin}"><f:convertDateTime type="localTime" pattern="HH:mm"/></h:outputText>
+                                    </td>
+                                    <td class="px-lg py-3 text-center">
+                                        <span class="px-3 py-1 rounded-full text-label-sm text-label-sm font-bold #{horario.disponible ? 'bg-tertiary-container/20 text-tertiary' : 'bg-secondary-container text-secondary'}">
+                                            #{horario.disponible ? 'Disponible' : 'Reservado'}
+                                        </span>
+                                    </td>
+                                    <td class="px-lg py-3 text-right">
+                                        <div class="flex items-center justify-end gap-2">
+                                            <h:commandLink styleClass="p-2 text-primary hover:bg-primary-container/20 rounded-lg transition-all inline-block" title="Liberar"
+                                                           action="#{horarioMedicoBean.liberarHorario(horario)}" rendered="#{not horario.disponible}">
+                                                <span class="material-symbols-outlined">restart_alt</span>
+                                                <f:ajax execute="@none" render=":formListaHorarios"/>
+                                            </h:commandLink>
+                                            <h:commandLink styleClass="p-2 text-error hover:bg-error-container/30 rounded-lg transition-all inline-block" title="Eliminar"
+                                                           action="#{horarioMedicoBean.eliminarHorario(horario)}">
+                                                <span class="material-symbols-outlined">delete</span>
+                                                <f:ajax execute="@none" render=":formListaHorarios"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ui:repeat>
+                            <ui:fragment rendered="#{empty horarioMedicoBean.horariosMedicoSeleccionado}">
+                            <tr>
+                                <td class="px-lg py-6 text-center" colspan="4">
+                                    <p class="font-body-md text-body-md text-on-surface-variant">Este médico todavía no tiene horarios registrados.</p>
+                                </td>
+                            </tr>
+                            </ui:fragment>
+                            </tbody>
+                        </table>
+                        </h:form>
+                    </div>
+                </ui:fragment>
+                </h:panelGroup>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="mt-auto py-md px-gutter border-t border-outline-variant text-center">
+        <p class="font-label-sm text-label-sm text-on-surface-variant">© 2024 M.A.S.S. Medical Administration System Software. Todos los derechos reservados.</p>
+    </footer>
+</main>
+</body></html>
