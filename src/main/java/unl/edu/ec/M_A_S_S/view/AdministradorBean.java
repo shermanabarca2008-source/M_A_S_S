@@ -2,6 +2,7 @@ package unl.edu.ec.M_A_S_S.view;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import unl.edu.ec.M_A_S_S.domain.Administrador;
 import unl.edu.ec.M_A_S_S.domain.Especialidad;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 @Named
 @SessionScoped
+
 public class AdministradorBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,14 +32,27 @@ public class AdministradorBean implements Serializable {
     private String especialidadSeleccionadaEdicion;
     private boolean modoEdicion;
 
-    @PostConstruct
-    public void init() {
-        if (administrador == null) {
-            administrador = new Administrador(1, "admin123");
-            cargarDatosIniciales();
-        }
+    private boolean formularioVisible = false;
+
+    private Medico medico = new Medico();
+
+    public void mostrarFormulario() {
+        formularioVisible = true;
     }
 
+    public boolean isFormularioVisible() {
+        return formularioVisible;
+    }
+
+    public void setFormularioVisible(boolean formularioVisible) {
+        this.formularioVisible = formularioVisible;
+    }
+
+    public Medico getMedico() {
+        return medico;
+    }
+
+    @PostConstruct
     private void cargarDatosIniciales() {
         Especialidad medicinaGeneral = new Especialidad("Medicina General", "Atención primaria");
         Especialidad pediatria = new Especialidad("Pediatría", "Atención infantil");
@@ -85,35 +100,6 @@ public class AdministradorBean implements Serializable {
             mensajeAdmin = "Ingrese un nombre para el médico.";
             errorAdmin = true;
         }
-    }
-
-    public void prepararEdicion(Medico medico) {
-        if (medico != null) {
-            this.medicoSeleccionado = medico;
-            this.nombreMedicoEdicion = medico.getNombreCompleto();
-            this.especialidadSeleccionadaEdicion = medico.getEspecialidad() != null ? medico.getEspecialidad().getNombre() : "";
-            this.modoEdicion = true;
-            this.mensajeAdmin = "Editando médico: " + medico.getNombreCompleto();
-            this.errorAdmin = false;
-        }
-    }
-
-    public void guardarEdicion() {
-        if (medicoSeleccionado == null) {
-            mensajeAdmin = "No hay médico seleccionado para editar.";
-            errorAdmin = true;
-            return;
-        }
-
-        medicoSeleccionado.setNombreCompleto(nombreMedicoEdicion != null ? nombreMedicoEdicion.trim() : "");
-        Especialidad nuevaEspecialidad = encontrarEspecialidadPorNombre(especialidadSeleccionadaEdicion);
-        medicoSeleccionado.setEspecialidad(nuevaEspecialidad);
-        if (nuevaEspecialidad != null) {
-            nuevaEspecialidad.agregarMedico(medicoSeleccionado);
-        }
-        modoEdicion = false;
-        mensajeAdmin = "Médico actualizado correctamente.";
-        errorAdmin = false;
     }
 
     public void cancelarEdicion() {
@@ -249,4 +235,5 @@ public class AdministradorBean implements Serializable {
     public void setModoEdicion(boolean modoEdicion) {
         this.modoEdicion = modoEdicion;
     }
+
 }

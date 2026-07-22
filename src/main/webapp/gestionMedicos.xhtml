@@ -142,8 +142,7 @@
             <p class="text-[11px] uppercase tracking-wider text-on-surface-variant font-bold">Panel de Administración</p>
         </div>
     </div>
-    <nav class="flex-1 overflow-y-auto px-md space-y-1 custom-scrollbar">
-
+    <nav class="flex-1 space-y-1 px-md">
         <h:link outcome="gestionAdmin"
                 styleClass="flex items-center gap-md px-lg py-md sidebar-active rounded-r-lg transition-all duration-200">
 
@@ -183,8 +182,8 @@
             <span class="font-body-md text-body-md">Configuración</span>
 
         </h:link>
-
     </nav>
+
 </aside>
 <!-- Main Content Wrapper -->
 <main class="ml-[280px] min-h-screen flex flex-col">
@@ -228,84 +227,9 @@
             </button>
         </div>
         <!-- Stats Row -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-lg mb-xl">
-            <div class="bg-white p-lg rounded-xl border border-outline-variant clinical-shadow">
-                <div class="flex items-center justify-between mb-md">
-                    <div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
-                        <span class="material-symbols-outlined">group</span>
-                    </div>
-                    <span class="font-label-sm text-label-sm text-on-tertiary-fixed-variant bg-tertiary-fixed px-2 py-1 rounded-full">+4 este mes</span>
-                </div>
-                <p class="font-label-md text-label-md text-on-surface-variant">Total Médicos</p>
-                <p class="font-headline-md text-headline-md text-on-surface">248</p>
-            </div>
-            <div class="bg-white p-lg rounded-xl border border-outline-variant clinical-shadow">
-                <div class="flex items-center justify-between mb-md">
-                    <div class="w-12 h-12 rounded-full bg-tertiary-fixed/30 flex items-center justify-center text-tertiary">
-                        <span class="material-symbols-outlined">check_circle</span>
-                    </div>
-                </div>
-                <p class="font-label-md text-label-md text-on-surface-variant">Médicos Activos</p>
-                <p class="font-headline-md text-headline-md text-on-surface">212</p>
-            </div>
-            <div class="bg-white p-lg rounded-xl border border-outline-variant clinical-shadow">
-                <div class="flex items-center justify-between mb-md">
-                    <div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-secondary">
-                        <span class="material-symbols-outlined">stethoscope</span>
-                    </div>
-                </div>
-                <p class="font-label-md text-label-md text-on-surface-variant">En Consulta</p>
-                <p class="font-headline-md text-headline-md text-on-surface">34</p>
-            </div>
-            <div class="bg-white p-lg rounded-xl border border-outline-variant clinical-shadow">
-                <div class="flex items-center justify-between mb-md">
-                    <div class="w-12 h-12 rounded-full bg-error-container/40 flex items-center justify-center text-error">
-                        <span class="material-symbols-outlined">event_busy</span>
-                    </div>
-                </div>
-                <p class="font-label-md text-label-md text-on-surface-variant">Fuera de Servicio</p>
-                <p class="font-headline-md text-headline-md text-on-surface">2</p>
-            </div>
-        </div>
+
         <!-- Filters Section -->
-        <div class="bg-white p-md rounded-xl border border-outline-variant clinical-shadow mb-lg flex flex-wrap items-center gap-md">
-            <div class="flex items-center gap-2 min-w-[200px] flex-1">
-                <label class="font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">Especialidad:</label>
-                <select class="w-full bg-surface-container-low border-outline-variant rounded-lg font-body-sm text-body-sm focus:ring-primary focus:border-primary">
-                    <option>Todas las Especialidades</option>
-                    <option>Cardiología</option>
-                    <option>Pediatría</option>
-                    <option>Dermatología</option>
-                    <option>Neurología</option>
-                    <option>Traumatología</option>
-                </select>
-            </div>
-            <div class="flex items-center gap-2 min-w-[150px] flex-1">
-                <label class="font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">Estado:</label>
-                <select class="w-full bg-surface-container-low border-outline-variant rounded-lg font-body-sm text-body-sm focus:ring-primary focus:border-primary">
-                    <option>Todos los Estados</option>
-                    <option>Activo</option>
-                    <option>Inactivo</option>
-                    <option>Vacaciones</option>
-                </select>
-            </div>
-            <div class="flex items-center gap-2 min-w-[150px] flex-1">
-                <label class="font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">Sede:</label>
-                <select class="w-full bg-surface-container-low border-outline-variant rounded-lg font-body-sm text-body-sm focus:ring-primary focus:border-primary">
-                    <option>Todas las Sedes</option>
-                    <option>Central Norte</option>
-                    <option>Clínica Sur</option>
-                    <option>Módulo Este</option>
-                </select>
-            </div>
-            <button class="px-md py-2 border border-outline text-on-surface font-label-md text-label-md rounded-lg hover:bg-surface-container transition-all flex items-center gap-2">
-                <span class="material-symbols-outlined text-[20px]">filter_list</span>
-                Más Filtros
-            </button>
-            <button class="text-primary font-label-md text-label-md px-2 hover:underline">
-                Limpiar
-            </button>
-        </div>
+
         <!-- Table Section -->
         <div class="bg-white rounded-xl border border-outline-variant clinical-shadow overflow-hidden">
             <table class="w-full text-left border-collapse">
@@ -459,22 +383,7 @@
                 </tbody>
             </table>
             <!-- Pagination -->
-            <div class="px-lg py-4 flex items-center justify-between border-t border-outline-variant bg-surface-container-lowest">
-                <p class="font-body-sm text-body-sm text-on-surface-variant">Mostrando 1 a 10 de 248 médicos</p>
-                <div class="flex items-center gap-1">
-                    <button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg disabled:opacity-30" disabled="">
-                        <span class="material-symbols-outlined">chevron_left</span>
-                    </button>
-                    <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-white font-label-md text-label-md">1</button>
-                    <button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container-high text-on-surface font-label-md text-label-md">2</button>
-                    <button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container-high text-on-surface font-label-md text-label-md">3</button>
-                    <span class="px-2 text-on-surface-variant">...</span>
-                    <button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container-high text-on-surface font-label-md text-label-md">25</button>
-                    <button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg">
-                        <span class="material-symbols-outlined">chevron_right</span>
-                    </button>
-                </div>
-            </div>
+            <div class="px-lg py-4 flex items-center justify-between border-t border-outline-variant bg-surface-container-lowest"><p class="font-body-md text-body-md text-on-surface-variant w-full text-center">Total de médicos registrados: 248</p></div>
         </div>
     </div>
     <!-- Footer -->
@@ -505,6 +414,8 @@
         searchInput.parentElement.classList.remove('ring-2', 'ring-primary/20');
     });
 </script>
+
+
 
 
 </body></html>

@@ -1,0 +1,68 @@
+services:
+  # Base de datos PostgreSQL
+  mass-pg-db:
+    image: postgres:${POSTGRES_VERSION}
+    restart: unless-stopped
+    container_name: mass-pg-db-container
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - ${DB_PGSQL_PORT_PUBLIC}:5432
+    volumes:
+      - mass-pg-data:/var/lib/postgresql
+      #- jbrew-pg-data:/var/lib/postgresql/data para versiones 17 o anteriores
+      #- ./init_db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      mass-pg-network:
+        ipv4_address: 172.30.0.251
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5 # Número de intentos antes de marcar como no saludable
+      start_period: 30s #Espera inicial antes de comenzar a comprobar(Dar tiempo a PostgreSQL inicie)
+
+  mass-pg-adminer-db:
+    image: adminer
+    container_name: mass-pg-adminer-db-container
+    restart: unless-stopped
+    #    restart: always
+    ports:
+      - 8180:8080
+    depends_on:
+      - mass-pg-db
+    networks:
+      mass-pg-network:
+        ipv4_address: 172.30.0.252
+
+  mass-view-pgadmin4:
+    container_name: mass-pgadmin4-container
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "adminDB@postgres.org"
+      PGADMIN_DEFAULT_PASSWORD: "admin123"
+    ports:
+      - 81:80
+    depends_on:
+      - mass-pg-db
+    networks:
+      mass-pg-network:
+        ipv4_address: 172.30.0.253
+
+networks:
+  mass-pg-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+volumes:
+  mass-pg-data:
+    name: mass-pg-data-local
+    driver: local
+    driver_opts:
+      type: none
+      device: ${LOCAL_DATA_DIR_BD}
+      o: bind

@@ -208,7 +208,7 @@
                 <p class="text-[10px] text-on-surface-variant">Super Administrador</p>
             </div>
             <div class="w-10 h-10 rounded-full border border-primary overflow-hidden">
-                <img class="w-full h-full object-cover" data-alt="Professional studio portrait of a medical administrator wearing a crisp white lab coat, smiling confidently against a soft blue clinical background. High resolution, professional lighting, corporate medical photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBraimVnEqUwS2RVK3-FiMIAcuwtXHJUEcBrl5ZUcDkQnObMPqG8WxaoJATWsAtSXwfQLqc1mgfxz-3pObKE2U05uBqKQY0TLRJ1PPfYr_wwG-wJuS6kgLAqVCDukuT3vnAUEb9QYFiPbzgi3cHAty1Ac9gIvqrgTXjaqD7QbAuQb6tqfoahXuQur5KAYFGZfYRWeT4pMWOjCV2HfEFF6Q3AAlIwDCKRt7Je_JfIZ6IRPWTIohzPUBE7kjmoV6nodukHr4-8qH8G5Q">
+                <img class="w-full h-full object-cover" data-alt="Professional studio portrait of a medical administrator wearing a crisp white lab coat, smiling confidently against a soft blue clinical background. High resolution, professional lighting, corporate medical photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBraimVnEqUwS2RVK3-FiMIAcuwtXHJUEcBrl5ZUcDkQnObMPqG8WxaoJATWsAtSXwfQLqc1mgfxz-3pObKE2U05uBqKQY0TLRJ1PPfYr_wwG-wJuS6kgLAqVCDukuT3vnAUEb9QYFiPbzgi3cHAty1Ac9gIvqrgTXjaqD7QbAuQb6tqfoahXuQur5KAYFGZfYRWeT4pMWOjCV2HfEFF6Q3AAlIwDCKRt7Je_JfIZ6IRPWTIohzPUBE7kjmoV6nodukHr4-8qH8G5Q"/>
             </div>
         </div>
     </div>
@@ -221,11 +221,40 @@
             <h2 class="font-headline-lg text-headline-lg text-on-surface">Gestión de Especialidades</h2>
             <p class="font-body-md text-body-md text-on-surface-variant">Administra los departamentos médicos, especialidades y subespecialidades del sistema.</p>
         </div>
-        <button class="bg-primary text-white px-6 py-3 rounded-lg font-label-md flex items-center gap-2 shadow-sm hover:bg-primary-container transition-all active:scale-95">
-            <span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
-            Nueva Especialidad
-        </button>
     </div>
+
+    <h:form>
+
+        <h:commandButton value="Nueva Especialidad"
+
+        styleClass="bg-primary text-white px-6 py-3 rounded-lg font-label-md flex items-center gap-2 shadow-sm hover:bg-primary-container transition-all active:scale-95">
+            <f:ajax listener="#{administradorBean.mostrarFormulario}"
+                    render="panelFormulario"/>
+        </h:commandButton>
+
+        <h:panelGroup id="panelFormulario">
+
+            <h:panelGrid columns="2" rendered="#{administradorBean.agregarEspecialidad()}">
+
+                <h:outputText value="Nombre de especialidad"/>
+                <h:inputText value="#{administradorBean.agregarEspecialidad()}"/>
+            
+            <div class="flex flex-col md:flex-row items-center gap-md w-full md:w-auto">
+                <h:commandButton
+                        value="Registrarme"
+                        action="#{pacienteBean.registrarPaciente}"
+                        styleClass="w-full md:w-64 py-4 px-xl bg-primary text-white font-headline-sm rounded-xl shadow-lg"/>
+
+                <h:link
+                        value="Cancelar"
+                        outcome="/gestionEspecialidades"/>
+            </div>
+
+            </h:panelGrid>
+
+        </h:panelGroup>
+
+    </h:form>
     <!-- Summary Cards (Bento style) -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter mb-xl">
         <div class="card-elevation p-lg rounded-xl card-hover flex flex-col justify-between" style="transform: translateY(0px); transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);">
@@ -233,7 +262,6 @@
                 <div class="p-2 bg-primary/10 rounded-lg">
                     <span class="material-symbols-outlined text-primary" data-icon="category">category</span>
                 </div>
-                <span class="text-green-600 font-label-sm">+2 este mes</span>
             </div>
             <div class="mt-4">
                 <p class="text-on-surface-variant text-label-md uppercase tracking-wider">Total Especialidades</p>

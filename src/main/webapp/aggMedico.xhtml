@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="jakarta.faces.facelets"><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Añadir Nuevo Médico - M.A.S.S.</title>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#111d23",
+                        "surface-container": "#e3f0f8",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#005313",
+                        "on-primary-container": "#dae5ff",
+                        "background": "#f4faff",
+                        "tertiary-container": "#0f7623",
+                        "surface-bright": "#f4faff",
+                        "on-surface-variant": "#424752",
+                        "inverse-primary": "#a9c7ff",
+                        "secondary-fixed": "#e2e2e2",
+                        "surface-dim": "#cfdce4",
+                        "primary-container": "#1565c0",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#005b15",
+                        "secondary-container": "#dfe0e0",
+                        "surface-container-highest": "#d7e4ec",
+                        "on-primary-fixed-variant": "#00468c",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#005db7",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "primary": "#004d99",
+                        "on-primary-fixed": "#001b3d",
+                        "surface-container-high": "#ddeaf2",
+                        "on-tertiary-fixed": "#002204",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "surface-variant": "#d7e4ec",
+                        "on-surface": "#111d23",
+                        "on-error": "#ffffff",
+                        "outline-variant": "#c2c6d4",
+                        "primary-fixed": "#d6e3ff",
+                        "tertiary-fixed-dim": "#7ddc7a",
+                        "tertiary-fixed": "#98f994",
+                        "on-secondary-fixed-variant": "#454747",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#263238",
+                        "on-secondary-container": "#616363",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#9afa95",
+                        "surface-container-low": "#e9f6fd",
+                        "secondary": "#5d5f5f",
+                        "outline": "#727783",
+                        "error": "#ba1a1a",
+                        "surface": "#f4faff",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#e6f3fb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "max_container": "1440px",
+                        "sidebar_width": "280px",
+                        "lg": "24px",
+                        "base": "4px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .form-input-focus:focus {
+            border-width: 2px;
+            border-color: #1565c0;
+            box-shadow: 0 0 0 4px rgba(21, 101, 192, 0.1);
+            outline: none;
+        }
+        .clinical-card {
+            box-shadow: 0px 2px 4px rgba(38, 50, 56, 0.05);
+            border: 1px solid #E0E4E8;
+        }
+        .transition-standard {
+            transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md">
+<!-- Shared TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface border-b border-outline-variant shadow-sm">
+    <div class="flex items-center gap-md">
+        <span class="font-headline-sm text-headline-sm font-bold text-primary">M.A.S.S.</span>
+    </div>
+    <div class="flex-1 max-w-md mx-xl hidden md:block">
+        <div class="relative flex items-center">
+            <span class="material-symbols-outlined absolute left-3 text-outline">search</span>
+            <input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-body-sm focus:ring-2 focus:ring-primary/20" placeholder="Buscar..." type="text"/>
+        </div>
+    </div>
+    <div class="flex items-center gap-md">
+        <button class="material-symbols-outlined p-2 rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors">notifications</button>
+        <button class="material-symbols-outlined p-2 rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors">settings</button>
+        <div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-outline-variant">
+            <img class="w-full h-full object-cover" data-alt="A professional medical practitioner profile portrait in a bright, high-key clinic setting. The person is wearing a white clinical coat and a stethoscope, smiling warmly towards the camera. The background is a clean, minimalist medical office with soft blue and white tones, reflecting professional excellence and clinical precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZOtKYux3aJx7ObEKTFJPx1U9q0XuY7muWGV4zbMyVdnRQ84p_Q2t3pXpXGudKLKPx_r3aSRPxKdDg4qg1gJABays1B4VlxNVCYZ-FSQL77ZAojsjtNkSiFGSWJGESSlg9UVxal7yqxe33qhB9YUWIENELXkySbOrie2-LDkYG_3ivbk5bDT906NLbjXuqGXlpzEBFfkKWf70g6PXnDxj3JkoYWPrGTtT9ZSIVrL-dj85sCqNESxGO1qm-7l8af2E0Tggc9TAvCyE"/>
+        </div>
+    </div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 pt-24 pb-12 px-gutter flex justify-center items-start">
+    <div class="w-full max-w-[800px] animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <!-- Breadcrumb / Back Navigation -->
+        <div class="mb-lg flex items-center gap-xs text-on-surface-variant hover:text-primary transition-standard cursor-pointer" onclick="window.history.back()">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+            <span class="font-label-md text-label-md">Volver al Panel</span>
+        </div>
+        <!-- Central Form Card -->
+        <div class="bg-surface-container-lowest clinical-card rounded-xl overflow-hidden flex flex-col md:flex-row">
+            <!-- Form Area -->
+            <div class="flex-1 p-xl">
+                <div class="mb-xl">
+                    <h1 class="font-headline-md text-headline-md text-on-surface">Añadir Nuevo Médico</h1>
+                    <p class="font-body-md text-body-md text-on-surface-variant mt-1">Complete los detalles del profesional para registrarlo en el sistema.</p>
+                </div>
+                <form class="space-y-lg" onsubmit="event.preventDefault();">
+                    <!-- Full Name -->
+                    <div class="space-y-xs">
+                        <label class="font-label-md text-label-md text-on-surface" for="nombre">Nombre Completo</label>
+                        <input class="w-full px-md py-sm rounded-lg border border-outline-variant bg-surface-container-lowest text-body-md form-input-focus transition-standard" id="nombre" name="nombre" placeholder="ej. Dr. Juan Pérez" type="text"/>
+                    </div>
+                    <!-- Specialty -->
+                    <div class="space-y-xs">
+                        <label class="font-label-md text-label-md text-on-surface" for="especialidad">Seleccionar Especialidad</label>
+                        <div class="relative">
+                            <select class="w-full px-md py-sm rounded-lg border border-outline-variant bg-surface-container-lowest text-body-md form-input-focus appearance-none transition-standard" id="especialidad" name="especialidad">
+                                <option disabled="" selected="" value="">Seleccione una especialidad</option>
+                                <option value="cardiologia">Cardiología</option>
+                                <option value="pediatria">Pediatría</option>
+                                <option value="neurologia">Neurología</option>
+                                <option value="dermatologia">Dermatología</option>
+                                <option value="traumatologia">Traumatología</option>
+                                <option value="medicina_general">Medicina General</option>
+                            </select>
+                            <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
+                        </div>
+                    </div>
+                    <!-- License Number -->
+                    <div class="space-y-xs">
+                        <label class="font-label-md text-label-md text-on-surface" for="colegiado">Número de Cédula</label>
+                        <input class="w-full px-md py-sm rounded-lg border border-outline-variant bg-surface-container-lowest text-body-md form-input-focus transition-standard" id="colegiado" name="colegiado" placeholder="ej. 282812345" type="text"/>
+                    </div>
+                    <!-- Email -->
+                    <div class="space-y-xs">
+                        <label class="font-label-md text-label-md text-on-surface" for="email">Correo Electrónico</label>
+                        <input class="w-full px-md py-sm rounded-lg border border-outline-variant bg-surface-container-lowest text-body-md form-input-focus transition-standard" id="email" name="email" placeholder="doctor@ejemplo.com" type="email"/>
+                    </div>
+                    <!-- Actions -->
+                    <div class="pt-xl flex flex-col sm:flex-row gap-md">
+                        <button class="flex-1 bg-primary-container text-on-primary hover:bg-primary transition-standard px-lg py-md rounded-lg font-label-md text-label-md flex items-center justify-center gap-sm shadow-sm active:scale-95" type="submit">
+                            <span class="material-symbols-outlined text-[20px]">save</span>
+                            Guardar Médico
+                        </button>
+                        <button class="flex-1 border border-outline text-secondary hover:bg-surface-container transition-standard px-lg py-md rounded-lg font-label-md text-label-md flex items-center justify-center gap-sm active:scale-95" type="button">
+                            <span class="material-symbols-outlined text-[20px]">close</span>
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- Visual Asset Area -->
+            <div class="hidden md:block w-72 bg-surface-container p-xl flex flex-col justify-center items-center gap-lg border-l border-outline-variant">
+                <div class="w-full aspect-square rounded-full bg-surface-container-lowest flex items-center justify-center clinical-card p-sm">
+                    <div class="w-full h-full rounded-full overflow-hidden">
+                        <img class="w-full h-full object-cover" data-alt="A minimalist clinical 3D illustration of a medical professional icon. The style features soft claymorphism, rounded shapes, and a bright color palette of medical blue and white. High-key studio lighting with soft shadows on a clean off-white background, embodying professionalism and modern healthcare technology." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuzLHIB9dcW_43pEekKAwG7ia5KUaW2_4vDouGmHlQ3iJ0Axb_5xlsjT00dxdBzVbfoWeAMLVW94OkdNf5xrGQrsTU0xngPPVyldlZohWy6nDXgcYMCEpWklny-ylxQzpcGM8Vk3OFZkDSiI79Zv7N29abc7nD--dvlyiAwuu9Vxm_HnQofiCng-yGaku6aZx7HewHNI-0eC7DXUNaqCG8PUfW5ASR13LCask8cHAXiHLRUVUPosF7AVAEqNI75c57fXcqIHidoAQ"/>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <span class="material-symbols-outlined text-primary text-[32px] mb-xs">verified_user</span>
+                    <p class="font-label-sm text-label-sm text-on-surface-variant px-md">Registro verificado mediante protocolos de seguridad clínica avanzada.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Helper Hint -->
+        <div class="mt-lg p-md bg-surface-container-high/50 rounded-lg flex items-start gap-sm">
+            <span class="material-symbols-outlined text-primary text-[20px]">info</span>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">
+                Al guardar, el médico recibirá un correo electrónico automático para configurar su contraseña de acceso al sistema M.A.S.S.
+            </p>
+        </div>
+    </div>
+</main>
+<!-- Shared Footer -->
+<footer class="w-full py-md px-gutter flex flex-col md:flex-row justify-between items-center max-w-max_container mx-auto border-t border-outline-variant bg-background">
+    <span class="font-label-sm text-label-sm text-secondary">© 2024 Medical Appointment Scheduling System. Clinical Excellence.</span>
+    <div class="flex gap-lg mt-md md:mt-0">
+        <a class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors" href="#">Privacy Policy</a>
+        <a class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors" href="#">Terms of Service</a>
+        <a class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors" href="#">Support</a>
+    </div>
+</footer>
+<script>
+    // Micro-interaction for form feedback
+    const primaryBtn = document.querySelector('button[type="submit"]');
+    primaryBtn.addEventListener('click', (e) => {
+        const originalContent = primaryBtn.innerHTML;
+        primaryBtn.innerHTML = `&lt;span class="material-symbols-outlined animate-spin">sync&lt;/span> Procesando...`;
+        primaryBtn.disabled = true;
+
+        setTimeout(() => {
+            primaryBtn.innerHTML = `&lt;span class="material-symbols-outlined">check_circle&lt;/span> Registrado`;
+            primaryBtn.classList.replace('bg-primary-container', 'bg-tertiary-container');
+            primaryBtn.classList.replace('text-on-primary', 'text-on-tertiary');
+
+            setTimeout(() => {
+                primaryBtn.innerHTML = originalContent;
+                primaryBtn.classList.replace('bg-tertiary-container', 'bg-primary-container');
+                primaryBtn.classList.replace('text-on-tertiary', 'text-on-primary');
+                primaryBtn.disabled = false;
+            }, 2000);
+        }, 1200);
+    });
+
+    // Add hover effects for inputs
+    document.querySelectorAll('input, select').forEach(el => {
+        el.addEventListener('mouseenter', () => el.classList.add('bg-surface-container-lowest'));
+        el.addEventListener('mouseleave', () => {
+            if(document.activeElement !== el) el.classList.remove('bg-surface-container-lowest');
+        });
+    });
+</script>
+</body></html>

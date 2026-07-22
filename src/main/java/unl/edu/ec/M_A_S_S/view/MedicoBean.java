@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Named
-@SessionScoped
 public class MedicoBean implements Serializable {
+
 
     private Medico medicoActual;
     private List<Medico> medicos;
