@@ -2,7 +2,13 @@
                      xmlns="http://www.w3.org/1999/xhtml"
                      xmlns:h="http://xmlns.jcp.org/jsf/html"
                      xmlns:f="http://xmlns.jcp.org/jsf/core"
-                     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+                     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"><head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">
+    try{
     tailwind.config = {
         darkMode: "class",
         theme: {
@@ -98,7 +104,8 @@
             },
         },
     }
-}catch(_e){}</script><meta charset="utf-8"></head><body class="bg-background text-on-surface">
+}catch(_e){}</script><meta charset="utf-8"/>
+</head><body class="bg-background text-on-surface">
 <!-- Sidebar Navigation -->
 
 <!-- Top Navigation Bar -->
@@ -106,7 +113,7 @@
     <div class="flex items-center gap-md max-w-xl w-full">
         <div class="relative w-full">
             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-            <input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-10 pr-4 font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary-container" placeholder="Buscar en el sistema..." type="text">
+            <input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-10 pr-4 font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary-container" placeholder="Buscar en el sistema..." type="text"/>
         </div>
     </div>
     <div class="flex items-center gap-md">
@@ -139,7 +146,7 @@
                 <label class="font-label-md text-label-md text-on-surface" for="specialty-name">Nombre de la Especialidad</label>
                 <div class="relative">
                     <span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-outline">category</span>
-                    <input class="w-full pl-xl pr-md py-md border border-outline-variant rounded-lg font-body-md text-body-md input-focus-ring bg-surface-bright transition-standard" id="specialty-name" name="specialty-name" placeholder="Ej. Cardiología, Pediatría..." required="" type="text">
+                    <input class="w-full pl-xl pr-md py-md border border-outline-variant rounded-lg font-body-md text-body-md input-focus-ring bg-surface-bright transition-standard" id="specialty-name" name="specialty-name" placeholder="Ej. Cardiología, Pediatría..." required="" type="text"/>
                 </div>
             </div>
             <!-- Responsible Doctor Dropdown -->
@@ -159,7 +166,7 @@
             </div>
             <!-- Descriptive Image Block -->
             <div class="w-full h-40 rounded-lg overflow-hidden clinical-border mb-base">
-                <img class="w-full h-full object-cover" data-alt="A clean, minimalist medical workspace with an organized doctor's desk featuring a stethoscope, a tablet showing medical data, and a small anatomical heart model. The background is a soft, blurred clinical setting in light blues and whites. The overall lighting is bright, high-key, and professional, echoing the 'Clinical Precision' design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBe-ZOpbrwMIrJJUEBBykp_fKboVWak4NGjzdCYFC1xyRxI4I-L190NCQywpcuFQpGTaTuAwpL6zL7cQTnQTeCslOyzSsDLnM_SHrDCGw8Xk1iYMzD8G7nx5dzkehUtpmngu0_iBAIY_IvG71fJz2yleIKHacdtmDl0XTibPGZEN-AS_oq83djSbu-H0au2vmtacF8LLVVEnjc0t67qw7nXjXNqqIueIONoqtCzHKxmzOG8Xmc1OmCrIoJMlL8NAdCZcCRaEnN-Jdc">
+                <img class="w-full h-full object-cover" data-alt="A clean, minimalist medical workspace with an organized doctor's desk featuring a stethoscope, a tablet showing medical data, and a small anatomical heart model. The background is a soft, blurred clinical setting in light blues and whites. The overall lighting is bright, high-key, and professional, echoing the 'Clinical Precision' design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBe-ZOpbrwMIrJJUEBBykp_fKboVWak4NGjzdCYFC1xyRxI4I-L190NCQywpcuFQpGTaTuAwpL6zL7cQTnQTeCslOyzSsDLnM_SHrDCGw8Xk1iYMzD8G7nx5dzkehUtpmngu0_iBAIY_IvG71fJz2yleIKHacdtmDl0XTibPGZEN-AS_oq83djSbu-H0au2vmtacF8LLVVEnjc0t67qw7nXjXNqqIueIONoqtCzHKxmzOG8Xmc1OmCrIoJMlL8NAdCZcCRaEnN-Jdc"/>
             </div>
             <!-- Actions -->
             <div class="flex flex-col sm:flex-row items-center gap-md pt-md border-t border-outline-variant">
@@ -190,14 +197,14 @@
 
         // Disable buttons during "loading"
         const submitBtn = e.target.querySelector('button[type="submit"]');
-        submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> Guardando...';
+        submitBtn.innerHTML = '&lt;span class="material-symbols-outlined animate-spin">progress_activity&lt;/span> Guardando...';
         submitBtn.disabled = true;
 
         setTimeout(() => {
             // Simulate redirect or reset
             toast.classList.add('translate-y-20', 'opacity-0');
             toast.classList.remove('translate-y-0', 'opacity-100');
-            submitBtn.innerHTML = '<span class="material-symbols-outlined">save</span> Guardar Especialidad';
+            submitBtn.innerHTML = '&lt;span class="material-symbols-outlined">save&lt;/span> Guardar Especialidad';
             submitBtn.disabled = false;
             alert('Especialidad registrada con éxito (Simulación)');
         }, 2000);

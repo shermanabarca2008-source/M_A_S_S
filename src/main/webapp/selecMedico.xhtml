@@ -1,11 +1,15 @@
-<!DOCTYPE html><html lang="es"><head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<!DOCTYPE html><html lang="es"
+                     xmlns="http://www.w3.org/1999/xhtml"
+                     xmlns:h="http://xmlns.jcp.org/jsf/html"
+                     xmlns:f="http://xmlns.jcp.org/jsf/core"
+                     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>M.A.S.S. - Seleccionar Médico (Paso 2)</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -133,12 +137,12 @@
         <div class="flex items-center gap-md">
             <div class="hidden sm:flex items-center bg-surface-container-low px-md py-xs rounded-full border border-outline-variant">
                 <span class="material-symbols-outlined text-on-surface-variant text-[20px]">search</span>
-                <input class="bg-transparent border-none focus:ring-0 text-body-sm w-32 lg:w-48" placeholder="Buscar..." type="text">
+                <input class="bg-transparent border-none focus:ring-0 text-body-sm w-32 lg:w-48" placeholder="Buscar..." type="text"/>
             </div>
             <button class="material-symbols-outlined p-xs text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors">notifications</button>
             <button class="material-symbols-outlined p-xs text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors">settings</button>
             <div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant cursor-pointer active:opacity-80">
-                <img class="w-full h-full object-cover" data-alt="A professional headshot of a female medical administrative professional with a friendly smile, wearing a modern clinical uniform. The background is a clean, softly lit medical office with a palette of soft blues and whites. The lighting is bright and professional, creating a trustworthy and efficient medical environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMxFn3qTwfzLFJXUd1wXZ24BB-FzpcgcJbxFmeLq_phQ0xrYl1V_iedAp2oSGfmr4kB_tpkBq8i1m0oq8hx5e_6CrIJ-HOQVQnbbpL5Yugum-VkjorOrhnwLMG2D4Hu8SngBB5oomDqOtAIfHpdP8S1h_4ykgXBTs5yNnbnIO3-7pnpec5CYLzG7K5IymIHUOGi8nD27TQ7KyqksINO0BQMklpCd_mnJThIbAPyMmvmMzKg8VvjdwRev99fch3LW4is22fn4kExXc">
+                <img class="w-full h-full object-cover" data-alt="A professional headshot of a female medical administrative professional with a friendly smile, wearing a modern clinical uniform. The background is a clean, softly lit medical office with a palette of soft blues and whites. The lighting is bright and professional, creating a trustworthy and efficient medical environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMxFn3qTwfzLFJXUd1wXZ24BB-FzpcgcJbxFmeLq_phQ0xrYl1V_iedAp2oSGfmr4kB_tpkBq8i1m0oq8hx5e_6CrIJ-HOQVQnbbpL5Yugum-VkjorOrhnwLMG2D4Hu8SngBB5oomDqOtAIfHpdP8S1h_4ykgXBTs5yNnbnIO3-7pnpec5CYLzG7K5IymIHUOGi8nD27TQ7KyqksINO0BQMklpCd_mnJThIbAPyMmvmMzKg8VvjdwRev99fch3LW4is22fn4kExXc"/>
             </div>
         </div>
     </div>
@@ -183,11 +187,11 @@
                         <label class="font-label-md text-label-md text-on-surface block mb-xs">Disponibilidad</label>
                         <div class="space-y-sm">
                             <label class="flex items-center gap-sm cursor-pointer">
-                                <input class="rounded text-primary focus:ring-primary h-4 w-4" type="checkbox">
+                                <input class="rounded text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
                                 <span class="text-body-sm">Hoy mismo</span>
                             </label>
                             <label class="flex items-center gap-sm cursor-pointer">
-                                <input class="rounded text-primary focus:ring-primary h-4 w-4" type="checkbox">
+                                <input class="rounded text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
                                 <span class="text-body-sm">Esta semana</span>
                             </label>
                         </div>
@@ -215,7 +219,7 @@
                 <div class="glass-card p-md rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-all duration-300 group flex flex-col">
                     <div class="flex gap-md mb-md">
                         <div class="w-24 h-24 rounded-lg overflow-hidden border border-outline-variant flex-shrink-0">
-                            <img class="w-full h-full object-cover" data-alt="A professional portrait of a male cardiologist in his 40s, wearing a white lab coat and a stethoscope. He has a warm, confident expression. The background is a high-tech cardiology clinic with soft blue ambient lighting and blurred medical monitors, emphasizing a clean, clinical, and high-trust medical environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaCq9qE2lDhTQ3YtDiaP1oBIkPfoz0PX3coKDyFWYX84v7qbftvMvAFJPIX-kD8pQ9WPwIhJBShxzN2OdDGs9Q0D2UBHTdumwrEVj03yjzv3d0MUGqfXmcBhKLoKbLhO_H7j0NfmQNewcExHsQZUMPFy5M9mNeXADa0xStGtvjQR_arS0CPE8ooM7XnaDOoqDBfTHq_4ln-eUT6E6Juax1Dtws1_IaoYb2hIwrzoFA3U0L9dTeWqTW7LotY3vV1xaFrxHJz1w-EVo">
+                            <img class="w-full h-full object-cover" data-alt="A professional portrait of a male cardiologist in his 40s, wearing a white lab coat and a stethoscope. He has a warm, confident expression. The background is a high-tech cardiology clinic with soft blue ambient lighting and blurred medical monitors, emphasizing a clean, clinical, and high-trust medical environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaCq9qE2lDhTQ3YtDiaP1oBIkPfoz0PX3coKDyFWYX84v7qbftvMvAFJPIX-kD8pQ9WPwIhJBShxzN2OdDGs9Q0D2UBHTdumwrEVj03yjzv3d0MUGqfXmcBhKLoKbLhO_H7j0NfmQNewcExHsQZUMPFy5M9mNeXADa0xStGtvjQR_arS0CPE8ooM7XnaDOoqDBfTHq_4ln-eUT6E6Juax1Dtws1_IaoYb2hIwrzoFA3U0L9dTeWqTW7LotY3vV1xaFrxHJz1w-EVo"/>
                         </div>
                         <div class="flex-1">
                             <div class="flex justify-between items-start">
@@ -248,7 +252,7 @@
                 <div class="glass-card p-md rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-all duration-300 group flex flex-col">
                     <div class="flex gap-md mb-md">
                         <div class="w-24 h-24 rounded-lg overflow-hidden border border-outline-variant flex-shrink-0">
-                            <img class="w-full h-full object-cover" data-alt="A professional portrait of a female cardiologist in her late 30s, wearing a crisp white medical coat with a blue undershirt. She has a friendly, professional smile. The background shows a minimalist medical office with natural light coming through a large window, suggesting a clean, airy, and modern clinical space with soft blue and white tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCT7CWo56AV8SgKk5MaicFVOQsZzXCw9I74pcUp4aU26nFkWci_A89bnr4c0BXfK_H-R5gUAltXPJL8bz-y06VpTunnvPp8O6o6UBqGaqmVTfIeUZ3hLfgfy-j5KkfmUOmgYOTRB_Q2RFwS-xx0plZZ3cHxtvz6zCbf4sO1KdWVL8AFaNjWBvJAUoUfTjRb0bQb32T2waVqf5Nf8E-bhpf_3xRM9NZ5qcHfU39cC6tAFmLxPC_JSgPb97GJqON3IU-5rGy4js9Xz8k">
+                            <img class="w-full h-full object-cover" data-alt="A professional portrait of a female cardiologist in her late 30s, wearing a crisp white medical coat with a blue undershirt. She has a friendly, professional smile. The background shows a minimalist medical office with natural light coming through a large window, suggesting a clean, airy, and modern clinical space with soft blue and white tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCT7CWo56AV8SgKk5MaicFVOQsZzXCw9I74pcUp4aU26nFkWci_A89bnr4c0BXfK_H-R5gUAltXPJL8bz-y06VpTunnvPp8O6o6UBqGaqmVTfIeUZ3hLfgfy-j5KkfmUOmgYOTRB_Q2RFwS-xx0plZZ3cHxtvz6zCbf4sO1KdWVL8AFaNjWBvJAUoUfTjRb0bQb32T2waVqf5Nf8E-bhpf_3xRM9NZ5qcHfU39cC6tAFmLxPC_JSgPb97GJqON3IU-5rGy4js9Xz8k"/>
                         </div>
                         <div class="flex-1">
                             <div class="flex justify-between items-start">
@@ -281,7 +285,7 @@
                 <div class="glass-card p-md rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-all duration-300 group flex flex-col">
                     <div class="flex gap-md mb-md">
                         <div class="w-24 h-24 rounded-lg overflow-hidden border border-outline-variant flex-shrink-0">
-                            <img class="w-full h-full object-cover" data-alt="A professional headshot of a middle-aged male doctor specialized in cardiology, wearing a light blue shirt and a professional white coat. He looks approachable and experienced. Behind him is a blurred view of a modern hospital corridor with polished floors and clinical lighting, maintaining a high-end, clean medical aesthetic in light blue and white colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdep6-BC9Q7AjWjqjDhDio7JFM2Wfeu2YjlYWrmaMMtqzoQviALowYk5hfy2NWlXY1GFPFR6eS30trnFdWBpfovg-go7KvWtml7ncIKG3y8m3XqNQ30XYz2bhoZLHAQ_NnhEMPw4CqpI4bU1FxjvtiBqE7jeXgrMabsXFFdEaZ9C2Fjf11YlEJ9n1n67dSc-FxXdPDTrp30HafNSw7Quni12vlK8AdS_HMUNm8i209f6oRMI1KQ6JlyOJ_Dy6S6qkxhVzLJH3ELvw">
+                            <img class="w-full h-full object-cover" data-alt="A professional headshot of a middle-aged male doctor specialized in cardiology, wearing a light blue shirt and a professional white coat. He looks approachable and experienced. Behind him is a blurred view of a modern hospital corridor with polished floors and clinical lighting, maintaining a high-end, clean medical aesthetic in light blue and white colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdep6-BC9Q7AjWjqjDhDio7JFM2Wfeu2YjlYWrmaMMtqzoQviALowYk5hfy2NWlXY1GFPFR6eS30trnFdWBpfovg-go7KvWtml7ncIKG3y8m3XqNQ30XYz2bhoZLHAQ_NnhEMPw4CqpI4bU1FxjvtiBqE7jeXgrMabsXFFdEaZ9C2Fjf11YlEJ9n1n67dSc-FxXdPDTrp30HafNSw7Quni12vlK8AdS_HMUNm8i209f6oRMI1KQ6JlyOJ_Dy6S6qkxhVzLJH3ELvw"/>
                         </div>
                         <div class="flex-1">
                             <div class="flex justify-between items-start">
@@ -314,7 +318,7 @@
                 <div class="glass-card p-md rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-all duration-300 group flex flex-col">
                     <div class="flex gap-md mb-md">
                         <div class="w-24 h-24 rounded-lg overflow-hidden border border-outline-variant flex-shrink-0">
-                            <img class="w-full h-full object-cover" data-alt="A professional portrait of a female cardiologist with glasses, wearing a white coat over a navy blue top. She is smiling gently, conveying wisdom and care. The background is a bright, high-end medical lobby with modern architectural details and soft lighting, using a palette of whites, light grays, and clinical blues to reinforce a clean and safe medical brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRPTP91f8HZHTTudSlzF8FYlgS9ICKBbcsZWJZcDIasBqVL-CnMnTOGEt1J8hN3QQtt7HOhDQE8qubAWjV3dI-tNIS-mgh1knnNb0Jf8zrHFp0IYroh4Lbp-8DucPOhaNzYYz5Y5A0AtGIhxONfKeeCwcPcK9VW_HjWU_aaeLGOryZ2Rn1-gk5QPADzeeFQmnz4zGrankhdxFYppcBXZmuE7Iox0UBuguk1z4KmQ5twOGiOe4f2s9B2O_hW2AcSNmomWGoBhFLTZY">
+                            <img class="w-full h-full object-cover" data-alt="A professional portrait of a female cardiologist with glasses, wearing a white coat over a navy blue top. She is smiling gently, conveying wisdom and care. The background is a bright, high-end medical lobby with modern architectural details and soft lighting, using a palette of whites, light grays, and clinical blues to reinforce a clean and safe medical brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRPTP91f8HZHTTudSlzF8FYlgS9ICKBbcsZWJZcDIasBqVL-CnMnTOGEt1J8hN3QQtt7HOhDQE8qubAWjV3dI-tNIS-mgh1knnNb0Jf8zrHFp0IYroh4Lbp-8DucPOhaNzYYz5Y5A0AtGIhxONfKeeCwcPcK9VW_HjWU_aaeLGOryZ2Rn1-gk5QPADzeeFQmnz4zGrankhdxFYppcBXZmuE7Iox0UBuguk1z4KmQ5twOGiOe4f2s9B2O_hW2AcSNmomWGoBhFLTZY"/>
                         </div>
                         <div class="flex-1">
                             <div class="flex justify-between items-start">
