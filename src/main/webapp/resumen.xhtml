@@ -1,0 +1,312 @@
+<!DOCTYPE html><html class="light" lang="es"
+                     xmlns="http://www.w3.org/1999/xhtml"
+                     xmlns:h="http://xmlns.jcp.org/jsf/html"
+                     xmlns:f="http://xmlns.jcp.org/jsf/core"
+                     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>M.A.S.S. - Resumen (Paso 5)</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#004d99",
+                        "on-primary-fixed": "#001b3d",
+                        "background": "#f4faff",
+                        "surface-container-high": "#ddeaf2",
+                        "surface": "#f4faff",
+                        "surface-dim": "#cfdce4",
+                        "on-secondary-container": "#616363",
+                        "tertiary-fixed": "#98f994",
+                        "on-tertiary-fixed": "#002204",
+                        "on-tertiary-fixed-variant": "#005313",
+                        "on-tertiary-container": "#9afa95",
+                        "on-background": "#111d23",
+                        "inverse-surface": "#263238",
+                        "primary-container": "#1565c0",
+                        "tertiary-container": "#0f7623",
+                        "on-primary-fixed-variant": "#00468c",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-primary-container": "#dae5ff",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-surface-variant": "#424752",
+                        "inverse-on-surface": "#e6f3fb",
+                        "secondary": "#5d5f5f",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#dfe0e0",
+                        "surface-variant": "#d7e4ec",
+                        "outline": "#727783",
+                        "outline-variant": "#c2c6d4",
+                        "on-secondary-fixed-variant": "#454747",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#a9c7ff",
+                        "error": "#ba1a1a",
+                        "tertiary": "#005b15",
+                        "surface-tint": "#005db7",
+                        "surface-container": "#e3f0f8",
+                        "on-surface": "#111d23",
+                        "on-tertiary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "surface-container-highest": "#d7e4ec",
+                        "surface-bright": "#f4faff",
+                        "surface-container-low": "#e9f6fd",
+                        "primary-fixed": "#d6e3ff",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#7ddc7a",
+                        "secondary-fixed": "#e2e2e2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "gutter": "24px",
+                        "xl": "32px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "sidebar_width": "280px",
+                        "max_container": "1440px",
+                        "base": "4px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(224, 228, 232, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background font-body-md text-on-background min-h-screen">
+<!-- TopNavBar -->
+<header class="w-full top-0 sticky bg-surface border-b border-outline-variant shadow-sm z-50">
+    <div class="flex justify-between items-center px-lg py-sm max-w-max_container mx-auto w-full">
+        <div class="flex items-center gap-md">
+            <span class="text-headline-md font-headline-md font-bold text-primary">M.A.S.S.</span>
+        </div>
+        <nav class="hidden md:flex items-center gap-xl">
+            <a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-200 cursor-pointer">Dashboard</a>
+            <a class="text-primary border-b-2 border-primary font-bold pb-1 font-body-md text-body-md cursor-pointer">Find Doctor</a>
+            <a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-200 cursor-pointer">My Bookings</a>
+            <a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-200 cursor-pointer">Help</a>
+        </nav>
+        <div class="flex items-center gap-md">
+            <button class="material-symbols-outlined text-primary p-2 cursor-pointer active:opacity-80">notifications</button>
+            <button class="material-symbols-outlined text-primary p-2 cursor-pointer active:opacity-80">settings</button>
+            <div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden border border-outline-variant">
+                <img class="w-full h-full object-cover" data-alt="Professional profile portrait of a modern healthcare administrator in a bright clinical setting. The subject has a warm, trustworthy expression. The lighting is soft and high-key, reflecting a high-end, clean medical facility with blue and white tones and clinical minimalism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpI8l7yLZTPAgChTpwWdnXQRFRiTINyabzMZsYNnx_bzhyVD5Xx9OZTKzlsaLNyuCwIV4vlbiPSIpn8nO3dEAYCoXAmEUsLLSWRvxydQ0CH9KNNjHMjSfYst-b-XWCvNFjxmIDSUk-2A1OSM2P3yNxXYjZ3gxmnlbnQL0xmvI7WkLSlP88etCzEZBQDNbV1liifvNhffEBNMH8RFmZuolNzwCcS0WeLyDgcdpVMjrboEJbneQEVU1wgElHIqv7frtci8l3Wy5p3Wc"/>
+            </div>
+        </div>
+    </div>
+</header>
+<main class="max-w-max_container mx-auto px-gutter py-xl flex justify-center items-start min-h-[calc(100vh-64px)]">
+    <!-- Step Indicator & Summary Card Container -->
+    <div class="w-full max-w-3xl flex flex-col gap-lg animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <!-- Progress Indicator -->
+        <div class="flex flex-col gap-sm">
+            <div class="flex justify-between items-end">
+                <h1 class="font-headline-lg text-headline-lg text-primary">Resumen de la Cita</h1>
+                <span class="font-label-md text-label-md text-on-surface-variant">Paso 5 de 6</span>
+            </div>
+            <div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+                <div class="h-full bg-primary-container w-[83.33%] rounded-full transition-all duration-500 ease-out"></div>
+            </div>
+        </div>
+        <!-- Summary Bento-style Card -->
+        <div class="glass-card rounded-xl p-xl shadow-sm flex flex-col gap-lg border border-outline-variant">
+            <!-- Main Header: Medical Professional -->
+            <div class="flex flex-col md:flex-row gap-lg items-center md:items-start border-b border-outline-variant pb-lg">
+                <div class="w-24 h-24 rounded-xl overflow-hidden bg-surface shadow-sm border border-outline-variant shrink-0">
+                    <img class="w-full h-full object-cover" data-alt="Clinical headshot of a female specialist doctor with a stethoscope, smiling confidently. She is set against a clean, blurred hospital background. The lighting is bright and professional, maintaining a minimalist medical aesthetic with soft blue accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLX4qeXrbG1UVLqFZQnB3V7ogOjOmNzDWy2Ewcv4pAqVIDRwS_wo_yqlOKS3Dg-NY1C5d7KxKR1ij4BnEd0DYEA7DNiIA0u0YMZj1YM4D9EvhoelhhGP1kd8kp7GnzWXbFGJV7ChxWDX0jro8zADPhMgyEYAlh_y3CmB7P_W2ssu4emKF_v5h97yJIlS8_rAhIQW2pxNG6qI6ZWn5BGd9GgKsPM3LjVXGZQiMLaXY5YEkjFUIrcUHJUFlM5XmkKnLn6PbO-R5c6xk"/>
+                </div>
+                <div class="flex flex-col text-center md:text-left gap-xs">
+                    <span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Médico Especialista</span>
+                    <h2 class="font-headline-md text-headline-md text-on-background">Dra. Elena Rodríguez</h2>
+                    <div class="flex items-center justify-center md:justify-start gap-sm">
+                        <span class="material-symbols-outlined text-primary text-[20px]">medical_services</span>
+                        <span class="font-body-md text-body-md text-on-surface-variant">Cardiología Clínica</span>
+                    </div>
+                </div>
+                <div class="md:ml-auto flex flex-col items-center md:items-end">
+                    <div class="bg-tertiary-fixed text-on-tertiary-fixed px-md py-xs rounded-full flex items-center gap-xs">
+                        <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+                        <span class="font-label-md text-label-md">Médico Verificado</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Appointment Details Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+                <!-- Date & Time -->
+                <div class="bg-surface-container-low p-md rounded-lg flex gap-md items-center border border-outline-variant">
+                    <div class="bg-primary-container text-on-primary-container p-sm rounded-lg flex items-center justify-center">
+                        <span class="material-symbols-outlined">calendar_today</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-label-sm text-label-sm text-on-surface-variant">Fecha y Hora</span>
+                        <span class="font-body-md text-body-md font-bold">Lunes, 24 Octubre • 10:30 AM</span>
+                    </div>
+                </div>
+                <!-- Location -->
+                <div class="bg-surface-container-low p-md rounded-lg flex gap-md items-center border border-outline-variant">
+                    <div class="bg-primary-container text-on-primary-container p-sm rounded-lg flex items-center justify-center">
+                        <span class="material-symbols-outlined">location_on</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-label-sm text-label-sm text-on-surface-variant">Consultorio</span>
+                        <span class="font-body-md text-body-md font-bold">Piso 4, Ala Sur • Cons. 402</span>
+                    </div>
+                </div>
+                <!-- Duration -->
+                <div class="bg-surface-container-low p-md rounded-lg flex gap-md items-center border border-outline-variant">
+                    <div class="bg-primary-container text-on-primary-container p-sm rounded-lg flex items-center justify-center">
+                        <span class="material-symbols-outlined">schedule</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-label-sm text-label-sm text-on-surface-variant">Duración Estimada</span>
+                        <span class="font-body-md text-body-md font-bold">45 Minutos</span>
+                    </div>
+                </div>
+                <!-- Modality -->
+                <div class="bg-surface-container-low p-md rounded-lg flex gap-md items-center border border-outline-variant">
+                    <div class="bg-primary-container text-on-primary-container p-sm rounded-lg flex items-center justify-center">
+                        <span class="material-symbols-outlined">person</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-label-sm text-label-sm text-on-surface-variant">Tipo de Cita</span>
+                        <span class="font-body-md text-body-md font-bold">Consulta Presencial</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Clinical Note / Alert -->
+            <div class="bg-surface-variant rounded-lg p-md flex gap-md border-l-4 border-primary">
+                <span class="material-symbols-outlined text-primary">info</span>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">
+                    Por favor, llegue 15 minutos antes de su cita para completar el registro en recepción. No olvide traer sus estudios previos si los tiene.
+                </p>
+            </div>
+            <!-- Actions -->
+            <div class="flex flex-col md:flex-row gap-md mt-sm">
+                <button class="flex-1 bg-primary text-on-primary py-md px-xl rounded-lg font-label-md text-label-md hover:brightness-110 active:opacity-90 transition-all duration-200 flex items-center justify-center gap-md shadow-sm">
+                    Confirmar Cita
+                    <span class="material-symbols-outlined">check_circle</span>
+                </button>
+                <button class="flex-none md:w-48 bg-transparent border border-primary text-primary py-md px-xl rounded-lg font-label-md text-label-md hover:bg-primary/5 active:opacity-80 transition-all duration-200 flex items-center justify-center gap-md">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                    Volver
+                </button>
+            </div>
+        </div>
+        <!-- Footer Help Text -->
+        <div class="flex justify-center items-center gap-sm text-on-secondary-container">
+            <span class="material-symbols-outlined text-[16px]">help_outline</span>
+            <span class="font-body-sm text-body-sm">¿Necesitas ayuda? Contacta con Soporte M.A.S.S.</span>
+        </div>
+    </div>
+</main>
+<!-- SideNavBar (Hidden on Mobile, Visible on Desktop) -->
+<aside class="hidden lg:flex flex-col h-screen p-md bg-surface-container border-r border-outline-variant fixed left-0 top-0 w-sidebar_width z-40">
+    <div class="mb-xl px-md py-sm">
+        <span class="font-headline-sm text-headline-sm text-on-surface font-bold">M.A.S.S.</span>
+        <p class="font-label-sm text-label-sm text-on-surface-variant mt-xs">City Medical Center</p>
+    </div>
+    <nav class="flex-1 flex flex-col gap-sm">
+        <div class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-dim transition-all duration-200 rounded-lg group">
+            <span class="material-symbols-outlined group-hover:text-primary">calendar_today</span>
+            <span class="font-label-md text-label-md">Schedule</span>
+        </div>
+        <div class="flex items-center gap-md px-md py-sm cursor-pointer bg-primary-container text-on-primary-container border-l-4 border-primary rounded-r-full">
+            <span class="material-symbols-outlined">groups</span>
+            <span class="font-label-md text-label-md">Patients</span>
+        </div>
+        <div class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-dim transition-all duration-200 rounded-lg group">
+            <span class="material-symbols-outlined group-hover:text-primary">medical_services</span>
+            <span class="font-label-md text-label-md">Doctors</span>
+        </div>
+        <div class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-dim transition-all duration-200 rounded-lg group">
+            <span class="material-symbols-outlined group-hover:text-primary">bar_chart</span>
+            <span class="font-label-md text-label-md">Reports</span>
+        </div>
+        <div class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-dim transition-all duration-200 rounded-lg group">
+            <span class="material-symbols-outlined group-hover:text-primary">inventory_2</span>
+            <span class="font-label-md text-label-md">Inventory</span>
+        </div>
+    </nav>
+    <div class="mt-auto border-t border-outline-variant pt-md flex flex-col gap-sm">
+        <div class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-dim transition-all duration-200 rounded-lg group">
+            <span class="material-symbols-outlined group-hover:text-primary">help_outline</span>
+            <span class="font-label-md text-label-md">Support</span>
+        </div>
+        <div class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-dim transition-all duration-200 rounded-lg group">
+            <span class="material-symbols-outlined text-error">logout</span>
+            <span class="font-label-md text-label-md">Logout</span>
+        </div>
+    </div>
+</aside>
+<script>
+    // Micro-interaction for the confirm button
+    const confirmBtn = document.querySelector('button.bg-primary');
+    confirmBtn.addEventListener('click', function() {
+        this.innerHTML = '&lt;span class="material-symbols-outlined animate-spin"/>sync&lt;/span/> Procesando...';
+        this.classList.add('opacity-80');
+        setTimeout(() => {
+            this.innerHTML = '¡Cita Confirmada! &lt;span class="material-symbols-outlined"/>verified&lt;/span/>';
+            this.classList.remove('bg-primary');
+            this.classList.add('bg-tertiary-container', 'text-on-tertiary-container');
+        }, 1500);
+    });
+
+    // Simple animation on load for the details grid items
+    document.addEventListener('DOMContentLoaded', () => {
+        const items = document.querySelectorAll('.grid > div');
+        items.forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(10px)';
+            setTimeout(() => {
+                item.style.transition = 'all 0.4s ease-out';
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+            }, 300 + (index * 100));
+        });
+    });
+</script>
+</body></html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html><html lang="es" class="light"
+                     xmlns="http://www.w3.org/1999/xhtml"
+                     xmlns:h="http://xmlns.jcp.org/jsf/html"
+                     xmlns:f="http://xmlns.jcp.org/jsf/core"
+                     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "surface-dim": "#cfdce4",
+                    "primary-fixed-dim": "#a9c7ff",
+                    "surface-container-highest": "#d7e4ec",
+                    "inverse-primary": "#a9c7ff",
+                    "on-tertiary": "#ffffff",
+                    "surface": "#f4faff",
+                    "on-secondary": "#ffffff",
+                    "on-primary-container": "#dae5ff",
+                    "on-primary-fixed-variant": "#00468c",
+                    "on-error-container": "#93000a",
+                    "primary-container": "#1565c0",
+                    "secondary-fixed": "#e2e2e2",
+                    "error": "#ba1a1a",
+                    "surface-container-high": "#ddeaf2",
+                    "on-surface-variant": "#424752",
+                    "surface-bright": "#f4faff",
+                    "outline": "#727783",
+                    "secondary": "#5d5f5f",
+                    "on-secondary-fixed-variant": "#454747",
+                    "on-tertiary-container": "#9afa95",
+                    "on-background": "#111d23",
+                    "on-secondary-fixed": "#1a1c1c",
+                    "tertiary-container": "#0f7623",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "primary": "#004d99",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#005313",
+                    "inverse-on-surface": "#e6f3fb",
+                    "surface-container-low": "#e9f6fd",
+                    "secondary-fixed-dim": "#c6c6c7",
+                    "tertiary": "#005b15",
+                    "secondary-container": "#dfe0e0",
+                    "background": "#f4faff",
+                    "surface-tint": "#005db7",
+                    "outline-variant": "#c2c6d4",
+                    "on-primary-fixed": "#001b3d",
+                    "tertiary-fixed-dim": "#7ddc7a",
+                    "on-tertiary-fixed": "#002204",
+                    "surface-container": "#e3f0f8",
+                    "surface-variant": "#d7e4ec",
+                    "primary-fixed": "#d6e3ff",
+                    "on-surface": "#111d23",
+                    "tertiary-fixed": "#98f994",
+                    "on-secondary-container": "#616363",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#263238"
+                },
+                "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+                },
+                "spacing": {
+                    "xl": "32px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "base": "4px",
+                    "sidebar_width": "280px",
+                    "xs": "4px",
+                    "gutter": "24px",
+                    "max_container": "1440px",
+                    "sm": "8px"
+                },
+                "fontFamily": {
+                    "label-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-md": ["Inter"]
+                },
+                "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                }
+            },
+        },
+    }
+}catch(_e){}</script><meta charset="utf-8"></head><body class="bg-background text-on-surface">
+<!-- Sidebar Navigation -->
+
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 w-full z-40 bg-surface border-b border-outline-variant shadow-sm flex justify-between items-center h-16 px-gutter">
+    <div class="flex items-center gap-md max-w-xl w-full">
+        <div class="relative w-full">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+            <input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-10 pr-4 font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary-container" placeholder="Buscar en el sistema..." type="text">
+        </div>
+    </div>
+    <div class="flex items-center gap-md">
+        <button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-highest transition-colors">
+            <span class="material-symbols-outlined">notifications</span>
+        </button>
+        <button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-highest transition-colors">
+            <span class="material-symbols-outlined">help</span>
+        </button>
+    </div>
+</header>
+<!-- Main Content Canvas -->
+<main class="p-xl min-h-[calc(100vh-64px)] flex items-center justify-center relative">
+    <!-- Subtle background decoration -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-50">
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-primary-container rounded-full blur-[100px] opacity-10"></div>
+        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-tertiary-container rounded-full blur-[100px] opacity-10"></div>
+    </div>
+    <!-- Form Card (Modal Style) -->
+    <div class="w-full max-w-[600px] bg-surface-container-lowest clinical-border clinical-shadow rounded-xl p-xl z-10 transition-standard animate-in fade-in zoom-in duration-300">
+        <!-- Modal Header -->
+        <div class="mb-lg flex flex-col gap-xs">
+            <h2 class="font-headline-md text-headline-md text-on-surface">Añadir Nueva Especialidad</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">Complete los siguientes detalles para registrar una nueva especialidad médica en el sistema.</p>
+        </div>
+        <!-- Form Body -->
+        <form class="flex flex-col gap-lg" id="specialtyForm">
+            <!-- Specialty Name Input -->
+            <div class="flex flex-col gap-sm">
+                <label class="font-label-md text-label-md text-on-surface" for="specialty-name">Nombre de la Especialidad</label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-outline">category</span>
+                    <input class="w-full pl-xl pr-md py-md border border-outline-variant rounded-lg font-body-md text-body-md input-focus-ring bg-surface-bright transition-standard" id="specialty-name" name="specialty-name" placeholder="Ej. Cardiología, Pediatría..." required="" type="text">
+                </div>
+            </div>
+            <!-- Responsible Doctor Dropdown -->
+            <div class="flex flex-col gap-sm">
+                <label class="font-label-md text-label-md text-on-surface" for="responsible-doctor">Asignar Médico Responsable</label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-outline">person</span>
+                    <select class="w-full pl-xl pr-md py-md border border-outline-variant rounded-lg font-body-md text-body-md input-focus-ring bg-surface-bright appearance-none cursor-pointer transition-standard" id="responsible-doctor" name="responsible-doctor" required="">
+                        <option disabled="" selected="" value="">Seleccionar médico registrado...</option>
+                        <option value="1">Dr. Alejandro Méndez - Medicina General</option>
+                        <option value="2">Dra. Beatriz Solís - Neurología</option>
+                        <option value="3">Dr. Carlos Ruiz - Traumatología</option>
+                        <option value="4">Dra. Elena Vargas - Dermatología</option>
+                    </select>
+                    <span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-outline pointer-events-none">expand_more</span>
+                </div>
+            </div>
+            <!-- Descriptive Image Block -->
+            <div class="w-full h-40 rounded-lg overflow-hidden clinical-border mb-base">
+                <img class="w-full h-full object-cover" data-alt="A clean, minimalist medical workspace with an organized doctor's desk featuring a stethoscope, a tablet showing medical data, and a small anatomical heart model. The background is a soft, blurred clinical setting in light blues and whites. The overall lighting is bright, high-key, and professional, echoing the 'Clinical Precision' design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBe-ZOpbrwMIrJJUEBBykp_fKboVWak4NGjzdCYFC1xyRxI4I-L190NCQywpcuFQpGTaTuAwpL6zL7cQTnQTeCslOyzSsDLnM_SHrDCGw8Xk1iYMzD8G7nx5dzkehUtpmngu0_iBAIY_IvG71fJz2yleIKHacdtmDl0XTibPGZEN-AS_oq83djSbu-H0au2vmtacF8LLVVEnjc0t67qw7nXjXNqqIueIONoqtCzHKxmzOG8Xmc1OmCrIoJMlL8NAdCZcCRaEnN-Jdc">
+            </div>
+            <!-- Actions -->
+            <div class="flex flex-col sm:flex-row items-center gap-md pt-md border-t border-outline-variant">
+                <button class="w-full sm:flex-1 h-12 bg-primary text-on-primary font-label-md text-label-md rounded-lg flex items-center justify-center gap-sm hover:bg-[#003d7a] shadow-sm btn-press transition-standard" type="submit">
+                    <span class="material-symbols-outlined">save</span>
+                    Guardar Especialidad
+                </button>
+                <button class="w-full sm:w-auto px-lg h-12 border border-primary text-primary font-label-md text-label-md rounded-lg flex items-center justify-center gap-sm hover:bg-primary-fixed-dim transition-standard btn-press" onclick="window.history.back()" type="button">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</main>
+<!-- Success Feedback (Hidden initially) -->
+<div class="fixed bottom-xl right-xl bg-tertiary-container text-on-tertiary-container px-lg py-md rounded-xl shadow-lg border border-tertiary flex items-center gap-md translate-y-20 opacity-0 transition-all duration-300 z-[60]" id="toast">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+    <span class="font-label-md text-label-md">¡Especialidad guardada correctamente!</span>
+</div>
+<script>
+    document.getElementById('specialtyForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Basic UI feedback for submission
+        const toast = document.getElementById('toast');
+        toast.classList.remove('translate-y-20', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+
+        // Disable buttons during "loading"
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> Guardando...';
+        submitBtn.disabled = true;
+
+        setTimeout(() => {
+            // Simulate redirect or reset
+            toast.classList.add('translate-y-20', 'opacity-0');
+            toast.classList.remove('translate-y-0', 'opacity-100');
+            submitBtn.innerHTML = '<span class="material-symbols-outlined">save</span> Guardar Especialidad';
+            submitBtn.disabled = false;
+            alert('Especialidad registrada con éxito (Simulación)');
+        }, 2000);
+    });
+</script>
+
+</body></html>
