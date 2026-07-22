@@ -1,6 +1,7 @@
 package unl.edu.ec.M_A_S_S.view;
 
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import unl.edu.ec.M_A_S_S.domain.Cita;
 import unl.edu.ec.M_A_S_S.domain.Especialidad;
@@ -13,7 +14,6 @@ import unl.edu.ec.M_A_S_S.domain.Paciente;
 import java.io.Serializable;
 import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +23,9 @@ import java.util.List;
 public class PacienteBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @Inject
+    private AdministradorBean administradorBean;
 
     private final List<Paciente> pacientes = new ArrayList<>();
     private String cedula;
@@ -237,7 +240,7 @@ public class PacienteBean implements Serializable {
     }
 
     public List<Especialidad> getEspecialidades() {
-        return obtenerEspecialidadesBase();
+        return administradorBean.getEspecialidades();
     }
 
     public List<Medico> getMedicosDisponibles() {
@@ -288,23 +291,6 @@ public class PacienteBean implements Serializable {
             }
         }
         return result;
-    }
-
-    private List<Especialidad> obtenerEspecialidadesBase() {
-        List<Especialidad> resultado = new ArrayList<>();
-        Especialidad medicinaGeneral = new Especialidad("Medicina General", "Atención primaria");
-        Especialidad pediatria = new Especialidad("Pediatría", "Atención infantil");
-        Medico medico1 = new Medico("Dra. Ana Torres", medicinaGeneral);
-        Medico medico2 = new Medico("Dr. Luis Pérez", pediatria);
-        HorarioMedico horario1 = new HorarioMedico(LocalDate.now().plusDays(1), LocalTime.of(8, 0), LocalTime.of(9, 0), true);
-        HorarioMedico horario2 = new HorarioMedico(LocalDate.now().plusDays(2), LocalTime.of(10, 0), LocalTime.of(11, 0), true);
-        medicinaGeneral.agregarMedico(medico1);
-        pediatria.agregarMedico(medico2);
-        medico1.getHorarios().add(horario1);
-        medico2.getHorarios().add(horario2);
-        resultado.add(medicinaGeneral);
-        resultado.add(pediatria);
-        return resultado;
     }
 
     private Especialidad encontrarEspecialidadPorNombre(String nombre) {
