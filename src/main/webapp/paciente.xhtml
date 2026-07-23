@@ -22,12 +22,12 @@
 
     <h:form>
         <div class="tabs">
-            <h:commandButton value="Agendar cita" action="#{pacienteBean.seleccionarTab('agendar')}" styleClass="tab-btn #{pacienteBean.tabActiva('agendar') ? 'active' : ''}" />
-            <h:commandButton value="Mis citas" action="#{pacienteBean.seleccionarTab('citas')}" styleClass="tab-btn #{pacienteBean.tabActiva('citas') ? 'active' : ''}" />
-            <h:commandButton value="Historial clínico" action="#{pacienteBean.seleccionarTab('historial')}" styleClass="tab-btn #{pacienteBean.tabActiva('historial') ? 'active' : ''}" />
+            <h:commandButton value="Agendar cita" action="#{pacienteBean.seleccionarTab('agendar')}" styleClass="tab-btn #{pacienteBean.isTabActiva('agendar') ? 'active' : ''}" />
+            <h:commandButton value="Mis citas" action="#{pacienteBean.seleccionarTab('citas')}" styleClass="tab-btn #{pacienteBean.isTabActiva('citas') ? 'active' : ''}" />
+            <h:commandButton value="Historial clínico" action="#{pacienteBean.seleccionarTab('historial')}" styleClass="tab-btn #{pacienteBean.isTabActiva('historial') ? 'active' : ''}" />
         </div>
 
-        <h:panelGroup rendered="#{pacienteBean.tabActiva('agendar')}">
+        <h:panelGroup rendered="#{pacienteBean.isTabActiva('agendar')}">
             <div class="card">
                 <h2>Agendar cita</h2>
                 <h:panelGrid columns="2">
@@ -57,7 +57,7 @@
             </div>
         </h:panelGroup>
 
-        <h:panelGroup rendered="#{pacienteBean.tabActiva('citas')}">
+        <h:panelGroup rendered="#{pacienteBean.isTabActiva('citas')}">
             <div class="card">
                 <h2>Mis citas asignadas</h2>
                 <h:selectOneMenu value="#{pacienteBean.citaSeleccionada}">
@@ -72,7 +72,7 @@
             </div>
         </h:panelGroup>
 
-        <h:panelGroup rendered="#{pacienteBean.tabActiva('historial')}">
+        <h:panelGroup rendered="#{pacienteBean.isTabActiva('historial')}">
             <div class="card">
                 <h2>Historial clínico</h2>
                 <h:commandButton value="Consultar historial" action="#{pacienteBean.seleccionarTab('historial')}" />

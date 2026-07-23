@@ -260,7 +260,7 @@
                             <h:outputText value="#{horarioMedicoBean.mensaje}" styleClass="text-tertiary font-label-md block mt-3"
                                           rendered="#{not empty horarioMedicoBean.mensaje and not horarioMedicoBean.error}"/>
                             <div class="mt-md">
-                                <h:commandButton value="Registrar Horario" styleClass="bg-primary text-white font-label-md px-lg py-2 rounded-lg hover:bg-primary-container transition-all">
+                                <h:commandButton value="Registrar Horario" action="#{horarioMedicoBean.registrarHorario}" styleClass="bg-primary text-white font-label-md px-lg py-2 rounded-lg hover:bg-primary-container transition-all">
                                     <f:ajax execute="@form" render="@form panelHorarios"/>
                                 </h:commandButton>
                             </div>

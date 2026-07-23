@@ -1,6 +1,6 @@
 package unl.edu.ec.M_A_S_S.view;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Named
-@ApplicationScoped
+@SessionScoped
 public class HorarioMedicoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
