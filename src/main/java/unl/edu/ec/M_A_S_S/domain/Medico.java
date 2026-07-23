@@ -1,6 +1,7 @@
 package unl.edu.ec.M_A_S_S.domain;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +30,13 @@ public class Medico implements Serializable {
 
     @NotBlank(message = "El nombre del médico es obligatorio")
     private String nombreCompleto;
+
+    @NotBlank(message = "El usuario de acceso es obligatorio")
+    @Column(unique = true)
+    private String usuario;
+
+    @NotBlank(message = "La contraseña de acceso es obligatoria")
+    private String contrasena;
 
     // Relaciones UML
     @NotEmpty(message = "Debe seleccionar al menos una especialidad")
@@ -86,6 +94,22 @@ public class Medico implements Serializable {
 
     public void setNombreCompleto(String nombreCompleto) {
         this.nombreCompleto = nombreCompleto;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public List<Especialidad> getEspecialidades() {

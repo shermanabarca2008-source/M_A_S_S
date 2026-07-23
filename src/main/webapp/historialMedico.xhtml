@@ -165,36 +165,30 @@
         <p class="font-label-md text-label-md text-on-surface-variant">Portal del Paciente</p>
     </div>
     <nav class="flex-1 space-y-1">
-        <a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group" href="#">
+        <h:link outcome="gestionPacientes" styleClass="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group">
             <span class="material-symbols-outlined group-hover:text-primary">dashboard</span>
             <span class="font-label-md text-label-md">Dashboard</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group" href="#">
+        </h:link>
+        <h:link outcome="misCitas" styleClass="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group">
             <span class="material-symbols-outlined group-hover:text-primary">calendar_today</span>
             <span class="font-label-md text-label-md">Citas</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-3 bg-primary-container text-on-primary-container border-l-4 border-primary rounded-r-full group" href="#">
+        </h:link>
+        <h:link outcome="historialMedico" styleClass="flex items-center gap-md px-md py-3 bg-primary-container text-on-primary-container border-l-4 border-primary rounded-r-full group">
             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">history_edu</span>
             <span class="font-label-md text-label-md">Historial</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group" href="#">
-            <span class="material-symbols-outlined group-hover:text-primary">pill</span>
-            <span class="font-label-md text-label-md">Recetas</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group" href="#">
-            <span class="material-symbols-outlined group-hover:text-primary">assessment</span>
-            <span class="font-label-md text-label-md">Informes</span>
-        </a>
+        </h:link>
     </nav>
     <div class="mt-auto pt-lg border-t border-outline-variant">
         <a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group" href="#">
             <span class="material-symbols-outlined">help</span>
             <span class="font-label-md text-label-md">Centro de Ayuda</span>
         </a>
-        <a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group" href="#">
-            <span class="material-symbols-outlined">logout</span>
-            <span class="font-label-md text-label-md">Cerrar Sesión</span>
-        </a>
+        <h:form>
+            <h:commandLink action="#{pacienteBean.cerrarSesion}" styleClass="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group w-full">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-md text-label-md">Cerrar Sesión</span>
+            </h:commandLink>
+        </h:form>
     </div>
 </aside>
 <!-- Main Content Canvas -->

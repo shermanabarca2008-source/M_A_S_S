@@ -1,6 +1,7 @@
 package unl.edu.ec.M_A_S_S.view;
 
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
@@ -17,6 +18,7 @@ import unl.edu.ec.M_A_S_S.domain.Paciente;
 import java.io.Serializable;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +36,9 @@ public class PacienteBean implements Serializable {
 
     @Inject
     private PacienteRepositorioBean pacienteRepositorioBean;
+
+    @Inject
+    private MedicoSesionBean medicoSesionBean;
 
     private String cedula;
     private String contrasena;
@@ -60,12 +65,35 @@ public class PacienteBean implements Serializable {
         if (pacienteActual != null) {
             mensaje = "Bienvenido " + pacienteActual.getNombreCompleto() + ".";
             error = false;
-            return "paciente";
+            return "gestionPacientes?faces-redirect=true";
+        }
+
+        Medico medico = encontrarMedicoPorCredenciales(cedula, contrasena);
+        if (medico != null) {
+            medicoSesionBean.setMedicoActual(medico);
+            mensaje = "Bienvenido " + medico.getNombreCompleto() + ".";
+            error = false;
+            return "panelMedico?faces-redirect=true";
         }
 
         mensaje = "Cédula o contraseña incorrecta.";
         error = true;
         return null;
+    }
+
+    public String cerrarSesion() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/index?faces-redirect=true";
+    }
+
+    private Medico encontrarMedicoPorCredenciales(String usuario, String contrasena) {
+        List<Medico> resultado = em.createQuery(
+                        "SELECT m FROM Medico m WHERE m.usuario = :usuario AND m.contrasena = :contrasena",
+                        Medico.class)
+                .setParameter("usuario", usuario)
+                .setParameter("contrasena", contrasena)
+                .getResultList();
+        return resultado.isEmpty() ? null : resultado.get(0);
     }
 
     public String registrarPaciente() {
@@ -228,6 +256,30 @@ public class PacienteBean implements Serializable {
             }
         }
         return result;
+    }
+
+    public Cita getProximaCita() {
+        if (pacienteActual == null) {
+            return null;
+        }
+        List<Cita> citas = new ArrayList<>(pacienteActual.getCitas());
+        citas.removeIf(cita -> cita.getEstado() != Cita.EstadoCita.AGENDADA);
+        citas.sort(Comparator.comparing(Cita::getFecha).thenComparing(Cita::getHora));
+        return citas.isEmpty() ? null : citas.get(0);
+    }
+
+    public List<Notificacion> getNotificaciones() {
+        List<Notificacion> resultado = new ArrayList<>();
+        if (pacienteActual == null) {
+            return resultado;
+        }
+        for (Cita cita : pacienteActual.getCitas()) {
+            if (cita.getNotificacion() != null) {
+                resultado.add(cita.getNotificacion());
+            }
+        }
+        resultado.sort(Comparator.comparing(Notificacion::getFechaEnvio).reversed());
+        return resultado;
     }
 
     public List<String> getHistorialClinico() {

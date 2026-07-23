@@ -194,6 +194,21 @@
                             <p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Mantén presionado Ctrl (o Cmd) para seleccionar varias.</p>
                         </div>
                     </div>
+                    <!-- Access Credentials -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
+                        <div class="space-y-xs">
+                            <label class="font-label-md text-label-md text-on-surface" for="usuarioMedico">Usuario de acceso</label>
+                            <h:inputText id="usuarioMedico" value="#{administradorBean.usuarioNuevoMedico}"
+                                         styleClass="w-full px-md py-sm rounded-lg border border-outline-variant bg-surface-container-lowest text-body-md form-input-focus transition-standard"
+                                         pt:placeholder="ej. jperez"/>
+                        </div>
+                        <div class="space-y-xs">
+                            <label class="font-label-md text-label-md text-on-surface" for="contrasenaMedico">Contraseña de acceso</label>
+                            <h:inputSecret id="contrasenaMedico" value="#{administradorBean.contrasenaNuevoMedico}" redisplay="true"
+                                         styleClass="w-full px-md py-sm rounded-lg border border-outline-variant bg-surface-container-lowest text-body-md form-input-focus transition-standard"
+                                         pt:placeholder="Contraseña"/>
+                        </div>
+                    </div>
                     <h:outputText value="#{administradorBean.mensajeAdmin}" styleClass="text-error font-label-md block"
                                   rendered="#{not empty administradorBean.mensajeAdmin and administradorBean.errorAdmin}"/>
                     <!-- Actions -->

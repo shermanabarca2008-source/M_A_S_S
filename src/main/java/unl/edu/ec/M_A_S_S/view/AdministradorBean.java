@@ -25,6 +25,8 @@ public class AdministradorBean implements Serializable {
     private String nombreEspecialidad;
     private String descripcionEspecialidad;
     private String nombreMedico;
+    private String usuarioNuevoMedico;
+    private String contrasenaNuevoMedico;
     private List<String> especialidadesNuevoMedico = new ArrayList<>();
     private String usuarioAdmin;
     private String passwordAdmin;
@@ -93,6 +95,23 @@ public class AdministradorBean implements Serializable {
             return null;
         }
 
+        if (usuarioNuevoMedico == null || usuarioNuevoMedico.trim().isEmpty()
+                || contrasenaNuevoMedico == null || contrasenaNuevoMedico.trim().isEmpty()) {
+            mensajeAdmin = "Ingrese el usuario y la contraseña de acceso del médico.";
+            errorAdmin = true;
+            return null;
+        }
+
+        Long usuariosExistentes = em.createQuery(
+                        "SELECT COUNT(m) FROM Medico m WHERE m.usuario = :usuario", Long.class)
+                .setParameter("usuario", usuarioNuevoMedico.trim())
+                .getSingleResult();
+        if (usuariosExistentes > 0) {
+            mensajeAdmin = "Ya existe un médico registrado con ese usuario.";
+            errorAdmin = true;
+            return null;
+        }
+
         List<Especialidad> especialidades = resolverEspecialidades(especialidadesNuevoMedico);
         if (especialidades.isEmpty()) {
             mensajeAdmin = "Seleccione al menos una especialidad.";
@@ -101,8 +120,12 @@ public class AdministradorBean implements Serializable {
         }
 
         Medico medico = new Medico(nombreMedico.trim(), especialidades);
+        medico.setUsuario(usuarioNuevoMedico.trim());
+        medico.setContrasena(contrasenaNuevoMedico.trim());
         em.persist(medico);
         nombreMedico = "";
+        usuarioNuevoMedico = "";
+        contrasenaNuevoMedico = "";
         especialidadesNuevoMedico = new ArrayList<>();
         mensajeAdmin = "Médico agregado correctamente.";
         errorAdmin = false;
@@ -227,6 +250,22 @@ public class AdministradorBean implements Serializable {
 
     public void setNombreMedico(String nombreMedico) {
         this.nombreMedico = nombreMedico;
+    }
+
+    public String getUsuarioNuevoMedico() {
+        return usuarioNuevoMedico;
+    }
+
+    public void setUsuarioNuevoMedico(String usuarioNuevoMedico) {
+        this.usuarioNuevoMedico = usuarioNuevoMedico;
+    }
+
+    public String getContrasenaNuevoMedico() {
+        return contrasenaNuevoMedico;
+    }
+
+    public void setContrasenaNuevoMedico(String contrasenaNuevoMedico) {
+        this.contrasenaNuevoMedico = contrasenaNuevoMedico;
     }
 
     public List<String> getEspecialidadesNuevoMedico() {
