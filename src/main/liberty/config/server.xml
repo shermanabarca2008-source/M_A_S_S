@@ -15,7 +15,11 @@
 
     <dataSource id="massDS" jndiName="jdbc/massDS">
         <jdbcDriver libraryRef="postgresqlLib"/>
-        <properties.postgresql serverName="localhost" portNumber="5432"
-                                databaseName="mass_db" user="mass_user" password="mass_pass"/>
+        <properties.postgresql
+                serverName="localhost"
+                portNumber="5432"
+                databaseName="M_A_S_S"
+                user="mass"
+                password="103125"/>
     </dataSource>
 </server>
