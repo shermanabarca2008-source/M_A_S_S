@@ -1,16 +1,20 @@
 package unl.edu.ec.M_A_S_S.view;
 
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import unl.edu.ec.M_A_S_S.domain.Administrador;
+import unl.edu.ec.M_A_S_S.domain.Cita;
 import unl.edu.ec.M_A_S_S.domain.Especialidad;
 import unl.edu.ec.M_A_S_S.domain.Medico;
+import unl.edu.ec.M_A_S_S.domain.Paciente;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Named
@@ -38,6 +42,68 @@ public class AdministradorBean implements Serializable {
     private boolean modoEdicion;
 
     private boolean formularioVisible = false;
+
+    private String terminoBusqueda;
+    private boolean busquedaRealizada;
+
+    public Date getFechaActual() {
+        return new Date();
+    }
+
+    public void buscar(AjaxBehaviorEvent event) {
+        busquedaRealizada = terminoBusqueda != null && !terminoBusqueda.trim().isEmpty();
+    }
+
+    public List<Medico> getResultadosMedicosBusqueda() {
+        if (!busquedaRealizada) {
+            return List.of();
+        }
+        String termino = "%" + terminoBusqueda.trim().toLowerCase() + "%";
+        return em.createQuery(
+                        "SELECT DISTINCT m FROM Medico m LEFT JOIN m.especialidades e "
+                                + "WHERE LOWER(m.nombreCompleto) LIKE :termino OR LOWER(e.nombre) LIKE :termino "
+                                + "ORDER BY m.nombreCompleto",
+                        Medico.class)
+                .setParameter("termino", termino)
+                .getResultList();
+    }
+
+    public List<Paciente> getResultadosPacientesBusqueda() {
+        if (!busquedaRealizada) {
+            return List.of();
+        }
+        String termino = "%" + terminoBusqueda.trim().toLowerCase() + "%";
+        return em.createQuery(
+                        "SELECT p FROM Paciente p WHERE LOWER(p.nombreCompleto) LIKE :termino "
+                                + "OR LOWER(p.cedula) LIKE :termino ORDER BY p.nombreCompleto",
+                        Paciente.class)
+                .setParameter("termino", termino)
+                .getResultList();
+    }
+
+    public List<Especialidad> getResultadosEspecialidadesBusqueda() {
+        if (!busquedaRealizada) {
+            return List.of();
+        }
+        String termino = "%" + terminoBusqueda.trim().toLowerCase() + "%";
+        return em.createQuery(
+                        "SELECT e FROM Especialidad e WHERE LOWER(e.nombre) LIKE :termino ORDER BY e.nombre",
+                        Especialidad.class)
+                .setParameter("termino", termino)
+                .getResultList();
+    }
+
+    public String getTerminoBusqueda() {
+        return terminoBusqueda;
+    }
+
+    public void setTerminoBusqueda(String terminoBusqueda) {
+        this.terminoBusqueda = terminoBusqueda;
+    }
+
+    public boolean isBusquedaRealizada() {
+        return busquedaRealizada;
+    }
 
     public void mostrarFormulario() {
         formularioVisible = true;
@@ -226,6 +292,43 @@ public class AdministradorBean implements Serializable {
 
     public List<Medico> getMedicos() {
         return em.createQuery("SELECT m FROM Medico m ORDER BY m.nombreCompleto", Medico.class).getResultList();
+    }
+
+    public int getTotalPacientesRegistrados() {
+        return em.createQuery("SELECT COUNT(p) FROM Paciente p", Long.class).getSingleResult().intValue();
+    }
+
+    public int getCitasHoy() {
+        return em.createQuery("SELECT COUNT(c) FROM Cita c WHERE c.fecha = CURRENT_DATE", Long.class)
+                .getSingleResult().intValue();
+    }
+
+    public int getCitasCanceladasTotal() {
+        return em.createQuery("SELECT COUNT(c) FROM Cita c WHERE c.estado = :estado", Long.class)
+                .setParameter("estado", Cita.EstadoCita.CANCELADA)
+                .getSingleResult().intValue();
+    }
+
+    public int getCitasAgendadasTotal() {
+        return em.createQuery("SELECT COUNT(c) FROM Cita c WHERE c.estado = :estado", Long.class)
+                .setParameter("estado", Cita.EstadoCita.AGENDADA)
+                .getSingleResult().intValue();
+    }
+
+    public int getCitasFinalizadasTotal() {
+        return em.createQuery("SELECT COUNT(c) FROM Cita c WHERE c.estado = :estado", Long.class)
+                .setParameter("estado", Cita.EstadoCita.FINALIZADA)
+                .getSingleResult().intValue();
+    }
+
+    public int getCitasReagendadasTotal() {
+        return em.createQuery("SELECT COUNT(c) FROM Cita c WHERE c.estado = :estado", Long.class)
+                .setParameter("estado", Cita.EstadoCita.REAGENDADA)
+                .getSingleResult().intValue();
+    }
+
+    public int getTotalCitasRegistradas() {
+        return em.createQuery("SELECT COUNT(c) FROM Cita c", Long.class).getSingleResult().intValue();
     }
 
     public String getNombreEspecialidad() {

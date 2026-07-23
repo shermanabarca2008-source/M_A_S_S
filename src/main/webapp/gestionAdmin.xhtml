@@ -3,7 +3,8 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="jakarta.faces.facelets"><head>
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:pt="jakarta.faces.passthrough"><head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>M.A.S.S. - Panel de Administración</title>
@@ -223,10 +224,14 @@
     <!-- TopNavBar -->
     <header class="sticky top-0 w-full bg-surface/80 backdrop-blur-md h-16 px-gutter flex justify-between items-center border-b border-outline-variant/50 shadow-sm z-40">
         <div class="flex items-center gap-lg flex-1">
-            <div class="relative w-full max-w-md">
+            <h:form styleClass="relative w-full max-w-md">
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-                <input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-body-sm focus:ring-2 focus:ring-primary/20" placeholder="Buscar pacientes, doctores o folios..." type="text"/>
-            </div>
+                <h:inputText value="#{administradorBean.terminoBusqueda}"
+                             styleClass="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-body-sm focus:ring-2 focus:ring-primary/20"
+                             pt:placeholder="Buscar médicos, pacientes o especialidades...">
+                    <f:ajax event="keyup" listener="#{administradorBean.buscar}" render=":resultadosBusqueda" delay="400"/>
+                </h:inputText>
+            </h:form>
         </div>
         <div class="flex items-center gap-md">
             <button class="hover:bg-surface-container-high rounded-full p-2 text-on-surface-variant transition-colors">
@@ -237,7 +242,9 @@
             </button>
             <div class="h-8 w-[1px] bg-outline-variant mx-2"></div>
             <div class="flex items-center gap-sm">
-                <span class="text-label-md font-medium">12 Oct, 2023</span>
+                <h:outputText value="#{administradorBean.fechaActual}" styleClass="text-label-md font-medium">
+                    <f:convertDateTime pattern="dd MMM, yyyy"/>
+                </h:outputText>
                 <span class="material-symbols-outlined text-on-surface-variant">schedule</span>
             </div>
         </div>
@@ -255,6 +262,43 @@
 
             </div>
         </div>
+        <!-- Search Results -->
+        <h:panelGroup id="resultadosBusqueda" layout="block">
+        <ui:fragment rendered="#{administradorBean.busquedaRealizada}">
+        <div class="glass-card rounded-xl p-lg space-y-lg">
+            <h3 class="font-headline-sm text-on-surface">Resultados para "#{administradorBean.terminoBusqueda}"</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+                <div>
+                    <p class="text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm">Médicos (#{administradorBean.resultadosMedicosBusqueda.size()})</p>
+                    <ui:repeat value="#{administradorBean.resultadosMedicosBusqueda}" var="med">
+                        <p class="text-body-sm py-1 border-b border-outline-variant/30">#{med.nombreCompleto} <span class="text-on-surface-variant">- #{med.especialidadesTexto}</span></p>
+                    </ui:repeat>
+                    <ui:fragment rendered="#{empty administradorBean.resultadosMedicosBusqueda}">
+                        <p class="text-body-sm text-on-surface-variant">Sin coincidencias.</p>
+                    </ui:fragment>
+                </div>
+                <div>
+                    <p class="text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm">Pacientes (#{administradorBean.resultadosPacientesBusqueda.size()})</p>
+                    <ui:repeat value="#{administradorBean.resultadosPacientesBusqueda}" var="pac">
+                        <p class="text-body-sm py-1 border-b border-outline-variant/30">#{pac.nombreCompleto} <span class="text-on-surface-variant">- #{pac.cedula}</span></p>
+                    </ui:repeat>
+                    <ui:fragment rendered="#{empty administradorBean.resultadosPacientesBusqueda}">
+                        <p class="text-body-sm text-on-surface-variant">Sin coincidencias.</p>
+                    </ui:fragment>
+                </div>
+                <div>
+                    <p class="text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm">Especialidades (#{administradorBean.resultadosEspecialidadesBusqueda.size()})</p>
+                    <ui:repeat value="#{administradorBean.resultadosEspecialidadesBusqueda}" var="esp">
+                        <p class="text-body-sm py-1 border-b border-outline-variant/30">#{esp.nombre}</p>
+                    </ui:repeat>
+                    <ui:fragment rendered="#{empty administradorBean.resultadosEspecialidadesBusqueda}">
+                        <p class="text-body-sm text-on-surface-variant">Sin coincidencias.</p>
+                    </ui:fragment>
+                </div>
+            </div>
+        </div>
+        </ui:fragment>
+        </h:panelGroup>
         <!-- KPI Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-lg">
             <!-- Card 1 -->
@@ -263,12 +307,9 @@
                     <div class="p-2 bg-blue-50 text-blue-600 rounded-lg">
                         <span class="material-symbols-outlined">group</span>
                     </div>
-                    <span class="text-green-600 text-label-sm font-bold flex items-center">
-                            +4.2% <span class="material-symbols-outlined text-[16px]">trending_up</span>
-</span>
                 </div>
                 <p class="text-label-sm text-on-surface-variant uppercase tracking-wider">Total Pacientes</p>
-                <p class="text-headline-md font-bold">12,480</p>
+                <p class="text-headline-md font-bold">#{administradorBean.totalPacientesRegistrados}</p>
             </div>
             <!-- Card 2 -->
             <div class="glass-card p-lg rounded-xl">
@@ -276,9 +317,6 @@
                     <div class="p-2 bg-purple-50 text-purple-600 rounded-lg">
                         <span class="material-symbols-outlined">stethoscope</span>
                     </div>
-                    <span class="text-on-surface-variant text-label-sm font-bold flex items-center">
-                            Estable
-                        </span>
                 </div>
                 <p class="text-label-sm text-on-surface-variant uppercase tracking-wider">Total Médicos</p>
                 <p class="text-headline-md font-bold">#{administradorBean.medicos.size()}</p>
@@ -292,7 +330,7 @@
                     <span class="text-primary text-label-sm font-bold">Hoy</span>
                 </div>
                 <p class="text-label-sm text-on-surface-variant uppercase tracking-wider">Citas del Día</p>
-                <p class="text-headline-md font-bold">84</p>
+                <p class="text-headline-md font-bold">#{administradorBean.citasHoy}</p>
             </div>
             <!-- Card 4 -->
             <div class="glass-card p-lg rounded-xl">
@@ -300,12 +338,9 @@
                     <div class="p-2 bg-red-50 text-red-600 rounded-lg">
                         <span class="material-symbols-outlined">event_busy</span>
                     </div>
-                    <span class="text-red-600 text-label-sm font-bold flex items-center">
-                            -2% <span class="material-symbols-outlined text-[16px]">trending_down</span>
-</span>
                 </div>
                 <p class="text-label-sm text-on-surface-variant uppercase tracking-wider">Canceladas</p>
-                <p class="text-headline-md font-bold">12</p>
+                <p class="text-headline-md font-bold">#{administradorBean.citasCanceladasTotal}</p>
             </div>
             <!-- Card 5 -->
 
@@ -314,98 +349,31 @@
         <div class="grid grid-cols-10 gap-gutter">
             <!-- Left Column (70%) -->
             <div class="col-span-10 lg:col-span-7 space-y-gutter">
-                <!-- Analytics Chart Placeholder -->
+                <!-- Citas por Estado -->
                 <div class="glass-card p-lg rounded-xl relative overflow-hidden h-[360px]">
                     <div class="flex justify-between items-center mb-xl">
                         <div>
-                            <h3 class="font-headline-sm text-on-surface">Citas por Mes</h3>
-                            <p class="text-body-sm text-on-surface-variant">Tendencia histórica de consultas 2023</p>
+                            <h3 class="font-headline-sm text-on-surface">Citas por Estado</h3>
+                            <p class="text-body-sm text-on-surface-variant">#{administradorBean.totalCitasRegistradas} citas registradas en total</p>
                         </div>
-                        <select class="bg-surface-container text-body-sm border-outline-variant rounded-lg px-md py-1">
-                            <option>Últimos 12 meses</option>
-                            <option>Año actual</option>
-                        </select>
                     </div>
-                    <!-- Pseudo-Chart Bars -->
-                    <div class="absolute bottom-lg left-lg right-lg h-48 flex items-end justify-between gap-2 px-md">
-                        <div class="bg-primary/20 w-full rounded-t-sm h-[40%]"></div>
-                        <div class="bg-primary/20 w-full rounded-t-sm h-[60%]"></div>
-                        <div class="bg-primary/20 w-full rounded-t-sm h-[55%]"></div>
-                        <div class="bg-primary/20 w-full rounded-t-sm h-[75%]"></div>
-                        <div class="bg-primary/20 w-full rounded-t-sm h-[90%]"></div>
-                        <div class="bg-primary/40 w-full rounded-t-sm h-[65%]"></div>
-                        <div class="bg-primary/40 w-full rounded-t-sm h-[80%]"></div>
-                        <div class="bg-primary w-full rounded-t-sm h-[95%]"></div>
-                        <div class="bg-primary w-full rounded-t-sm h-[85%]"></div>
-                        <div class="bg-primary w-full rounded-t-sm h-[70%]"></div>
-                        <div class="bg-primary w-full rounded-t-sm h-[60%]"></div>
-                        <div class="bg-primary/10 w-full rounded-t-sm h-[45%]"></div>
-                    </div>
-                    <div class="absolute bottom-4 left-lg right-lg flex justify-between px-md text-[10px] text-on-surface-variant font-medium">
-                        <span class="">ENE</span><span class="">FEB</span><span class="">MAR</span><span class="">ABR</span><span class="">MAY</span><span class="">JUN</span><span class="">JUL</span><span class="">AGO</span><span class="">SEP</span><span class="">OCT</span><span class="">NOV</span><span class="">DIC</span>
-                    </div>
-                </div>
-                <!-- Recent Activity Table -->
-                <div class="glass-card rounded-xl overflow-hidden">
-                    <div class="p-lg border-b border-outline-variant/30 flex justify-between items-center">
-                        <h3 class="font-headline-sm text-on-surface">Actividad Reciente del Sistema</h3>
-                        <button class="text-primary text-label-md font-bold hover:underline">Ver todo</button>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left">
-                            <thead class="bg-surface-container-low text-on-surface-variant text-label-sm uppercase tracking-wider">
-                            <tr>
-                                <th class="px-lg py-md">Evento</th>
-                                <th class="px-lg py-md">Usuario / Paciente</th>
-                                <th class="px-lg py-md">Hora</th>
-                                <th class="px-lg py-md">Estado</th>
-                            </tr>
-                            </thead>
-                            <tbody class="divide-y divide-outline-variant/30 text-body-sm">
-                            <tr class="hover:bg-surface-container-lowest transition-colors">
-                                <td class="px-lg py-md flex items-center gap-sm">
-                                    <span class="material-symbols-outlined text-primary text-[20px]">calendar_add_on</span>
-                                    Cita Agendada
-                                </td>
-                                <td class="px-lg py-md">
-                                    <div class="font-medium text-on-surface">Carlos Mendoza</div>
-                                    <div class="text-xs text-on-surface-variant">Cardiología</div>
-                                </td>
-                                <td class="px-lg py-md">Hace 5 min</td>
-                                <td class="px-lg py-md">
-                                    <span class="px-sm py-xs bg-primary-fixed text-on-primary-fixed-variant rounded-full text-[10px] font-bold">PENDIENTE</span>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-surface-container-lowest transition-colors">
-                                <td class="px-lg py-md flex items-center gap-sm">
-                                    <span class="material-symbols-outlined text-tertiary text-[20px]">person_add</span>
-                                    Nuevo Registro
-                                </td>
-                                <td class="px-lg py-md">
-                                    <div class="font-medium text-on-surface">Elena Rodriguez</div>
-                                    <div class="text-xs text-on-surface-variant">Expediente #9021</div>
-                                </td>
-                                <td class="px-lg py-md">Hace 18 min</td>
-                                <td class="px-lg py-md">
-                                    <span class="px-sm py-xs bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-full text-[10px] font-bold">EXITOSO</span>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-surface-container-lowest transition-colors">
-                                <td class="px-lg py-md flex items-center gap-sm">
-                                    <span class="material-symbols-outlined text-error text-[20px]">cancel</span>
-                                    Cita Cancelada
-                                </td>
-                                <td class="px-lg py-md">
-                                    <div class="font-medium text-on-surface"> </div>
-                                    <div class="text-xs text-on-surface-variant"> </div>
-                                </td>
-                                <td class="px-lg py-md">Hace 32 min</td>
-                                <td class="px-lg py-md">
-                                    <span class="px-sm py-xs bg-error-container text-on-error-container rounded-full text-[10px] font-bold">CANCELADO</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    <div class="absolute bottom-lg left-lg right-lg h-48 flex items-end justify-between gap-4 px-md">
+                        <div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+                            <div class="bg-primary w-full rounded-t-sm" style="height: #{administradorBean.totalCitasRegistradas eq 0 ? 4 : (administradorBean.citasAgendadasTotal * 100) / administradorBean.totalCitasRegistradas}%"></div>
+                            <span class="text-[11px] text-on-surface-variant font-medium">Agendadas (#{administradorBean.citasAgendadasTotal})</span>
+                        </div>
+                        <div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+                            <div class="bg-tertiary w-full rounded-t-sm" style="height: #{administradorBean.totalCitasRegistradas eq 0 ? 4 : (administradorBean.citasFinalizadasTotal * 100) / administradorBean.totalCitasRegistradas}%"></div>
+                            <span class="text-[11px] text-on-surface-variant font-medium">Finalizadas (#{administradorBean.citasFinalizadasTotal})</span>
+                        </div>
+                        <div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+                            <div class="bg-secondary w-full rounded-t-sm" style="height: #{administradorBean.totalCitasRegistradas eq 0 ? 4 : (administradorBean.citasReagendadasTotal * 100) / administradorBean.totalCitasRegistradas}%"></div>
+                            <span class="text-[11px] text-on-surface-variant font-medium">Reagendadas (#{administradorBean.citasReagendadasTotal})</span>
+                        </div>
+                        <div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+                            <div class="bg-error w-full rounded-t-sm" style="height: #{administradorBean.totalCitasRegistradas eq 0 ? 4 : (administradorBean.citasCanceladasTotal * 100) / administradorBean.totalCitasRegistradas}%"></div>
+                            <span class="text-[11px] text-on-surface-variant font-medium">Canceladas (#{administradorBean.citasCanceladasTotal})</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -413,48 +381,22 @@
             <div class="col-span-10 lg:col-span-3 space-y-gutter">
                 <!-- Specialties Card -->
                 <div class="glass-card p-lg rounded-xl">
-                    <h3 class="font-headline-sm text-on-surface mb-lg">Especialidades más solicitadas</h3>
+                    <h3 class="font-headline-sm text-on-surface mb-lg">Médicos por Especialidad</h3>
                     <div class="space-y-md">
-                        <!-- Progress Bar Pattern -->
+                        <ui:repeat value="#{administradorBean.especialidades}" var="esp">
                         <div>
                             <div class="flex justify-between text-label-md mb-1">
-                                <span class=""> </span>
-                                <span class="font-bold"> </span>
+                                <span class="">#{esp.nombre}</span>
+                                <span class="font-bold">#{esp.medicos.size()}</span>
                             </div>
                             <div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
-                                <div class="bg-primary h-full rounded-full" style="width: 42%"></div>
+                                <div class="bg-primary h-full rounded-full" style="width: #{administradorBean.medicos.size() eq 0 ? 0 : (esp.medicos.size() * 100) / administradorBean.medicos.size()}%"></div>
                             </div>
                         </div>
-                        <div>
-                            <div class="flex justify-between text-label-md mb-1">
-                                <span class=""> </span>
-                                <span class="font-bold"> </span>
-                            </div>
-                            <div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
-                                <div class="bg-primary-container h-full rounded-full" style="width: 28%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-label-md mb-1">
-                                <span class=""> </span>
-                                <span class="font-bold"> </span>
-                            </div>
-                            <div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
-                                <div class="bg-primary-fixed-dim h-full rounded-full" style="width: 15%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-label-md mb-1">
-                                <span class=""> </span>
-                                <span class="font-bold"> </span>
-                            </div>
-                            <div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
-                                <div class="bg-outline-variant h-full rounded-full" style="width: 15%"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-xl pt-lg border-t border-outline-variant/30 text-center">
-                        <button class="text-primary font-label-md hover:underline">Análisis Detallado</button>
+                        </ui:repeat>
+                        <ui:fragment rendered="#{empty administradorBean.especialidades}">
+                            <p class="text-body-sm text-on-surface-variant">No hay especialidades registradas todavía.</p>
+                        </ui:fragment>
                     </div>
                 </div>
                 <div class="glass-card p-lg rounded-xl">

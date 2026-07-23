@@ -3,15 +3,15 @@ services:
     image: postgres:16
     container_name: mass_postgres
     environment:
-      POSTGRES_DB: mass_db
-      POSTGRES_USER: mass_user
-      POSTGRES_PASSWORD: mass_pass
+      POSTGRES_DB: M_A_S_S
+      POSTGRES_USER: mass
+      POSTGRES_PASSWORD: "103125"
     ports:
       - "5432:5432"
     volumes:
       - mass_pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U mass_user -d mass_db"]
+      test: ["CMD-SHELL", "pg_isready -U mass -d M_A_S_S"]
       interval: 5s
       timeout: 5s
       retries: 5

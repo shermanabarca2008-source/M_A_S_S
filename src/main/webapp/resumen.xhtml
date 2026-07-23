@@ -255,18 +255,6 @@
     </div>
 </aside>
 <script>
-    // Micro-interaction for the confirm button
-    const confirmBtn = document.querySelector('button.bg-primary');
-    confirmBtn.addEventListener('click', function() {
-        this.innerHTML = '&lt;span class="material-symbols-outlined animate-spin"/>sync&lt;/span/> Procesando...';
-        this.classList.add('opacity-80');
-        setTimeout(() => {
-            this.innerHTML = '¡Cita Confirmada! &lt;span class="material-symbols-outlined"/>verified&lt;/span/>';
-            this.classList.remove('bg-primary');
-            this.classList.add('bg-tertiary-container', 'text-on-tertiary-container');
-        }, 1500);
-    });
-
     // Simple animation on load for the details grid items
     document.addEventListener('DOMContentLoaded', () => {
         const items = document.querySelectorAll('.grid > div');
