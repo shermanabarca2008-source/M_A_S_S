@@ -1,5 +1,22 @@
 package unl.edu.ec.M_A_S_S.domain;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -7,17 +24,37 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "cita")
 public class Cita implements Serializable {
 
-    // Atributos
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull(message = "La fecha de la cita es obligatoria")
+    @Temporal(TemporalType.DATE)
     private Date fecha;
+
+    @NotNull(message = "La hora de la cita es obligatoria")
     private Time hora;
+
+    @Enumerated(EnumType.STRING)
     private EstadoCita estado;
 
     // Relaciones UML
+    @ManyToOne
+    @JoinColumn(name = "medico_id")
     private Medico medico;
+
+    @ManyToOne
+    @JoinColumn(name = "paciente_id")
     private Paciente paciente;
+
+    @OneToMany(mappedBy = "cita", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<IndicacionesMedicas> indicaciones;
+
+    @OneToOne(mappedBy = "cita", cascade = CascadeType.ALL, orphanRemoval = true)
     private Notificacion notificacion;
 
     // Constructor vacío
@@ -39,6 +76,10 @@ public class Cita implements Serializable {
     }
 
     // Getters y Setters
+    public Long getId() {
+        return id;
+    }
+
     public Date getFecha() {
         return fecha;
     }

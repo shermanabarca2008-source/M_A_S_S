@@ -5,8 +5,8 @@
                                  https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
              version="3.0">
 
-    <persistence-unit name="jbrewPU" transaction-type="JTA">
-        <jta-data-source>jdbc/jbrewDS</jta-data-source>
+    <persistence-unit name="massPU" transaction-type="JTA">
+        <jta-data-source>jdbc/massDS</jta-data-source>
 
         <properties>
             <!-- 1. Configuración de generación / actualización de tablas (esquema de BD) -->

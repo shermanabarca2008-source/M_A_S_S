@@ -185,14 +185,13 @@
                     </div>
                     <!-- Specialty -->
                     <div class="space-y-xs">
-                        <label class="font-label-md text-label-md text-on-surface" for="especialidad">Seleccionar Especialidad</label>
+                        <label class="font-label-md text-label-md text-on-surface" for="especialidad">Seleccionar Especialidad(es)</label>
                         <div class="relative">
-                            <h:selectOneMenu id="especialidad" value="#{administradorBean.especialidadNuevoMedico}"
-                                              styleClass="w-full px-md py-sm rounded-lg border border-outline-variant bg-surface-container-lowest text-body-md form-input-focus appearance-none transition-standard">
-                                <f:selectItem itemValue="" itemLabel="Seleccione una especialidad" itemDisabled="true"/>
+                            <h:selectManyListbox id="especialidad" value="#{administradorBean.especialidadesNuevoMedico}"
+                                              styleClass="w-full px-md py-sm rounded-lg border border-outline-variant bg-surface-container-lowest text-body-md form-input-focus transition-standard">
                                 <f:selectItems value="#{administradorBean.especialidades}" var="esp" itemValue="#{esp.nombre}" itemLabel="#{esp.nombre}"/>
-                            </h:selectOneMenu>
-                            <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
+                            </h:selectManyListbox>
+                            <p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Mantén presionado Ctrl (o Cmd) para seleccionar varias.</p>
                         </div>
                     </div>
                     <h:outputText value="#{administradorBean.mensajeAdmin}" styleClass="text-error font-label-md block"

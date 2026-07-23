@@ -2,6 +2,9 @@ package unl.edu.ec.M_A_S_S.view;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import unl.edu.ec.M_A_S_S.domain.HorarioMedico;
 import unl.edu.ec.M_A_S_S.domain.Medico;
 
@@ -17,6 +20,9 @@ public class HorarioMedicoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @PersistenceContext(unitName = "massPU")
+    private EntityManager em;
+
     private Medico medicoSeleccionado;
     private LocalDate fechaDisponible;
     private LocalTime horaInicio;
@@ -25,7 +31,7 @@ public class HorarioMedicoBean implements Serializable {
     private boolean error;
 
     public void seleccionarMedico(Medico medico) {
-        medicoSeleccionado = medico;
+        medicoSeleccionado = medico != null ? em.find(Medico.class, medico.getId()) : null;
         limpiarCampos();
         mensaje = null;
         error = false;
@@ -36,6 +42,7 @@ public class HorarioMedicoBean implements Serializable {
         return "gestionHorarios?faces-redirect=true";
     }
 
+    @Transactional
     public void registrarHorario() {
         if (medicoSeleccionado == null || fechaDisponible == null
                 || horaInicio == null || horaFin == null) {
@@ -55,26 +62,37 @@ public class HorarioMedicoBean implements Serializable {
             return;
         }
 
+        Medico administrado = em.find(Medico.class, medicoSeleccionado.getId());
         HorarioMedico nuevo = new HorarioMedico(fechaDisponible, horaInicio, horaFin, true);
-        medicoSeleccionado.gestionarDisponibilidad(nuevo);
+        administrado.gestionarDisponibilidad(nuevo);
+        em.persist(nuevo);
+        medicoSeleccionado = administrado;
         mostrarExito("Horario registrado correctamente.");
         limpiarCampos();
     }
 
+    @Transactional
     public void liberarHorario(HorarioMedico horario) {
         if (horario == null) {
             mostrarError("Seleccione un horario.");
             return;
         }
-        horario.setDisponible(true);
+        HorarioMedico administrado = em.find(HorarioMedico.class, horario.getId());
+        administrado.setDisponible(true);
         mostrarExito("Horario habilitado nuevamente.");
     }
 
+    @Transactional
     public void eliminarHorario(HorarioMedico horario) {
-        if (medicoSeleccionado == null || horario == null || !medicoSeleccionado.getHorarios().remove(horario)) {
+        HorarioMedico administrado = horario != null ? em.find(HorarioMedico.class, horario.getId()) : null;
+        if (administrado == null) {
             mostrarError("No se pudo eliminar el horario.");
             return;
         }
+        if (administrado.getMedico() != null) {
+            administrado.getMedico().getHorarios().remove(administrado);
+        }
+        em.remove(administrado);
         mostrarExito("Horario eliminado correctamente.");
     }
 
@@ -82,11 +100,15 @@ public class HorarioMedicoBean implements Serializable {
         if (medicoSeleccionado == null) {
             return new ArrayList<>();
         }
-        return medicoSeleccionado.getHorarios();
+        return em.createQuery(
+                        "SELECT h FROM HorarioMedico h WHERE h.medico = :medico ORDER BY h.fechaDisponible, h.horaInicio",
+                        HorarioMedico.class)
+                .setParameter("medico", medicoSeleccionado)
+                .getResultList();
     }
 
     private boolean existeCruce() {
-        for (HorarioMedico horario : medicoSeleccionado.getHorarios()) {
+        for (HorarioMedico horario : getHorariosMedicoSeleccionado()) {
             if (fechaDisponible.equals(horario.getFechaDisponible())
                     && horaInicio.isBefore(horario.getHoraFin())
                     && horaFin.isAfter(horario.getHoraInicio())) {

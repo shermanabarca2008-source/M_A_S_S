@@ -257,9 +257,9 @@
                     <ui:fragment rendered="#{administradorBean.modoEdicion and administradorBean.medicoSeleccionado eq medico}">
                     <td class="px-lg py-4" colspan="2">
                         <h:inputText value="#{administradorBean.nombreMedicoEdicion}" styleClass="border border-outline-variant rounded-lg px-2 py-1 mr-2"/>
-                        <h:selectOneMenu value="#{administradorBean.especialidadSeleccionadaEdicion}" styleClass="border border-outline-variant rounded-lg px-2 py-1">
+                        <h:selectManyListbox value="#{administradorBean.especialidadesSeleccionadasEdicion}" styleClass="border border-outline-variant rounded-lg px-2 py-1">
                             <f:selectItems value="#{administradorBean.especialidades}" var="e" itemValue="#{e.nombre}" itemLabel="#{e.nombre}"/>
-                        </h:selectOneMenu>
+                        </h:selectManyListbox>
                     </td>
                     <td class="px-lg py-4 text-center">
                         <h:commandLink styleClass="font-body-md text-body-md text-primary hover:underline" action="#{horarioMedicoBean.irAHorarios(medico)}">
@@ -289,7 +289,7 @@
                         </div>
                     </td>
                     <td class="px-lg py-4">
-                        <span class="font-body-md text-body-md text-on-surface-variant">#{medico.especialidad.nombre}</span>
+                        <span class="font-body-md text-body-md text-on-surface-variant">#{medico.especialidadesTexto}</span>
                     </td>
                     <td class="px-lg py-4 text-center">
                         <h:commandLink styleClass="font-body-md text-body-md text-primary hover:underline" action="#{horarioMedicoBean.irAHorarios(medico)}">

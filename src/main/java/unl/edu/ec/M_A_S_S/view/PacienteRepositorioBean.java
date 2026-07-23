@@ -2,10 +2,12 @@ package unl.edu.ec.M_A_S_S.view;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import unl.edu.ec.M_A_S_S.domain.Paciente;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Named
@@ -14,41 +16,40 @@ public class PacienteRepositorioBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final List<Paciente> pacientes = new ArrayList<>();
+    @PersistenceContext(unitName = "massPU")
+    private EntityManager em;
 
     public List<Paciente> getPacientes() {
-        return pacientes;
+        return em.createQuery("SELECT p FROM Paciente p ORDER BY p.nombreCompleto", Paciente.class).getResultList();
     }
 
+    @Transactional
     public void registrar(Paciente paciente) {
-        pacientes.add(paciente);
+        em.persist(paciente);
     }
 
     public Paciente buscarPorCredenciales(String cedula, String contrasena) {
-        for (Paciente paciente : pacientes) {
-            if (cedula != null && cedula.equals(paciente.getCedula())
-                    && contrasena != null && contrasena.equals(paciente.getContrasena())) {
-                return paciente;
-            }
-        }
-        return null;
+        List<Paciente> resultado = em.createQuery(
+                        "SELECT p FROM Paciente p WHERE p.cedula = :cedula AND p.contrasena = :contrasena",
+                        Paciente.class)
+                .setParameter("cedula", cedula)
+                .setParameter("contrasena", contrasena)
+                .getResultList();
+        return resultado.isEmpty() ? null : resultado.get(0);
     }
 
     public boolean existeCedula(String cedula) {
-        for (Paciente paciente : pacientes) {
-            if (cedula.equals(paciente.getCedula())) {
-                return true;
-            }
-        }
-        return false;
+        Long total = em.createQuery("SELECT COUNT(p) FROM Paciente p WHERE p.cedula = :cedula", Long.class)
+                .setParameter("cedula", cedula)
+                .getSingleResult();
+        return total > 0;
     }
 
     public boolean existeCorreo(String correo) {
-        for (Paciente paciente : pacientes) {
-            if (correo.equalsIgnoreCase(paciente.getCorreo())) {
-                return true;
-            }
-        }
-        return false;
+        Long total = em.createQuery(
+                        "SELECT COUNT(p) FROM Paciente p WHERE LOWER(p.correoElectronico) = LOWER(:correo)", Long.class)
+                .setParameter("correo", correo)
+                .getSingleResult();
+        return total > 0;
     }
 }

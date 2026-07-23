@@ -1,15 +1,34 @@
 package unl.edu.ec.M_A_S_S.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@Entity
+@Table(name = "notificacion")
 public class Notificacion implements Serializable {
 
-    // Atributos
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String mensaje;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEnvio;
 
     // Relación UML
+    @OneToOne
+    @JoinColumn(name = "cita_id")
     private Cita cita;
 
     // Constructor vacío
@@ -28,6 +47,10 @@ public class Notificacion implements Serializable {
     }
 
     // Getters y Setters
+    public Long getId() {
+        return id;
+    }
+
     public String getMensaje() {
         return mensaje;
     }

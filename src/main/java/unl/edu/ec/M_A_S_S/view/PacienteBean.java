@@ -3,6 +3,9 @@ package unl.edu.ec.M_A_S_S.view;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import unl.edu.ec.M_A_S_S.domain.Cita;
 import unl.edu.ec.M_A_S_S.domain.Especialidad;
 import unl.edu.ec.M_A_S_S.domain.HorarioMedico;
@@ -13,7 +16,6 @@ import unl.edu.ec.M_A_S_S.domain.Paciente;
 
 import java.io.Serializable;
 import java.sql.Time;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +25,9 @@ import java.util.List;
 public class PacienteBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @PersistenceContext(unitName = "massPU")
+    private EntityManager em;
 
     @Inject
     private AdministradorBean administradorBean;
@@ -35,18 +40,13 @@ public class PacienteBean implements Serializable {
     private String mensaje;
     private boolean error;
     private Paciente pacienteActual;
+    private Paciente nuevoPaciente = new Paciente();
     private String especialidadSeleccionada;
     private String medicoSeleccionado;
     private String horarioSeleccionado;
     private String citaSeleccionada;
     private String tabActiva = "agendar";
     private Cita ultimaCitaAgendada;
-    private String nombres;
-    private String apellidos;
-    private String telefono;
-    private String correo;
-    private String direccion;
-    private String fechaNacimiento;
 
     public String iniciarSesion() {
         if ("admin".equals(cedula) && "admin123".equals(contrasena)) {
@@ -70,87 +70,33 @@ public class PacienteBean implements Serializable {
 
     public String registrarPaciente() {
 
-        if (!telefono.matches("\\d{10}")) {
-            mensaje = "El teléfono debe contener 10 dígitos.";
-            error = true;
-            return null;
-        }
-
-        if (!correo.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-            mensaje = "Correo electrónico inválido.";
-            error = true;
-            return null;
-        }
-
-        if (!cedula.matches("\\d{10}")) {
-            mensaje = "La cédula debe contener 10 dígitos.";
-            error = true;
-            return null;
-        }
-
-        if (cedula.trim().isEmpty() || contrasena == null || contrasena.trim().isEmpty() || nombres == null
-                || nombres.trim().isEmpty() || apellidos == null
-                || apellidos.trim().isEmpty() || telefono.trim().isEmpty()
-                || correo.trim().isEmpty() || direccion == null || direccion.trim().isEmpty()) {
-
-            mensaje = "Debe completar todos los campos.";
-            error = true;
-            return null;
-        }
-
         // Verificar que la cédula no exista
-        if (pacienteRepositorioBean.existeCedula(cedula)) {
+        if (pacienteRepositorioBean.existeCedula(nuevoPaciente.getCedula())) {
             mensaje = "Ya existe un paciente registrado con esa cédula.";
             error = true;
             return null;
         }
 
         // Verificar que el correo no exista
-        if (pacienteRepositorioBean.existeCorreo(correo)) {
+        if (pacienteRepositorioBean.existeCorreo(nuevoPaciente.getCorreoElectronico())) {
             mensaje = "El correo electrónico ya está registrado.";
             error = true;
             return null;
         }
 
-        Paciente nuevo = new Paciente();
+        pacienteRepositorioBean.registrar(nuevoPaciente);
 
-        nuevo.setCedula(cedula);
-        nuevo.setContrasena(contrasena);
-        nuevo.setNombres(nombres);
-        nuevo.setApellidos(apellidos);
-        nuevo.setTelefono(telefono);
-        nuevo.setCorreo(correo);
-        nuevo.setDireccion(direccion);
-
-        if (fechaNacimiento != null && !fechaNacimiento.isBlank()) {
-            nuevo.setFechaNacimiento(LocalDate.parse(fechaNacimiento));
-        }
-
-        pacienteRepositorioBean.registrar(nuevo);
-
-        pacienteActual = nuevo;
+        pacienteActual = nuevoPaciente;
 
         mensaje = "Registro exitoso.";
         error = false;
 
-        limpiarFormulario();
+        nuevoPaciente = new Paciente();
 
         return "/index.xhtml?faces-redirect=true";
     }
 
-    private void limpiarFormulario() {
-
-        cedula = "";
-        contrasena = "";
-        nombres = "";
-        apellidos = "";
-        telefono = "";
-        correo = "";
-        direccion = "";
-        fechaNacimiento = null;
-
-    }
-
+    @Transactional
     public String agendarCita() {
         if (pacienteActual == null) {
             mensaje = "Debe iniciar sesión primero.";
@@ -164,25 +110,29 @@ public class PacienteBean implements Serializable {
             return null;
         }
 
-        Especialidad especialidad = encontrarEspecialidadPorNombre(especialidadSeleccionada);
-        Medico medico = encontrarMedicoPorNombre(medicoSeleccionado, especialidad);
+        Medico medico = encontrarMedicoPorNombre(medicoSeleccionado);
         HorarioMedico horario = encontrarHorarioPorTexto(horarioSeleccionado, medico);
+        Paciente paciente = em.find(Paciente.class, pacienteActual.getId());
 
-        if (especialidad == null || medico == null || horario == null) {
+        if (medico == null || horario == null || paciente == null) {
             mensaje = "No fue posible crear la cita.";
             error = true;
             return null;
         }
 
         Cita cita = new Cita(Date.from(horario.getFechaDisponible().atStartOfDay(java.time.ZoneId.systemDefault()).toInstant()),
-                Time.valueOf(horario.getHoraInicio()), medico, pacienteActual);
+                Time.valueOf(horario.getHoraInicio()), medico, paciente);
         cita.agendar();
-        pacienteActual.agendarCita(cita);
+        paciente.agendarCita(cita);
         horario.reservarHorario();
         medico.agregarCita(cita);
         cita.setNotificacion(new Notificacion("Cita agendada correctamente", new Date(), cita));
+
+        em.persist(cita);
+
         cita.getNotificacion().enviarNotificacion();
 
+        pacienteActual = paciente;
         ultimaCitaAgendada = cita;
         mensaje = "Cita agendada correctamente.";
         error = false;
@@ -193,12 +143,7 @@ public class PacienteBean implements Serializable {
         return ultimaCitaAgendada;
     }
 
-    public String verHistorial() {
-        mensaje = "Función Ver Historial en desarrollo.";
-        error = false;
-        return null;
-    }
-
+    @Transactional
     public String cancelarCita() {
         if (pacienteActual == null || citaSeleccionada == null) {
             mensaje = "Seleccione una cita para cancelar.";
@@ -208,12 +153,7 @@ public class PacienteBean implements Serializable {
 
         for (Cita cita : pacienteActual.getCitas()) {
             if (citaSeleccionada.equals(cita.getMedico().getNombreCompleto() + " | " + cita.getFecha() + " | " + cita.getHora())) {
-                cita.cancelar();
-                if (cita.getNotificacion() != null) {
-                    cita.getNotificacion().enviarNotificacion();
-                }
-                mensaje = "Cita cancelada correctamente.";
-                error = false;
+                cancelarCita(cita);
                 return null;
             }
         }
@@ -223,15 +163,17 @@ public class PacienteBean implements Serializable {
         return null;
     }
 
+    @Transactional
     public void cancelarCita(Cita cita) {
         if (cita == null) {
             mensaje = "Seleccione una cita para cancelar.";
             error = true;
             return;
         }
-        cita.cancelar();
-        if (cita.getNotificacion() != null) {
-            cita.getNotificacion().enviarNotificacion();
+        Cita administrada = em.find(Cita.class, cita.getId());
+        administrada.cancelar();
+        if (administrada.getNotificacion() != null) {
+            administrada.getNotificacion().enviarNotificacion();
         }
         mensaje = "Cita cancelada correctamente.";
         error = false;
@@ -255,27 +197,27 @@ public class PacienteBean implements Serializable {
     }
 
     public List<Medico> getMedicosDisponibles() {
-        List<Medico> resultado = new ArrayList<>();
-        Especialidad especialidad = encontrarEspecialidadPorNombre(especialidadSeleccionada);
-        if (especialidad != null) {
-            for (Medico medico : especialidad.getMedicos()) {
-                resultado.add(medico);
-            }
+        if (especialidadSeleccionada == null) {
+            return new ArrayList<>();
         }
-        return resultado;
+        return em.createQuery(
+                        "SELECT m FROM Medico m JOIN m.especialidades e WHERE e.nombre = :nombre ORDER BY m.nombreCompleto",
+                        Medico.class)
+                .setParameter("nombre", especialidadSeleccionada)
+                .getResultList();
     }
 
     public List<HorarioMedico> getHorariosDisponibles() {
-        List<HorarioMedico> resultado = new ArrayList<>();
-        Medico medico = encontrarMedicoPorNombre(medicoSeleccionado, encontrarEspecialidadPorNombre(especialidadSeleccionada));
-        if (medico != null) {
-            for (HorarioMedico horario : medico.getHorarios()) {
-                if (horario.isDisponible()) {
-                    resultado.add(horario);
-                }
-            }
+        Medico medico = encontrarMedicoPorNombre(medicoSeleccionado);
+        if (medico == null) {
+            return new ArrayList<>();
         }
-        return resultado;
+        return em.createQuery(
+                        "SELECT h FROM HorarioMedico h WHERE h.medico = :medico AND h.disponible = true "
+                                + "ORDER BY h.fechaDisponible, h.horaInicio",
+                        HorarioMedico.class)
+                .setParameter("medico", medico)
+                .getResultList();
     }
 
     public List<String> getCitasPaciente() {
@@ -304,25 +246,15 @@ public class PacienteBean implements Serializable {
         return result;
     }
 
-    private Especialidad encontrarEspecialidadPorNombre(String nombre) {
-        for (Especialidad especialidad : getEspecialidades()) {
-            if (especialidad.getNombre().equals(nombre)) {
-                return especialidad;
-            }
-        }
-        return null;
-    }
-
-    private Medico encontrarMedicoPorNombre(String nombre, Especialidad especialidad) {
-        if (especialidad == null) {
+    private Medico encontrarMedicoPorNombre(String nombre) {
+        if (nombre == null) {
             return null;
         }
-        for (Medico medico : especialidad.getMedicos()) {
-            if (medico.getNombreCompleto().equals(nombre)) {
-                return medico;
-            }
-        }
-        return null;
+        List<Medico> resultado = em.createQuery(
+                        "SELECT m FROM Medico m WHERE m.nombreCompleto = :nombre", Medico.class)
+                .setParameter("nombre", nombre)
+                .getResultList();
+        return resultado.isEmpty() ? null : resultado.get(0);
     }
 
     private HorarioMedico encontrarHorarioPorTexto(String texto, Medico medico) {
@@ -352,6 +284,10 @@ public class PacienteBean implements Serializable {
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    public Paciente getNuevoPaciente() {
+        return nuevoPaciente;
     }
 
     public String getEspecialidadSeleccionada() {
@@ -405,30 +341,4 @@ public class PacienteBean implements Serializable {
     public void setTabActiva(String tabActiva) {
         this.tabActiva = tabActiva;
     }
-
-    public String getNombres() {return nombres;}
-
-    public void setNombres(String nombres) {this.nombres = nombres;}
-
-    public String getApellidos() {return apellidos;}
-
-    public void setApellidos(String apellidos) {this.apellidos = apellidos;}
-
-    public String getTelefono() {return telefono;}
-
-    public void setTelefono(String telefono) {this.telefono = telefono;}
-
-    public String getCorreo() {return correo;}
-
-    public void setCorreo(String correo) {this.correo = correo;}
-
-    public String getDireccion() {return direccion;}
-
-    public void setDireccion(String direccion) {this.direccion = direccion;}
-
-    public String getFechaNacimiento() {return fechaNacimiento;}
-
-    public void setFechaNacimiento(String fechaNacimiento) {this.fechaNacimiento = fechaNacimiento;}
-
-    public String getTelfono() {return telefono;}
 }

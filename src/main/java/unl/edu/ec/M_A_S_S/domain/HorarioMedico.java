@@ -1,18 +1,45 @@
 package unl.edu.ec.M_A_S_S.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Entity
+@Table(name = "horario_medico")
 public class HorarioMedico implements Serializable {
 
-    // Atributos
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull(message = "La fecha disponible es obligatoria")
     private LocalDate fechaDisponible;
+
+    @NotNull(message = "La hora de inicio es obligatoria")
     private LocalTime horaInicio;
+
+    @NotNull(message = "La hora de fin es obligatoria")
     private LocalTime horaFin;
+
     private boolean disponible;
 
+    @ManyToOne
+    @JoinColumn(name = "medico_id")
+    private Medico medico;
+
     // Constructor
+    public HorarioMedico() {
+    }
+
     public HorarioMedico(LocalDate fechaDisponible, LocalTime horaInicio,
                          LocalTime horaFin, boolean disponible) {
 
@@ -23,6 +50,10 @@ public class HorarioMedico implements Serializable {
     }
 
     // Getters y Setters
+    public Long getId() {
+        return id;
+    }
+
     public LocalDate getFechaDisponible() {
         return fechaDisponible;
     }
@@ -55,6 +86,14 @@ public class HorarioMedico implements Serializable {
         this.disponible = disponible;
     }
 
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+
     // Método para mostrar información
     public void mostrarHorario() {
 
@@ -79,26 +118,5 @@ public class HorarioMedico implements Serializable {
         } else {
             System.out.println("El horario ya no está disponible.");
         }
-    }
-
-    // Método principal
-    public static void main(String[] args) {
-
-        HorarioMedico horario1 = new HorarioMedico(
-                LocalDate.of(2026, 5, 30),
-                LocalTime.of(8, 0),
-                LocalTime.of(9, 0),
-                true
-        );
-
-        horario1.mostrarHorario();
-
-        System.out.println("\nReservando horario...\n");
-
-        horario1.reservarHorario();
-
-        System.out.println();
-
-        horario1.mostrarHorario();
     }
 }

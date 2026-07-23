@@ -8,4 +8,14 @@
     <keyStore id="defaultKeyStore" password="password" />
     <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9443" />
     <webApplication location="M_A_S_S.war" contextRoot="/"/>
+
+    <library id="postgresqlLib">
+        <fileset dir="${server.config.dir}/postgresql" includes="*.jar"/>
+    </library>
+
+    <dataSource id="massDS" jndiName="jdbc/massDS">
+        <jdbcDriver libraryRef="postgresqlLib"/>
+        <properties.postgresql serverName="localhost" portNumber="5432"
+                                databaseName="mass_db" user="mass_user" password="mass_pass"/>
+    </dataSource>
 </server>

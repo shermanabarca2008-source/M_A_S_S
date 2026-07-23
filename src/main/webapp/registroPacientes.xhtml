@@ -177,7 +177,7 @@
                                         id="cedula"
                                         name="cedula"
                                         type="text"
-                                        value="#{pacienteBean.cedula}"
+                                        value="#{pacienteBean.nuevoPaciente.cedula}"
                                         pt:placeholder="1900863067"
                                         required="true"
                                         styleClass="form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"
@@ -198,7 +198,7 @@
                                         id="nombres"
                                         name="nombres"
                                         type="text"
-                                        value="#{pacienteBean.nombres}"
+                                        value="#{pacienteBean.nuevoPaciente.nombres}"
                                         pt:placeholder="Escribe tus nombres"
                                         required="true"
                                         styleClass="form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"
@@ -210,7 +210,7 @@
                                         id="apellidos"
                                         name="apellidos"
                                         type="text"
-                                        value="#{pacienteBean.apellidos}"
+                                        value="#{pacienteBean.nuevoPaciente.apellidos}"
                                         pt:placeholder="Escribe tus apellidos"
                                         required="true"
                                         styleClass="form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"
@@ -221,9 +221,11 @@
                             <h:inputText
                                     id="fecha_nacimiento"
                                     type="date"
-                                    value="#{pacienteBean.fechaNacimiento}"
+                                    value="#{pacienteBean.nuevoPaciente.fechaNacimiento}"
                                     required="true"
-                                    styleClass="form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"/>
+                                    styleClass="form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md">
+                                <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
+                            </h:inputText>
                         </div>
                     </div>
                 </div>
@@ -242,7 +244,7 @@
                                             id="telefono"
                                             name="telefono"
                                             type="tel"
-                                            value="#{pacienteBean.telefono}"
+                                            value="#{pacienteBean.nuevoPaciente.telefono}"
                                             required="true"
                                             pt:placeholder="0990160983"
                                             styleClass="w-full pl-10 form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"
@@ -257,7 +259,7 @@
                                             id="correo"
                                             name="correo"
                                             type="email"
-                                            value="#{pacienteBean.correo}"
+                                            value="#{pacienteBean.nuevoPaciente.correoElectronico}"
                                             required="true"
                                             pt:placeholder="usuario@ejemplo.com"
                                             styleClass="w-full pl-10 form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"
@@ -268,7 +270,7 @@
                                 <h:inputText
                                         id="direccion"
                                         name="direccion"
-                                        value="#{pacienteBean.direccion}"
+                                        value="#{pacienteBean.nuevoPaciente.direccion}"
                                         required="true"
                                         pt:placeholder="Ingrese su dirección"
                                         styleClass="form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"/>
@@ -290,7 +292,7 @@
                                 <label class="font-label-md text-label-md text-on-surface-variant" for="password">Contraseña</label>
                                 <h:inputSecret
                                         id="password"
-                                        value="#{pacienteBean.contrasena}"
+                                        value="#{pacienteBean.nuevoPaciente.contrasena}"
                                         required="true"
                                         pt:placeholder="Mínimo 8 caracteres"
                                         styleClass="form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"
@@ -316,6 +318,9 @@
                     <input class="w-5 h-5 rounded text-primary border-outline-variant focus:ring-primary" required="" type="checkbox"/>
                     <span class="font-body-md text-on-surface-variant group-hover:text-on-surface transition-colors">Acepto los <a class="text-primary font-bold hover:underline" href="#">términos y condiciones</a> de privacidad de datos médicos.</span>
                 </label>
+                <h:messages styleClass="text-error font-label-md text-center" layout="list" globalOnly="false"/>
+                <h:outputText value="#{pacienteBean.mensaje}" styleClass="text-error font-label-md block"
+                              rendered="#{not empty pacienteBean.mensaje and pacienteBean.error}"/>
             </div>
                 <div class="flex flex-col md:flex-row items-center gap-md w-full md:w-auto">
                     <h:commandButton

@@ -1,39 +1,41 @@
 package unl.edu.ec.M_A_S_S.view;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import unl.edu.ec.M_A_S_S.domain.Administrador;
 import unl.edu.ec.M_A_S_S.domain.Especialidad;
 import unl.edu.ec.M_A_S_S.domain.Medico;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named
 @ApplicationScoped
-
 public class AdministradorBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Administrador administrador;
+    @PersistenceContext(unitName = "massPU")
+    private EntityManager em;
+
     private String nombreEspecialidad;
     private String descripcionEspecialidad;
     private String nombreMedico;
-    private String especialidadNuevoMedico;
+    private List<String> especialidadesNuevoMedico = new ArrayList<>();
     private String usuarioAdmin;
     private String passwordAdmin;
     private String mensajeAdmin;
     private boolean errorAdmin;
     private Medico medicoSeleccionado;
     private String nombreMedicoEdicion;
-    private String especialidadSeleccionadaEdicion;
+    private List<String> especialidadesSeleccionadasEdicion = new ArrayList<>();
     private boolean modoEdicion;
 
     private boolean formularioVisible = false;
-
-    private Medico medico = new Medico();
 
     public void mostrarFormulario() {
         formularioVisible = true;
@@ -47,22 +49,14 @@ public class AdministradorBean implements Serializable {
         this.formularioVisible = formularioVisible;
     }
 
-    public Medico getMedico() {
-        return medico;
-    }
-
-    @PostConstruct
-    private void init() {
-        administrador = new Administrador();
-    }
-
+    @Transactional
     public void agregarEspecialidad() {
         if (nombreEspecialidad != null && !nombreEspecialidad.trim().isEmpty()) {
             Especialidad especialidad = new Especialidad(
                     nombreEspecialidad.trim(),
                     descripcionEspecialidad != null ? descripcionEspecialidad.trim() : ""
             );
-            administrador.gestionarEspecialidad(especialidad);
+            em.persist(especialidad);
             nombreEspecialidad = "";
             descripcionEspecialidad = "";
             formularioVisible = false;
@@ -78,8 +72,11 @@ public class AdministradorBean implements Serializable {
         formularioVisible = false;
     }
 
+    @Transactional
     public void eliminarEspecialidad(Especialidad especialidad) {
-        if (administrador != null && administrador.eliminarEspecialidad(especialidad)) {
+        Especialidad administrada = especialidad != null ? em.find(Especialidad.class, especialidad.getNombre()) : null;
+        if (administrada != null) {
+            em.remove(administrada);
             mensajeAdmin = "Especialidad eliminada correctamente.";
             errorAdmin = false;
         } else {
@@ -88,6 +85,7 @@ public class AdministradorBean implements Serializable {
         }
     }
 
+    @Transactional
     public String agregarMedico() {
         if (nombreMedico == null || nombreMedico.trim().isEmpty()) {
             mensajeAdmin = "Ingrese un nombre para el médico.";
@@ -95,18 +93,17 @@ public class AdministradorBean implements Serializable {
             return null;
         }
 
-        Especialidad especialidad = encontrarEspecialidadPorNombre(especialidadNuevoMedico);
-        if (especialidad == null) {
-            mensajeAdmin = "Seleccione una especialidad válida.";
+        List<Especialidad> especialidades = resolverEspecialidades(especialidadesNuevoMedico);
+        if (especialidades.isEmpty()) {
+            mensajeAdmin = "Seleccione al menos una especialidad.";
             errorAdmin = true;
             return null;
         }
 
-        Medico medico = new Medico(nombreMedico.trim(), especialidad);
-        administrador.gestionarMedico(medico);
-        especialidad.agregarMedico(medico);
+        Medico medico = new Medico(nombreMedico.trim(), especialidades);
+        em.persist(medico);
         nombreMedico = "";
-        especialidadNuevoMedico = "";
+        especialidadesNuevoMedico = new ArrayList<>();
         mensajeAdmin = "Médico agregado correctamente.";
         errorAdmin = false;
         return "gestionMedicos?faces-redirect=true";
@@ -115,10 +112,14 @@ public class AdministradorBean implements Serializable {
     public void seleccionarMedicoParaEditar(Medico medico) {
         medicoSeleccionado = medico;
         nombreMedicoEdicion = medico.getNombreCompleto();
-        especialidadSeleccionadaEdicion = medico.getEspecialidad() != null ? medico.getEspecialidad().getNombre() : "";
+        especialidadesSeleccionadasEdicion = new ArrayList<>();
+        for (Especialidad especialidad : medico.getEspecialidades()) {
+            especialidadesSeleccionadasEdicion.add(especialidad.getNombre());
+        }
         modoEdicion = true;
     }
 
+    @Transactional
     public void guardarEdicionMedico() {
         if (medicoSeleccionado == null || nombreMedicoEdicion == null || nombreMedicoEdicion.trim().isEmpty()) {
             mensajeAdmin = "Ingrese un nombre válido para el médico.";
@@ -126,23 +127,16 @@ public class AdministradorBean implements Serializable {
             return;
         }
 
-        Especialidad nuevaEspecialidad = encontrarEspecialidadPorNombre(especialidadSeleccionadaEdicion);
-        if (nuevaEspecialidad == null) {
-            mensajeAdmin = "Seleccione una especialidad válida.";
+        List<Especialidad> nuevasEspecialidades = resolverEspecialidades(especialidadesSeleccionadasEdicion);
+        if (nuevasEspecialidades.isEmpty()) {
+            mensajeAdmin = "Seleccione al menos una especialidad.";
             errorAdmin = true;
             return;
         }
 
-        medicoSeleccionado.setNombreCompleto(nombreMedicoEdicion.trim());
-
-        Especialidad especialidadAnterior = medicoSeleccionado.getEspecialidad();
-        if (especialidadAnterior != nuevaEspecialidad) {
-            if (especialidadAnterior != null) {
-                especialidadAnterior.getMedicos().remove(medicoSeleccionado);
-            }
-            nuevaEspecialidad.agregarMedico(medicoSeleccionado);
-            medicoSeleccionado.setEspecialidad(nuevaEspecialidad);
-        }
+        Medico administrado = em.find(Medico.class, medicoSeleccionado.getId());
+        administrado.setNombreCompleto(nombreMedicoEdicion.trim());
+        administrado.setEspecialidades(nuevasEspecialidades);
 
         mensajeAdmin = "Médico actualizado correctamente.";
         errorAdmin = false;
@@ -153,13 +147,16 @@ public class AdministradorBean implements Serializable {
         modoEdicion = false;
         medicoSeleccionado = null;
         nombreMedicoEdicion = "";
-        especialidadSeleccionadaEdicion = "";
+        especialidadesSeleccionadasEdicion = new ArrayList<>();
         mensajeAdmin = "Edición cancelada.";
         errorAdmin = false;
     }
 
+    @Transactional
     public void eliminarMedico(Medico medico) {
-        if (administrador != null && administrador.eliminarMedico(medico)) {
+        Medico administrado = medico != null ? em.find(Medico.class, medico.getId()) : null;
+        if (administrado != null) {
+            em.remove(administrado);
             mensajeAdmin = "Médico eliminado correctamente.";
             errorAdmin = false;
         } else {
@@ -168,20 +165,29 @@ public class AdministradorBean implements Serializable {
         }
     }
 
-    private Especialidad encontrarEspecialidadPorNombre(String nombre) {
-        if (nombre == null || nombre.isBlank()) {
-            return null;
+    private List<Especialidad> resolverEspecialidades(List<String> nombres) {
+        List<Especialidad> resultado = new ArrayList<>();
+        if (nombres == null) {
+            return resultado;
         }
-        for (Especialidad especialidad : administrador.getEspecialidades()) {
-            if (nombre.equals(especialidad.getNombre())) {
-                return especialidad;
+        for (String nombre : nombres) {
+            Especialidad especialidad = em.find(Especialidad.class, nombre);
+            if (especialidad != null) {
+                resultado.add(especialidad);
             }
         }
-        return null;
+        return resultado;
     }
 
     public String validarAccesoAdministrador() {
-        if (administrador != null && "admin123".equals(passwordAdmin) && "admin".equalsIgnoreCase(usuarioAdmin)) {
+        List<Administrador> resultado = em.createQuery(
+                        "SELECT a FROM Administrador a WHERE a.usuario = :usuario AND a.contrasena = :contrasena",
+                        Administrador.class)
+                .setParameter("usuario", usuarioAdmin)
+                .setParameter("contrasena", passwordAdmin)
+                .getResultList();
+
+        if (!resultado.isEmpty()) {
             mensajeAdmin = "Acceso correcto. Bienvenido administrador.";
             errorAdmin = false;
             return "admin";
@@ -192,11 +198,11 @@ public class AdministradorBean implements Serializable {
     }
 
     public List<Especialidad> getEspecialidades() {
-        return administrador != null ? administrador.getEspecialidades() : List.of();
+        return em.createQuery("SELECT e FROM Especialidad e ORDER BY e.nombre", Especialidad.class).getResultList();
     }
 
     public List<Medico> getMedicos() {
-        return administrador != null ? administrador.getMedicos() : List.of();
+        return em.createQuery("SELECT m FROM Medico m ORDER BY m.nombreCompleto", Medico.class).getResultList();
     }
 
     public String getNombreEspecialidad() {
@@ -223,16 +229,12 @@ public class AdministradorBean implements Serializable {
         this.nombreMedico = nombreMedico;
     }
 
-    public String getEspecialidadNuevoMedico() {
-        return especialidadNuevoMedico;
+    public List<String> getEspecialidadesNuevoMedico() {
+        return especialidadesNuevoMedico;
     }
 
-    public void setEspecialidadNuevoMedico(String especialidadNuevoMedico) {
-        this.especialidadNuevoMedico = especialidadNuevoMedico;
-    }
-
-    public Administrador getAdministrador() {
-        return administrador;
+    public void setEspecialidadesNuevoMedico(List<String> especialidadesNuevoMedico) {
+        this.especialidadesNuevoMedico = especialidadesNuevoMedico;
     }
 
     public String getUsuarioAdmin() {
@@ -275,12 +277,12 @@ public class AdministradorBean implements Serializable {
         this.nombreMedicoEdicion = nombreMedicoEdicion;
     }
 
-    public String getEspecialidadSeleccionadaEdicion() {
-        return especialidadSeleccionadaEdicion;
+    public List<String> getEspecialidadesSeleccionadasEdicion() {
+        return especialidadesSeleccionadasEdicion;
     }
 
-    public void setEspecialidadSeleccionadaEdicion(String especialidadSeleccionadaEdicion) {
-        this.especialidadSeleccionadaEdicion = especialidadSeleccionadaEdicion;
+    public void setEspecialidadesSeleccionadasEdicion(List<String> especialidadesSeleccionadasEdicion) {
+        this.especialidadesSeleccionadasEdicion = especialidadesSeleccionadasEdicion;
     }
 
     public boolean isModoEdicion() {
