@@ -1,83 +1,313 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<h:head>
-    <title>Gestión de Especialidades</title>
+<!DOCTYPE html><html class="light" lang="es" style=""
+                     xmlns="http://www.w3.org/1999/xhtml"
+                     xmlns:h="http://xmlns.jcp.org/jsf/html"
+                     xmlns:f="http://xmlns.jcp.org/jsf/core"
+                     xmlns:ui="jakarta.faces.facelets"><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"></link>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#cfdce4",
+                        "surface-variant": "#d7e4ec",
+                        "on-tertiary-fixed-variant": "#005313",
+                        "on-secondary-fixed-variant": "#454747",
+                        "surface-tint": "#005db7",
+                        "primary-fixed": "#d6e3ff",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#00468c",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#9afa95",
+                        "on-background": "#111d23",
+                        "surface-container-high": "#ddeaf2",
+                        "inverse-primary": "#a9c7ff",
+                        "on-tertiary-fixed": "#002204",
+                        "on-surface": "#111d23",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "on-secondary-container": "#616363",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c2c6d4",
+                        "surface-container-highest": "#d7e4ec",
+                        "on-primary-fixed": "#001b3d",
+                        "inverse-surface": "#263238",
+                        "on-surface-variant": "#424752",
+                        "on-error": "#ffffff",
+                        "primary": "#004d99",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#7ddc7a",
+                        "tertiary-fixed": "#98f994",
+                        "surface-container-low": "#e9f6fd",
+                        "primary-container": "#1565c0",
+                        "tertiary": "#005b15",
+                        "secondary-container": "#dfe0e0",
+                        "outline": "#727783",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#0f7623",
+                        "surface-container": "#e3f0f8",
+                        "on-primary-container": "#dae5ff",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "inverse-on-surface": "#e6f3fb",
+                        "secondary": "#5d5f5f",
+                        "background": "#f4faff",
+                        "surface-bright": "#f4faff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#e2e2e2",
+                        "surface": "#f4faff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "max_container": "1440px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "base": "4px",
+                        "gutter": "24px",
+                        "sidebar_width": "280px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
     <style>
-        body { font-family: Arial, sans-serif; margin: 24px; background-color: #f4faff; }
-        .card { border: 1px solid #ccc; padding: 16px; margin-bottom: 20px; border-radius: 8px; background: white; }
-        .btn { padding: 10px 16px; border: 1px solid #d0d5dd; border-radius: 8px; background: #f8fafc; cursor: pointer; }
-        .btn-primary { background: #004d99; color: white; border-color: #004d99; }
-        .btn-danger { background: #ba1a1a; color: white; border-color: #ba1a1a; }
-        .msg { color: #ba1a1a; font-weight: bold; }
-        .ok { color: #005b15; font-weight: bold; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e0e4e8; }
-        th { background: #e9f6fd; }
-        tr:hover { background: #f8fafc; }
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .sidebar-active {
+            border-left: 4px solid #004d99;
+            background-color: rgba(0, 77, 153, 0.1);
+            color: #004d99;
+            font-weight: 700;
+        }
+        .card-elevation {
+            background-color: #FFFFFF;
+            border: 1px solid #E0E4E8;
+            box-shadow: 0px 2px 4px rgba(38, 50, 56, 0.05);
+        }
+        .card-hover:hover {
+            box-shadow: 0px 8px 16px rgba(38, 50, 56, 0.08);
+            transition: all 0.2s ease;
+        }
     </style>
-</h:head>
-<h:body>
-    <h1>Gestión de Especialidades</h1>
-    <p>Total de especialidades: #{administradorBean.especialidades.size()}</p>
-
-    <h:form>
-        <h:commandButton value="Nueva Especialidad" action="#{administradorBean.mostrarFormulario}" styleClass="btn btn-primary"/>
-
-        <h:panelGroup rendered="#{administradorBean.formularioVisible}">
-            <div class="card">
-                <h2>Agregar Nueva Especialidad</h2>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="Nombre:" for="nombre"/>
-                    <h:inputText id="nombre" value="#{administradorBean.nombreEspecialidad}"/>
-
-                    <h:outputLabel value="Descripción:" for="descripcion"/>
-                    <h:inputText id="descripcion" value="#{administradorBean.descripcionEspecialidad}"/>
-
-                    <h:outputText value=""/>
-                    <div>
-                        <h:commandButton value="Guardar" action="#{administradorBean.agregarEspecialidad}" styleClass="btn btn-primary"/>
-                        <h:commandButton value="Cancelar" action="#{administradorBean.ocultarFormulario}" styleClass="btn"/>
-                    </div>
-                </h:panelGrid>
-                <br/>
-                <h:outputText value="#{administradorBean.mensajeAdmin}" styleClass="msg" rendered="#{not empty administradorBean.mensajeAdmin and administradorBean.errorAdmin}"/>
-                <h:outputText value="#{administradorBean.mensajeAdmin}" styleClass="ok" rendered="#{not empty administradorBean.mensajeAdmin and not administradorBean.errorAdmin}"/>
-            </div>
-        </h:panelGroup>
-    </h:form>
-
-    <div class="card">
-        <h2>Especialidades Registradas</h2>
-        <h:form>
-            <table>
-                <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Nº Médicos</th>
-                    <th>Acciones</th>
-                </tr>
-                </thead>
-                <tbody>
-                <ui:repeat value="#{administradorBean.especialidades}" var="esp">
-                    <tr>
-                        <td>#{esp.nombre}</td>
-                        <td>#{esp.medicos.size()}</td>
-                        <td>
-                            <h:commandLink value="Eliminar" action="#{administradorBean.eliminarEspecialidad(esp)}" styleClass="btn-danger"/>
-                        </td>
-                    </tr>
-                </ui:repeat>
-                </tbody>
-            </table>
-        </h:form>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-sidebar_width bg-surface-container dark:bg-surface-container-lowest border-r border-outline-variant flex flex-col py-lg z-50"><div class="px-gutter mb-xl">
+    <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center">
+            <span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">health_metrics</span>
+        </div>
+        <div>
+            <h1 class="font-headline-sm text-headline-sm font-bold text-primary">M.A.S.S.</h1>
+            <p class="text-label-sm text-on-surface-variant leading-none">Panel de Administración</p>
+        </div>
     </div>
+</div>
+    <nav class="flex-1 flex flex-col">
+        <h:link outcome="gestionAdmin" styleClass="relative flex items-center gap-4 px-gutter py-md text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="font-body-md text-body-md">Tablero</span>
+        </h:link>
+        <h:link outcome="gestionMedicos" styleClass="relative flex items-center gap-4 px-gutter py-md text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200">
+            <span class="material-symbols-outlined">medical_services</span>
+            <span class="font-body-md text-body-md">Doctores</span>
+        </h:link>
+        <h:link outcome="gestionEspecialidades" styleClass="relative flex items-center gap-4 px-gutter py-md text-primary font-bold bg-primary/10 transition-colors duration-200">
+            <div class="absolute left-0 w-1 h-8 bg-primary rounded-r-lg"></div>
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">category</span>
+            <span class="font-body-md text-body-md">Especialidades</span>
+        </h:link>
+        <h:link outcome="reportes" styleClass="relative flex items-center gap-4 px-gutter py-md text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200">
+            <span class="material-symbols-outlined">assessment</span>
+            <span class="font-body-md text-body-md">Reportes</span>
+        </h:link>
+        <h:link outcome="configuracionSistema" styleClass="relative flex items-center gap-4 px-gutter py-md text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200">
+            <span class="material-symbols-outlined">settings</span>
+            <span class="font-body-md text-body-md">Configuración</span>
+        </h:link>
+        <h:form>
+            <h:commandLink action="#{pacienteBean.cerrarSesion}" styleClass="relative flex items-center gap-4 px-gutter py-md text-error hover:bg-error-container/20 transition-colors duration-200 w-full">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-body-md text-body-md">Cerrar Sesión</span>
+            </h:commandLink>
+        </h:form>
+    </nav>
+    <div class="px-gutter pt-lg mt-auto border-t border-outline-variant">
+        <div class="flex items-center gap-3 p-2 rounded-xl bg-surface-container-low">
+            <img class="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAf6QxTf5cZhLYGf22vz-D0F-6CG3HlMIL9LNO1X8d_k9p8uz_MakmPEsfy60XaKyZiUAxFaX4nFIiaYwiiZeWwIOG_FCn8TGLTpDlSBFSoVna0AoLFRBD-WTwWkiErV22tHAcezopKudx3M85TMvIA2Z652LHKO_fJL_FP17lvAieYJyPx93G8daj5ln3qHN6dppTA-Z2KPf969Us4twq3-YNtYfjpTp00O5z8j-IwfwAtb4tWlVfVF3nh5AFZJKTR3QpZsA9sIO4" alt="Dr. Ricardo Alva"/>
+            <div class="overflow-hidden">
+                <p class="text-label-md text-on-surface font-bold truncate">Dr. Ricardo Alva</p>
+                <p class="text-label-sm text-on-surface-variant truncate">Admin Superior</p>
+            </div>
+        </div>
+    </div></aside>
+<!-- TopNavBar -->
+<header class="sticky top-0 w-full flex justify-between items-center h-16 px-gutter ml-[280px] bg-surface dark:bg-surface-dim border-b border-outline-variant shadow-sm z-40 max-w-[calc(100%-280px)]">
+    <div class="flex items-center gap-4 flex-1">
+        <div class="relative w-full max-w-md">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+            <input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline rounded-full text-body-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="Buscar especialidades o departamentos..." type="text"/>
+        </div>
+    </div>
+    <div class="flex items-center gap-3">
+        <button class="hover:bg-surface-container-high rounded-full p-2 transition-shadow duration-200">
+            <span class="material-symbols-outlined text-primary" data-icon="help">help</span>
+        </button>
+        <button class="hover:bg-surface-container-high rounded-full p-2 transition-shadow duration-200">
+            <span class="material-symbols-outlined text-primary" data-icon="apps">apps</span>
+        </button>
+        <div class="h-8 w-px bg-outline-variant mx-2"></div>
+        <div class="flex items-center gap-3 pl-2">
+            <div class="text-right hidden sm:block">
+                <p class="text-label-md font-bold text-on-surface leading-none">Admin Usuario</p>
+                <p class="text-[10px] text-on-surface-variant">Super Administrador</p>
+            </div>
+            <div class="w-10 h-10 rounded-full border border-primary overflow-hidden">
+                <img class="w-full h-full object-cover" data-alt="Professional studio portrait of a medical administrator wearing a crisp white lab coat, smiling confidently against a soft blue clinical background. High resolution, professional lighting, corporate medical photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBraimVnEqUwS2RVK3-FiMIAcuwtXHJUEcBrl5ZUcDkQnObMPqG8WxaoJATWsAtSXwfQLqc1mgfxz-3pObKE2U05uBqKQY0TLRJ1PPfYr_wwG-wJuS6kgLAqVCDukuT3vnAUEb9QYFiPbzgi3cHAty1Ac9gIvqrgTXjaqD7QbAuQb6tqfoahXuQur5KAYFGZfYRWeT4pMWOjCV2HfEFF6Q3AAlIwDCKRt7Je_JfIZ6IRPWTIohzPUBE7kjmoV6nodukHr4-8qH8G5Q"/>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main Content -->
+<main class="ml-[280px] p-gutter max-w-max_container mx-auto">
+    <!-- Header & Action -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-xl gap-4">
+        <div>
+            <h2 class="font-headline-lg text-headline-lg text-on-surface">Gestión de Especialidades</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">Administra los departamentos médicos, especialidades y subespecialidades del sistema.</p>
+        </div>
+        <h:link outcome="newEspecialidad" styleClass="bg-primary text-white px-6 py-3 rounded-lg font-label-md flex items-center gap-2 shadow-sm hover:bg-primary-container transition-all active:scale-95">
+            <span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+            Nueva Especialidad
+        </h:link>
+    </div>
+    <!-- Summary Cards (Bento style) -->
 
-    <h:link value="Volver al panel de administración" outcome="gestionAdmin" styleClass="btn"/>
-    <h:form>
-        <h:commandLink value="Cerrar sesión" action="#{pacienteBean.cerrarSesion}" styleClass="btn btn-danger"/>
+    <!-- Filters Section -->
+
+    <!-- Data Table -->
+    <h:form id="especialidadesForm">
+    <h:panelGroup rendered="#{not empty administradorBean.mensajeAdmin}">
+        <div class="mb-lg #{administradorBean.errorAdmin ? 'bg-error-container text-on-error-container' : 'bg-tertiary-container text-on-tertiary-container'} px-lg py-md rounded-lg border #{administradorBean.errorAdmin ? 'border-error' : 'border-tertiary'} flex items-center gap-md">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">#{administradorBean.errorAdmin ? 'error' : 'check_circle'}</span>
+            <span class="font-label-md text-label-md">#{administradorBean.mensajeAdmin}</span>
+        </div>
+    </h:panelGroup>
+    <div class="card-elevation rounded-xl overflow-hidden mb-lg" style="transform: translateY(0px); transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);">
+        <table class="w-full text-left border-collapse">
+            <thead class="bg-surface-container-low border-b border-outline-variant">
+            <tr>
+                <th class="px-lg py-4 font-label-md text-on-surface-variant">Nombre de Especialidad</th>
+
+                <th class="px-lg py-4 font-label-md text-on-surface-variant text-center">Nº Doctores</th>
+
+                <th class="px-lg py-4 font-label-md text-on-surface-variant text-right">Acciones</th>
+            </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant">
+            <ui:repeat value="#{administradorBean.especialidades}" var="esp">
+            <tr class="hover:bg-surface-container-low transition-colors group">
+                <td class="px-lg py-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded bg-primary/5 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary" data-icon="category">category</span>
+                        </div>
+                        <span class="font-body-md font-semibold text-on-surface">#{esp.nombre}</span>
+                    </div>
+                </td>
+
+                <td class="px-lg py-4 text-center">
+                    <span class="font-body-md">#{esp.medicos.size()}</span>
+                </td>
+
+                <td class="px-lg py-4 text-right">
+                    <div class="flex justify-end gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
+                        <h:commandLink action="#{administradorBean.eliminarEspecialidad(esp)}" styleClass="p-1 hover:text-error" title="Eliminar">
+                            <span class="material-symbols-outlined" data-icon="delete">delete</span>
+                            <f:ajax execute="@form" render="@form"/>
+                        </h:commandLink>
+                    </div>
+                </td>
+            </tr>
+            </ui:repeat>
+            <ui:fragment rendered="#{empty administradorBean.especialidades}">
+            <tr>
+                <td colspan="3" class="px-lg py-8 text-center text-on-surface-variant">
+                    No hay especialidades registradas.
+                </td>
+            </tr>
+            </ui:fragment>
+            </tbody>
+        </table>
+    </div>
     </h:form>
-</h:body>
-</html>
+    <!-- Pagination -->
+
+</main>
+<script>
+    // Micro-interactions and subtle effects
+    document.querySelectorAll('.card-elevation').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-2px)';
+            card.style.transition = 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0px)';
+        });
+    });
+
+    // Search bar interaction
+    const searchInput = document.querySelector('input[type="text"]');
+    searchInput.addEventListener('focus', () => {
+        searchInput.parentElement.classList.add('ring-2', 'ring-primary/20');
+    });
+    searchInput.addEventListener('blur', () => {
+        searchInput.parentElement.classList.remove('ring-2', 'ring-primary/20');
+    });
+</script>
+
+
+
+
+
+
+
+</body></html>

@@ -140,28 +140,21 @@
             <p class="font-body-md text-body-md text-on-surface-variant">Complete los siguientes detalles para registrar una nueva especialidad médica en el sistema.</p>
         </div>
         <!-- Form Body -->
-        <form class="flex flex-col gap-lg" id="specialtyForm">
+        <h:form class="flex flex-col gap-lg" id="specialtyForm">
             <!-- Specialty Name Input -->
             <div class="flex flex-col gap-sm">
                 <label class="font-label-md text-label-md text-on-surface" for="specialty-name">Nombre de la Especialidad</label>
                 <div class="relative">
                     <span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-outline">category</span>
-                    <input class="w-full pl-xl pr-md py-md border border-outline-variant rounded-lg font-body-md text-body-md input-focus-ring bg-surface-bright transition-standard" id="specialty-name" name="specialty-name" placeholder="Ej. Cardiología, Pediatría..." required="" type="text"/>
+                    <h:inputText class="w-full pl-xl pr-md py-md border border-outline-variant rounded-lg font-body-md text-body-md input-focus-ring bg-surface-bright transition-standard" id="specialty-name" value="#{administradorBean.nombreEspecialidad}" placeholder="Ej. Cardiología, Pediatría..." required="true"/>
                 </div>
             </div>
-            <!-- Responsible Doctor Dropdown -->
+            <!-- Description Textarea -->
             <div class="flex flex-col gap-sm">
-                <label class="font-label-md text-label-md text-on-surface" for="responsible-doctor">Asignar Médico Responsable</label>
+                <label class="font-label-md text-label-md text-on-surface" for="specialty-description">Descripción de la Especialidad</label>
                 <div class="relative">
-                    <span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-outline">person</span>
-                    <select class="w-full pl-xl pr-md py-md border border-outline-variant rounded-lg font-body-md text-body-md input-focus-ring bg-surface-bright appearance-none cursor-pointer transition-standard" id="responsible-doctor" name="responsible-doctor" required="">
-                        <option disabled="" selected="" value="">Seleccionar médico registrado...</option>
-                        <option value="1">Dr. Alejandro Méndez - Medicina General</option>
-                        <option value="2">Dra. Beatriz Solís - Neurología</option>
-                        <option value="3">Dr. Carlos Ruiz - Traumatología</option>
-                        <option value="4">Dra. Elena Vargas - Dermatología</option>
-                    </select>
-                    <span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-outline pointer-events-none">expand_more</span>
+                    <span class="material-symbols-outlined absolute left-md top-3 text-outline">description</span>
+                    <h:inputTextarea class="w-full pl-xl pr-md py-md border border-outline-variant rounded-lg font-body-md text-body-md input-focus-ring bg-surface-bright transition-standard resize-none" id="specialty-description" value="#{administradorBean.descripcionEspecialidad}" placeholder="Describa en qué consiste esta especialidad médica..." required="true" rows="3"/>
                 </div>
             </div>
             <!-- Descriptive Image Block -->
@@ -170,45 +163,21 @@
             </div>
             <!-- Actions -->
             <div class="flex flex-col sm:flex-row items-center gap-md pt-md border-t border-outline-variant">
-                <button class="w-full sm:flex-1 h-12 bg-primary text-on-primary font-label-md text-label-md rounded-lg flex items-center justify-center gap-sm hover:bg-[#003d7a] shadow-sm btn-press transition-standard" type="submit">
-                    <span class="material-symbols-outlined">save</span>
-                    Guardar Especialidad
-                </button>
-                <button class="w-full sm:w-auto px-lg h-12 border border-primary text-primary font-label-md text-label-md rounded-lg flex items-center justify-center gap-sm hover:bg-primary-fixed-dim transition-standard btn-press" onclick="window.history.back()" type="button">
-                    Cancelar
-                </button>
+                <h:commandButton class="w-full sm:flex-1 h-12 bg-primary text-on-primary font-label-md text-label-md rounded-lg flex items-center justify-center gap-sm hover:bg-[#003d7a] shadow-sm btn-press transition-standard" action="#{administradorBean.agregarEspecialidad}" value="Guardar Especialidad">
+                    <f:ajax execute="@form" render="@form"/>
+                </h:commandButton>
+                <h:commandButton action="#{administradorBean.cancelarNuevaEspecialidad}" styleClass="w-full sm:w-auto px-lg h-12 border border-primary text-primary font-label-md text-label-md rounded-lg flex items-center justify-center gap-sm hover:bg-primary-fixed-dim transition-standard btn-press" value="Cancelar" immediate="true">
+                </h:commandButton>
             </div>
-        </form>
+        </h:form>
     </div>
 </main>
-<!-- Success Feedback (Hidden initially) -->
-<div class="fixed bottom-xl right-xl bg-tertiary-container text-on-tertiary-container px-lg py-md rounded-xl shadow-lg border border-tertiary flex items-center gap-md translate-y-20 opacity-0 transition-all duration-300 z-[60]" id="toast">
-    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-    <span class="font-label-md text-label-md">¡Especialidad guardada correctamente!</span>
-</div>
-<script>
-    document.getElementById('specialtyForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // Basic UI feedback for submission
-        const toast = document.getElementById('toast');
-        toast.classList.remove('translate-y-20', 'opacity-0');
-        toast.classList.add('translate-y-0', 'opacity-100');
-
-        // Disable buttons during "loading"
-        const submitBtn = e.target.querySelector('button[type="submit"]');
-        submitBtn.innerHTML = '&lt;span class="material-symbols-outlined animate-spin">progress_activity&lt;/span> Guardando...';
-        submitBtn.disabled = true;
-
-        setTimeout(() => {
-            // Simulate redirect or reset
-            toast.classList.add('translate-y-20', 'opacity-0');
-            toast.classList.remove('translate-y-0', 'opacity-100');
-            submitBtn.innerHTML = '&lt;span class="material-symbols-outlined">save&lt;/span> Guardar Especialidad';
-            submitBtn.disabled = false;
-            alert('Especialidad registrada con éxito (Simulación)');
-        }, 2000);
-    });
-</script>
+<!-- Success/Error Feedback -->
+<h:panelGroup rendered="#{not empty administradorBean.mensajeAdmin}">
+    <div class="fixed bottom-xl right-xl #{administradorBean.errorAdmin ? 'bg-error-container text-on-error-container' : 'bg-tertiary-container text-on-tertiary-container'} px-lg py-md rounded-xl shadow-lg border #{administradorBean.errorAdmin ? 'border-error' : 'border-tertiary'} flex items-center gap-md z-[60]">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">#{administradorBean.errorAdmin ? 'error' : 'check_circle'}</span>
+        <span class="font-label-md text-label-md">#{administradorBean.mensajeAdmin}</span>
+    </div>
+</h:panelGroup>
 
 </body></html>

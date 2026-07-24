@@ -234,32 +234,56 @@
                     </div>
                 </div>
                 <!-- Section: Role Management (Bento Part) -->
+                <h:form>
                 <div class="glass-card rounded-xl p-lg">
                     <div class="flex items-center justify-between mb-lg">
                         <h3 class="font-headline-sm text-headline-sm flex items-center gap-sm">
                             <span class="material-symbols-outlined text-primary">group</span>
                             Gestión de Roles y Accesos
                         </h3>
-                        <button class="text-primary border border-primary px-lg py-2 rounded-lg font-label-md hover:bg-primary-fixed/10 transition-colors">Añadir Rol</button>
+                        <h:commandLink action="#{administradorBean.mostrarFormulario}" styleClass="text-primary border border-primary px-lg py-2 rounded-lg font-label-md hover:bg-primary-fixed/10 transition-colors" rendered="#{not administradorBean.formularioVisible}">
+                            <span class="material-symbols-outlined">add</span>
+                            Añadir Administrador
+                        </h:commandLink>
                     </div>
+                    <!-- Formulario para agregar administrador -->
+                    <h:panelGroup rendered="#{administradorBean.formularioVisible}" styleClass="mb-lg p-md bg-surface-container-low rounded-lg border border-outline-variant">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-md mb-md">
+                            <div class="space-y-sm">
+                                <label class="font-label-sm text-on-surface-variant">Usuario</label>
+                                <h:inputText value="#{administradorBean.usuarioAdmin}" class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-primary-container text-body-md"/>
+                            </div>
+                            <div class="space-y-sm">
+                                <label class="font-label-sm text-on-surface-variant">Contraseña</label>
+                                <h:inputSecret value="#{administradorBean.passwordAdmin}" class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-primary-container text-body-md"/>
+                            </div>
+                        </div>
+                        <div class="flex gap-sm">
+                            <h:commandButton action="#{administradorBean.validarAccesoAdministrador}" value="Guardar" styleClass="bg-primary text-on-primary px-lg py-2 rounded-lg font-label-md hover:bg-primary-container transition-colors shadow-sm">
+                                <f:ajax execute="@form" render="@form"/>
+                            </h:commandButton>
+                            <h:commandButton action="#{administradorBean.ocultarFormulario}" value="Cancelar" styleClass="border border-outline-variant px-lg py-2 rounded-lg font-label-md hover:bg-surface-container-highest transition-colors">
+                                <f:ajax execute="@form" render="@form"/>
+                            </h:commandButton>
+                        </div>
+                    </h:panelGroup>
                     <div class="space-y-md">
-                        <!-- Role Item -->
+                        <!-- Administradores -->
                         <div class="flex items-center justify-between p-md bg-surface-container-low rounded-lg border border-outline-variant hover:shadow-md transition-all">
                             <div class="flex items-center gap-lg">
                                 <div class="w-12 h-12 rounded-lg bg-primary-container flex items-center justify-center text-white">
                                     <span class="material-symbols-outlined">admin_panel_settings</span>
                                 </div>
                                 <div>
-                                    <p class="font-label-md text-on-surface">Super Administrador</p>
+                                    <p class="font-label-md text-on-surface">Administradores</p>
                                     <p class="text-body-sm text-on-surface-variant">Control total del sistema y gestión de base de datos.</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-md">
-                                <span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed text-label-sm rounded-full">3 Usuarios</span>
-                                <span class="material-symbols-outlined text-outline cursor-pointer hover:text-primary transition-colors">edit</span>
+                                <span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed text-label-sm rounded-full">#{administradorBean.medicos.size() + 1} Usuarios</span>
                             </div>
                         </div>
-                        <!-- Role Item -->
+                        <!-- Médicos -->
                         <div class="flex items-center justify-between p-md bg-surface-container-low rounded-lg border border-outline-variant hover:shadow-md transition-all">
                             <div class="flex items-center gap-lg">
                                 <div class="w-12 h-12 rounded-lg bg-tertiary-container flex items-center justify-center text-white">
@@ -271,28 +295,27 @@
                                 </div>
                             </div>
                             <div class="flex items-center gap-md">
-                                <span class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant text-label-sm rounded-full">42 Usuarios</span>
-                                <span class="material-symbols-outlined text-outline cursor-pointer hover:text-primary transition-colors">edit</span>
+                                <span class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant text-label-sm rounded-full">#{administradorBean.medicos.size()} Usuarios</span>
                             </div>
                         </div>
-                        <!-- Role Item -->
+                        <!-- Pacientes -->
                         <div class="flex items-center justify-between p-md bg-surface-container-low rounded-lg border border-outline-variant hover:shadow-md transition-all">
                             <div class="flex items-center gap-lg">
                                 <div class="w-12 h-12 rounded-lg bg-secondary-container flex items-center justify-center text-on-secondary-container">
-                                    <span class="material-symbols-outlined">support_agent</span>
+                                    <span class="material-symbols-outlined">person</span>
                                 </div>
                                 <div>
-                                    <p class="font-label-md text-on-surface">Recepción</p>
-                                    <p class="text-body-sm text-on-surface-variant">Gestión de citas, pagos y alta de pacientes inicial.</p>
+                                    <p class="font-label-md text-on-surface">Pacientes</p>
+                                    <p class="text-body-sm text-on-surface-variant">Usuarios del sistema que pueden agendar citas.</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-md">
-                                <span class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed-variant text-label-sm rounded-full">8 Usuarios</span>
-                                <span class="material-symbols-outlined text-outline cursor-pointer hover:text-primary transition-colors">edit</span>
+                                <span class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed-variant text-label-sm rounded-full">#{administradorBean.totalPacientesRegistrados} Usuarios</span>
                             </div>
                         </div>
                     </div>
                 </div>
+                </h:form>
             </section>
             <!-- Section: System Health & Quick Config (Col-span 4) -->
             <aside class="col-span-12 lg:col-span-4 space-y-lg">
@@ -317,47 +340,6 @@
                     <!-- Abstract pattern -->
                     <div class="absolute -right-4 -bottom-4 opacity-10">
                         <span class="material-symbols-outlined text-[120px]">cloud_done</span>
-                    </div>
-                </div>
-                <!-- Quick Toggles Card -->
-                <div class="glass-card rounded-xl p-lg">
-                    <h3 class="font-label-md text-on-surface mb-lg uppercase tracking-wider">Parámetros de Seguridad</h3>
-                    <div class="space-y-md">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="font-label-md">Autenticación 2FA</p>
-                                <p class="text-label-sm text-on-surface-variant">Obligatorio para médicos</p>
-                            </div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input checked="" class="sr-only peer" type="checkbox"/>
-                                <div class="w-11 h-6 bg-outline-variant peer-focus:ring-4 peer-focus:ring-primary-container rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
-
-                                </div>
-                            </label>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="font-label-md">Cifrado de Expedientes</p>
-                                <p class="text-label-sm text-on-surface-variant">AES-256 bits activo</p>
-                            </div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input checked="" class="sr-only peer" disabled="" type="checkbox"/>
-                                <div class="w-11 h-6 bg-primary opacity-50 rounded-full after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5">
-
-                                </div>
-                            </label>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="font-label-md">Cierre Automático</p>
-                                <p class="text-label-sm text-on-surface-variant">Inactividad tras 15 min</p>
-                            </div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input class="sr-only peer" type="checkbox"/>
-                                <div class="w-11 h-6 bg-outline-variant peer-focus:ring-4 peer-focus:ring-primary-container rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
-                                </div>
-                            </label>
-                        </div>
                     </div>
                 </div>
                 <!-- Backup Schedule Card -->

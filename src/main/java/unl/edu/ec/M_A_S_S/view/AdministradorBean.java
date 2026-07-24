@@ -118,7 +118,7 @@ public class AdministradorBean implements Serializable {
     }
 
     @Transactional
-    public void agregarEspecialidad() {
+    public String agregarEspecialidad() {
         if (nombreEspecialidad != null && !nombreEspecialidad.trim().isEmpty()) {
             Especialidad especialidad = new Especialidad(
                     nombreEspecialidad.trim(),
@@ -130,14 +130,24 @@ public class AdministradorBean implements Serializable {
             formularioVisible = false;
             mensajeAdmin = "Especialidad agregada correctamente.";
             errorAdmin = false;
+            return "gestionEspecialidades?faces-redirect=true";
         } else {
             mensajeAdmin = "Ingrese el nombre de la especialidad.";
             errorAdmin = true;
+            return null;
         }
     }
 
     public void ocultarFormulario() {
         formularioVisible = false;
+    }
+
+    public String cancelarNuevaEspecialidad() {
+        nombreEspecialidad = "";
+        descripcionEspecialidad = "";
+        mensajeAdmin = null;
+        errorAdmin = false;
+        return "gestionEspecialidades?faces-redirect=true";
     }
 
     @Transactional
