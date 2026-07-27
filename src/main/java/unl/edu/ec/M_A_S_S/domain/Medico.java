@@ -1,21 +1,11 @@
 package unl.edu.ec.M_A_S_S.domain;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-
+import unl.edu.ec.M_A_S_S.service.HorarioService;
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,7 +28,6 @@ public class Medico implements Serializable {
     @NotBlank(message = "La contraseña de acceso es obligatoria")
     private String contrasena;
 
-    // Relaciones UML
     @NotEmpty(message = "Debe seleccionar al menos una especialidad")
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "medico_especialidad",
@@ -55,7 +44,10 @@ public class Medico implements Serializable {
     @OneToMany(mappedBy = "medico", fetch = FetchType.EAGER)
     private List<IndicacionesMedicas> indicaciones;
 
-    // Constructor vacío
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "agenda_id")
+    private AgendaMedico agendaMedico;
+
     public Medico() {
         this.especialidades = new ArrayList<>();
         this.horarios = new ArrayList<>();
@@ -75,6 +67,14 @@ public class Medico implements Serializable {
         this.indicaciones = new ArrayList<>();
     }
 
+    public void generarAgenda() {
+
+        HorarioService horarioService = new HorarioService();
+
+        this.agendaMedico = horarioService.generarAgenda(this);
+
+    }
+
     public Medico(String nombreCompleto, List<Especialidad> especialidades) {
         this.nombreCompleto = nombreCompleto;
         this.especialidades = especialidades != null ? especialidades : new ArrayList<>();
@@ -83,47 +83,44 @@ public class Medico implements Serializable {
         this.indicaciones = new ArrayList<>();
     }
 
-    // Getters y Setters
-    public Long getId() {
-        return id;
+    public AgendaMedico getAgendaMedico() {
+        return agendaMedico;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public void setAgendaMedico(AgendaMedico agendaMedico) {
+        this.agendaMedico = agendaMedico;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
-    }
+    public void generarHorarioAutomatico() {
 
-    public String getUsuario() {
-        return usuario;
-    }
+        horarios.clear();
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
+        LocalTime hora = LocalTime.of(8,30);
 
-    public String getContrasena() {
-        return contrasena;
-    }
+        while (!hora.isAfter(LocalTime.of(16,30))) {
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
+            // Receso de 12:00 a 13:00
 
-    public List<Especialidad> getEspecialidades() {
-        return especialidades;
-    }
+            if(hora.equals(LocalTime.of(12,0))){
 
-    public void setEspecialidades(List<Especialidad> especialidades) {
-        this.especialidades = especialidades;
-    }
+                hora = LocalTime.of(13,0);
 
-    public String getEspecialidadesTexto() {
-        return especialidades.stream()
-                .map(Especialidad::getNombre)
-                .collect(Collectors.joining(", "));
+                continue;
+            }
+
+            HorarioMedico horario = new HorarioMedico();
+
+            horario.setHoraInicio(hora);
+
+            horario.setHoraFin(hora.plusMinutes(30));
+
+            horario.setDisponible(true);
+
+            horarios.add(horario);
+
+            hora = hora.plusMinutes(30);
+        }
+
     }
 
     public List<HorarioMedico> getHorarios() {
@@ -202,5 +199,48 @@ public class Medico implements Serializable {
                 "nombreCompleto='" + nombreCompleto + '\'' +
                 ", especialidades=" + getEspecialidadesTexto() +
                 '}';
+    }
+
+    // Getters y Setters
+    public Long getId() {
+        return id;
+    }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public List<Especialidad> getEspecialidades() {
+        return especialidades;
+    }
+
+    public void setEspecialidades(List<Especialidad> especialidades) {
+        this.especialidades = especialidades;
+    }
+
+    public String getEspecialidadesTexto() {
+        return especialidades.stream()
+                .map(Especialidad::getNombre)
+                .collect(Collectors.joining(", "));
     }
 }

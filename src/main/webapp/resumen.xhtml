@@ -161,10 +161,16 @@
                 </div>
                 <div class="flex flex-col text-center md:text-left gap-xs">
                     <span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Médico Especialista</span>
-                    <h2 class="font-headline-md text-headline-md text-on-background">#{pacienteBean.medicoSeleccionado}</h2>
+                    <h2 class="font-headline-md text-headline-md text-on-background">Dra. Elena Rodríguez</h2>
                     <div class="flex items-center justify-center md:justify-start gap-sm">
                         <span class="material-symbols-outlined text-primary text-[20px]">medical_services</span>
-                        <span class="font-body-md text-body-md text-on-surface-variant">#{pacienteBean.especialidadSeleccionada}</span>
+                        <span class="font-body-md text-body-md text-on-surface-variant">Cardiología Clínica</span>
+                    </div>
+                </div>
+                <div class="md:ml-auto flex flex-col items-center md:items-end">
+                    <div class="bg-tertiary-fixed text-on-tertiary-fixed px-md py-xs rounded-full flex items-center gap-xs">
+                        <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: &quot;FILL&quot; 1;">verified</span>
+                        <span class="font-label-md text-label-md">Médico Verificado</span>
                     </div>
                 </div>
             </div>
@@ -177,17 +183,37 @@
                     </div>
                     <div class="flex flex-col">
                         <span class="font-label-sm text-label-sm text-on-surface-variant">Fecha y Hora</span>
-                        <span class="font-body-md text-body-md font-bold">#{pacienteBean.horarioSeleccionado}</span>
+                        <span class="font-body-md text-body-md font-bold">Lunes, 24 Octubre • 10:30 AM</span>
                     </div>
                 </div>
-                <!-- Paciente -->
+                <!-- Location -->
+                <div class="bg-surface-container-low p-md rounded-lg flex gap-md items-center border border-outline-variant">
+                    <div class="bg-primary-container text-on-primary-container p-sm rounded-lg flex items-center justify-center">
+                        <span class="material-symbols-outlined">location_on</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-label-sm text-label-sm text-on-surface-variant">Consultorio</span>
+                        <span class="font-body-md text-body-md font-bold">Piso 4, Ala Sur • Cons. 402</span>
+                    </div>
+                </div>
+                <!-- Duration -->
+                <div class="bg-surface-container-low p-md rounded-lg flex gap-md items-center border border-outline-variant">
+                    <div class="bg-primary-container text-on-primary-container p-sm rounded-lg flex items-center justify-center">
+                        <span class="material-symbols-outlined">schedule</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-label-sm text-label-sm text-on-surface-variant">Duración Estimada</span>
+                        <span class="font-body-md text-body-md font-bold">45 Minutos</span>
+                    </div>
+                </div>
+                <!-- Modality -->
                 <div class="bg-surface-container-low p-md rounded-lg flex gap-md items-center border border-outline-variant">
                     <div class="bg-primary-container text-on-primary-container p-sm rounded-lg flex items-center justify-center">
                         <span class="material-symbols-outlined">person</span>
                     </div>
                     <div class="flex flex-col">
-                        <span class="font-label-sm text-label-sm text-on-surface-variant">Paciente</span>
-                        <span class="font-body-md text-body-md font-bold">#{pacienteBean.pacienteActual.nombreCompleto}</span>
+                        <span class="font-label-sm text-label-sm text-on-surface-variant">Tipo de Cita</span>
+                        <span class="font-body-md text-body-md font-bold">Consulta Presencial</span>
                     </div>
                 </div>
             </div>
@@ -198,15 +224,16 @@
                     Por favor, llegue 15 minutos antes de su cita para completar el registro en recepción. No olvide traer sus estudios previos si los tiene.
                 </p>
             </div>
-            <h:outputText value="#{pacienteBean.mensaje}" styleClass="text-error font-label-md"
-                          rendered="#{not empty pacienteBean.mensaje and pacienteBean.error}"/>
             <!-- Actions -->
-            <h:form styleClass="flex flex-col md:flex-row gap-md mt-sm">
-                <h:commandButton value="Confirmar Cita" action="#{pacienteBean.agendarCita}"
-                                 styleClass="flex-1 bg-primary text-on-primary py-md px-xl rounded-lg font-label-md text-label-md hover:brightness-110 active:opacity-90 transition-all duration-200 flex items-center justify-center gap-md shadow-sm"/>
-                <h:link outcome="horario" value="Volver"
-                        styleClass="flex-none md:w-48 bg-transparent border border-primary text-primary py-md px-xl rounded-lg font-label-md text-label-md hover:bg-primary/5 active:opacity-80 transition-all duration-200 flex items-center justify-center gap-md"/>
-            </h:form>
+            <div class="flex flex-col md:flex-row gap-md mt-sm">
+                <button class="bg-transparent border border-primary text-primary py-md px-xl rounded-lg font-label-md text-label-md hover:bg-primary/5 active:opacity-80 transition-all duration-200 flex items-center justify-center gap-md flex-1">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                    Volver
+                </button>
+                <button class="bg-primary text-on-primary py-md px-xl rounded-lg font-label-md text-label-md hover:opacity-90 active:opacity-80 transition-all duration-200 flex items-center justify-center gap-md flex-1">
+                    Confirmar Cita
+                    <span class="material-symbols-outlined">check_circle</span>
+                </button></div>
         </div>
         <!-- Footer Help Text -->
         <div class="flex justify-center items-center gap-sm text-on-secondary-container">
@@ -216,45 +243,19 @@
     </div>
 </main>
 <!-- SideNavBar (Hidden on Mobile, Visible on Desktop) -->
-<aside class="hidden lg:flex flex-col h-screen p-md bg-surface-container border-r border-outline-variant fixed left-0 top-0 w-sidebar_width z-40">
-    <div class="mb-xl px-md py-sm">
-        <span class="font-headline-sm text-headline-sm text-on-surface font-bold">M.A.S.S.</span>
-        <p class="font-label-sm text-label-sm text-on-surface-variant mt-xs">City Medical Center</p>
-    </div>
-    <nav class="flex-1 flex flex-col gap-sm">
-        <div class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-dim transition-all duration-200 rounded-lg group">
-            <span class="material-symbols-outlined group-hover:text-primary">calendar_today</span>
-            <span class="font-label-md text-label-md">Schedule</span>
-        </div>
-        <div class="flex items-center gap-md px-md py-sm cursor-pointer bg-primary-container text-on-primary-container border-l-4 border-primary rounded-r-full">
-            <span class="material-symbols-outlined">groups</span>
-            <span class="font-label-md text-label-md">Patients</span>
-        </div>
-        <div class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-dim transition-all duration-200 rounded-lg group">
-            <span class="material-symbols-outlined group-hover:text-primary">medical_services</span>
-            <span class="font-label-md text-label-md">Doctors</span>
-        </div>
-        <div class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-dim transition-all duration-200 rounded-lg group">
-            <span class="material-symbols-outlined group-hover:text-primary">bar_chart</span>
-            <span class="font-label-md text-label-md">Reports</span>
-        </div>
-        <div class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-dim transition-all duration-200 rounded-lg group">
-            <span class="material-symbols-outlined group-hover:text-primary">inventory_2</span>
-            <span class="font-label-md text-label-md">Inventory</span>
-        </div>
-    </nav>
-    <div class="mt-auto border-t border-outline-variant pt-md flex flex-col gap-sm">
-        <div class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-dim transition-all duration-200 rounded-lg group">
-            <span class="material-symbols-outlined group-hover:text-primary">help_outline</span>
-            <span class="font-label-md text-label-md">Support</span>
-        </div>
-        <div class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-dim transition-all duration-200 rounded-lg group">
-            <span class="material-symbols-outlined text-error">logout</span>
-            <span class="font-label-md text-label-md">Logout</span>
-        </div>
-    </div>
-</aside>
 <script>
+    // Micro-interaction for the confirm button
+    const confirmBtn = document.querySelector('button.bg-primary');
+    confirmBtn.addEventListener('click', function() {
+        this.innerHTML = '&lt;span class="material-symbols-outlined animate-spin">sync&lt;/span> Procesando...';
+        this.classList.add('opacity-80');
+        setTimeout(() => {
+            this.innerHTML = '¡Cita Confirmada! &lt;span class="material-symbols-outlined">verified&lt;/span>';
+            this.classList.remove('bg-primary');
+            this.classList.add('bg-tertiary-container', 'text-on-tertiary-container');
+        }, 1500);
+    });
+
     // Simple animation on load for the details grid items
     document.addEventListener('DOMContentLoaded', () => {
         const items = document.querySelectorAll('.grid > div');
@@ -269,4 +270,6 @@
         });
     });
 </script>
+
+
 </body></html>

@@ -5,16 +5,17 @@
                                  https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
              version="3.0">
 
+
     <persistence-unit name="massPU" transaction-type="JTA">
         <jta-data-source>jdbc/massDS</jta-data-source>
 
         <properties>
             <!-- 1. Configuración de generación / actualización de tablas (esquema de BD) -->
             <!-- Configuración de Jakarta persistence puede ser: none, create, drop-and-create, drop -->
-            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <!-- property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/-->
 
             <!-- Configuración de EclipseLink values: none, drop-and-create-tables, create-tables, create-or-extend-tables -->
-            <!--property name="eclipselink.ddl-generation" value="create-or-extend-tables"/-->
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
 
             <!-- database = ejecuta los comandos DDL directamente en la base de datos -->
             <property name="eclipselink.ddl-generation.output-mode" value="database"/>

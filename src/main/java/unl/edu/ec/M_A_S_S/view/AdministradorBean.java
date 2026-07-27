@@ -11,8 +11,11 @@ import unl.edu.ec.M_A_S_S.domain.Cita;
 import unl.edu.ec.M_A_S_S.domain.Especialidad;
 import unl.edu.ec.M_A_S_S.domain.Medico;
 import unl.edu.ec.M_A_S_S.domain.Paciente;
+import unl.edu.ec.M_A_S_S.service.AgendaService;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -264,6 +267,37 @@ public class AdministradorBean implements Serializable {
         }
     }
 
+    @Transactional
+    public void generarHorarioAutomatico(Medico medico) {
+        Medico administrado = medico != null ? em.find(Medico.class, medico.getId()) : null;
+        if (administrado != null) {
+            AgendaService agendaService = new AgendaService();
+            agendaService.registrarAgenda(administrado);
+            em.merge(administrado);
+            mensajeAdmin = "Horarios generados automáticamente para " + administrado.getNombreCompleto();
+            errorAdmin = false;
+        } else {
+            mensajeAdmin = "No se pudo generar los horarios.";
+            errorAdmin = true;
+        }
+    }
+
+    @Transactional
+    public void generarHorariosTodosMedicos() {
+        List<Medico> medicos = getMedicos();
+        AgendaService agendaService = new AgendaService();
+        int count = 0;
+        for (Medico medico : medicos) {
+            if (medico.getAgendaMedico() == null) {
+                agendaService.registrarAgenda(medico);
+                em.merge(medico);
+                count++;
+            }
+        }
+        mensajeAdmin = "Horarios generados para " + count + " médicos.";
+        errorAdmin = false;
+    }
+
     private List<Especialidad> resolverEspecialidades(List<String> nombres) {
         List<Especialidad> resultado = new ArrayList<>();
         if (nombres == null) {
@@ -443,6 +477,12 @@ public class AdministradorBean implements Serializable {
 
     public void setModoEdicion(boolean modoEdicion) {
         this.modoEdicion = modoEdicion;
+    }
+
+    public String getFechaActualFormateada() {
+        LocalDate hoy = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM, yyyy", new java.util.Locale("es"));
+        return hoy.format(formatter);
     }
 
 }

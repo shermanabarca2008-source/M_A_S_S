@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="jakarta.faces.facelets"><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Gestión de Horarios | M.A.S.S. - Sistema Médico</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#cfdce4",
+                        "surface-variant": "#d7e4ec",
+                        "primary-container": "#1565c0",
+                        "on-surface-variant": "#424752",
+                        "primary-fixed": "#d6e3ff",
+                        "tertiary": "#005b15",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "outline": "#727783",
+                        "surface-container": "#e3f0f8",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#7ddc7a",
+                        "surface-container-low": "#e9f6fd",
+                        "surface": "#f4faff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#9afa95",
+                        "outline-variant": "#c2c6d4",
+                        "on-primary-fixed-variant": "#00468c",
+                        "inverse-on-surface": "#e6f3fb",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#111d23",
+                        "error-container": "#ffdad6",
+                        "background": "#f4faff",
+                        "on-tertiary-fixed": "#002204",
+                        "surface-tint": "#005db7",
+                        "tertiary-fixed": "#98f994",
+                        "secondary-fixed": "#e2e2e2",
+                        "inverse-primary": "#a9c7ff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#dfe0e0",
+                        "surface-container-high": "#ddeaf2",
+                        "surface-bright": "#f4faff",
+                        "surface-container-highest": "#d7e4ec",
+                        "on-tertiary-fixed-variant": "#005313",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "secondary": "#5d5f5f",
+                        "tertiary-container": "#0f7623",
+                        "on-secondary-container": "#616363",
+                        "on-primary-container": "#dae5ff",
+                        "on-error": "#ffffff",
+                        "primary": "#004d99",
+                        "inverse-surface": "#263238",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-secondary-fixed-variant": "#454747",
+                        "on-primary-fixed": "#001b3d",
+                        "on-background": "#111d23",
+                        "on-primary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "xl": "32px",
+                        "gutter": "24px",
+                        "sidebar_width": "280px",
+                        "lg": "24px",
+                        "max_container": "1440px",
+                        "sm": "8px",
+                        "base": "4px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F5F7FA; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            border: 1px solid #E0E4E8;
+            box-shadow: 0px 2px 4px rgba(38, 50, 56, 0.05);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-tab-pill {
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body class="text-on-background">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-lg h-16 bg-surface-container-highest dark:bg-surface-container-high border-b border-outline-variant shadow-sm">
+    <div class="flex items-center gap-md">
+        <span class="font-headline-md text-headline-md font-bold text-primary">M.A.S.S.</span>
+        <div class="hidden md:flex ml-xl items-center bg-surface-container-low rounded-full px-md py-xs border border-outline-variant">
+            <span class="material-symbols-outlined text-on-surface-variant mr-sm">search</span>
+            <input class="bg-transparent border-none focus:ring-0 text-body-sm w-64" placeholder="Buscar pacientes o citas..." type="text"/>
+        </div>
+    </div>
+    <div class="flex items-center gap-md">
+        <button class="p-sm rounded-full hover:bg-surface-container-low transition-colors">
+            <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+        </button>
+        <button class="p-sm rounded-full hover:bg-surface-container-low transition-colors">
+            <span class="material-symbols-outlined text-on-surface-variant">settings</span>
+        </button>
+        <div class="h-10 w-10 rounded-full border border-primary flex items-center justify-center overflow-hidden bg-primary-container">
+            <img class="object-cover h-full w-full" data-alt="A professional medical practitioner headshot, mid-40s male doctor with a kind expression and wire-rimmed glasses, wearing a white clinical coat and a blue stethoscope. High-key clinical lighting, bright white background, studio quality photography reflecting the M.A.S.S. design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0mCphKJfbpC2Cp5faqqng1YMkQX9nbxVrqgfDcyHbFisy2ovqBTeA0WXSMLxT_5yDdCV1TDhlI2i2bVKUIXWp8GUp-YiAVv95YWDxidTCRbQxthjd1nxTx29Bb4hYeQHFtjglRKuB-NwRptbkcIp2ioLYoxjF2vc-T95H7OKByS4lFV7LyrgwP_aijAX9DL6EId1QxLHzLZnRwuqaxPZIQFtC6RsqlIFaR1VU4mda8N6MM5ruFK10QIA4U_ZrQ6c7BK126wsZeAY"/>
+        </div>
+    </div>
+</header>
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col w-[280px] h-screen fixed left-0 top-0 pt-20 pb-lg px-md bg-surface-container-low border-r border-outline-variant z-40">
+    <div class="flex flex-col gap-xs flex-grow">
+        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group" href="#">
+            <span class="material-symbols-outlined group-hover:text-primary">dashboard</span>
+            <span class="font-label-md text-label-md">Tablero</span>
+        </a>
+        <a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container border-l-4 border-primary rounded-r-full active-tab-pill" href="#">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <span class="font-label-md text-label-md">Citas</span>
+        </a>
+        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group" href="#">
+            <span class="material-symbols-outlined group-hover:text-primary">groups</span>
+            <span class="font-label-md text-label-md">Pacientes</span>
+        </a>
+        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group" href="#">
+            <span class="material-symbols-outlined group-hover:text-primary">history_edu</span>
+            <span class="font-label-md text-label-md">Historial Médico</span>
+        </a>
+        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group" href="#">
+            <span class="material-symbols-outlined group-hover:text-primary">assessment</span>
+            <span class="font-label-md text-label-md">Reportes</span>
+        </a>
+    </div>
+    <button class="mt-lg bg-primary text-on-primary py-sm px-md rounded-lg font-label-md flex items-center justify-center gap-sm shadow-md hover:opacity-90 transition-all">
+        <span class="material-symbols-outlined">add</span>
+        Nueva Cita
+    </button>
+    <div class="mt-xl pt-lg border-t border-outline-variant flex flex-col gap-xs">
+        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+            <span class="material-symbols-outlined">help</span>
+            <span class="font-label-md text-label-md">Centro de Ayuda</span>
+        </a>
+        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-error transition-colors" href="#">
+            <span class="material-symbols-outlined">logout</span>
+            <span class="font-label-md text-label-md">Cerrar Sesión</span>
+        </a>
+    </div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:ml-[280px] pt-16 min-h-screen">
+    <div class="max-w-[1440px] mx-auto p-lg">
+        <!-- Header Section -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between mb-xl gap-md">
+            <div>
+                <h1 class="font-headline-lg text-headline-lg text-on-surface">Gestión de Horarios</h1>
+                <p class="text-on-surface-variant font-body-md">Configure su disponibilidad clínica y genere turnos automáticos.</p>
+            </div>
+            <div class="flex gap-sm">
+                <h:form>
+                    <h:commandLink styleClass="flex items-center gap-sm bg-primary-container text-on-primary-container px-lg py-sm rounded-lg font-label-md shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all" action="#{administradorBean.generarHorariosTodosMedicos}">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">magic_button</span>
+                        Generar Horarios Automáticamente
+                        <f:ajax execute="@none" render="@form"/>
+                    </h:commandLink>
+                </h:form>
+            </div>
+        </div>
+        <!-- Bento Grid Layout -->
+        <div class="grid grid-cols-12 gap-lg">
+            <!-- Availability Summary Card -->
+            <div class="col-span-12 lg:col-span-4 flex flex-col gap-lg">
+                <section class="glass-panel rounded-xl p-lg flex flex-col gap-md">
+                    <div class="flex items-center justify-between">
+                        <h2 class="font-headline-sm text-headline-sm flex items-center gap-sm">
+                            <span class="material-symbols-outlined text-primary">event_available</span>
+                            Resumen Actual
+                        </h2>
+                        <span class="bg-tertiary-fixed text-on-tertiary-fixed px-sm py-xs rounded text-label-sm">Activo</span>
+                    </div>
+                    <div class="space-y-md mt-sm">
+                        <div class="flex justify-between items-center py-sm border-b border-outline-variant">
+                            <span class="text-body-sm text-on-surface-variant">Días Laborales</span>
+                            <span class="text-label-md">Lun - Vie</span>
+                        </div>
+                        <div class="flex justify-between items-center py-sm border-b border-outline-variant">
+                            <span class="text-body-sm text-on-surface-variant">Jornada Mañana</span>
+                            <span class="text-label-md">08:00 - 12:00</span>
+                        </div>
+                        <div class="flex justify-between items-center py-sm border-b border-outline-variant">
+                            <span class="text-body-sm text-on-surface-variant">Jornada Tarde</span>
+                            <span class="text-label-md">14:00 - 18:00</span>
+                        </div>
+                        <div class="flex justify-between items-center py-sm">
+                            <span class="text-body-sm text-on-surface-variant">Duración Promedio</span>
+                            <span class="text-label-md">30 min</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-md flex gap-sm">
+                        <button class="flex-1 border border-primary text-primary py-sm rounded-lg font-label-md hover:bg-surface-container transition-colors">Limpiar Agenda</button>
+                        <button class="flex-1 bg-primary text-on-primary py-sm rounded-lg font-label-md hover:opacity-90 shadow-sm transition-all">Guardar Horarios</button>
+                    </div>
+                </section>
+                <section class="glass-panel rounded-xl p-lg flex flex-col gap-md">
+                    <h2 class="font-headline-sm text-headline-sm">Próximos Días</h2>
+                    <div class="flex flex-col gap-sm">
+                        <!-- Mini Calendar Heatmap representation -->
+                        <div class="grid grid-cols-7 gap-xs">
+                            <div class="text-center text-label-sm text-on-surface-variant">L</div>
+                            <div class="text-center text-label-sm text-on-surface-variant">M</div>
+                            <div class="text-center text-label-sm text-on-surface-variant">X</div>
+                            <div class="text-center text-label-sm text-on-surface-variant">J</div>
+                            <div class="text-center text-label-sm text-on-surface-variant">V</div>
+                            <div class="text-center text-label-sm text-on-surface-variant">S</div>
+                            <div class="text-center text-label-sm text-on-surface-variant">D</div>
+                            <!-- Calendar days -->
+                            <div class="h-8 rounded bg-primary text-on-primary flex items-center justify-center text-label-sm">14</div>
+                            <div class="h-8 rounded bg-primary text-on-primary flex items-center justify-center text-label-sm">15</div>
+                            <div class="h-8 rounded bg-primary text-on-primary flex items-center justify-center text-label-sm">16</div>
+                            <div class="h-8 rounded bg-primary text-on-primary flex items-center justify-center text-label-sm">17</div>
+                            <div class="h-8 rounded bg-primary text-on-primary flex items-center justify-center text-label-sm">18</div>
+                            <div class="h-8 rounded bg-surface-variant flex items-center justify-center text-label-sm text-on-surface-variant">19</div>
+                            <div class="h-8 rounded bg-surface-variant flex items-center justify-center text-label-sm text-on-surface-variant">20</div>
+                        </div>
+                        <p class="text-body-sm text-on-surface-variant mt-sm">Muestra el nivel de ocupación proyectado basado en la configuración actual.</p>
+                    </div>
+                </section>
+            </div>
+            <!-- Main Slots Viewer -->
+            <div class="col-span-12 lg:col-span-8">
+                <div class="glass-panel rounded-xl overflow-hidden">
+                    <div class="p-lg border-b border-outline-variant flex items-center justify-between bg-surface-container-lowest">
+                        <h2 class="font-headline-sm text-headline-sm">Turnos Generados: #{administradorBean.fechaActualFormateada}</h2>
+                        <div class="flex gap-sm">
+                            <button class="p-xs rounded hover:bg-surface-container transition-colors"><span class="material-symbols-outlined">chevron_left</span></button>
+                            <button class="p-xs rounded hover:bg-surface-container transition-colors"><span class="material-symbols-outlined">chevron_right</span></button>
+                        </div>
+                    </div>
+                    <div class="p-lg bg-surface">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+                            <!-- Slot Card -->
+                            <div class="flex items-center justify-between p-md bg-surface-container-lowest rounded-lg border border-outline-variant hover:shadow-md transition-all group">
+                                <div class="flex items-center gap-md">
+                                    <div class="h-10 w-10 bg-primary-container/10 rounded flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-primary">schedule</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-label-md text-on-surface">08:00 - 08:30</p>
+                                        <p class="text-body-sm text-on-surface-variant">Disponible</p>
+                                    </div>
+                                </div>
+                                <button class="opacity-0 group-hover:opacity-100 transition-opacity text-error hover:bg-error-container p-xs rounded">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                            <!-- More slots -->
+                            <div class="flex items-center justify-between p-md bg-surface-container-lowest rounded-lg border border-outline-variant hover:shadow-md transition-all group">
+                                <div class="flex items-center gap-md">
+                                    <div class="h-10 w-10 bg-primary-container/10 rounded flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-primary">schedule</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-label-md text-on-surface">08:30 - 09:00</p>
+                                        <p class="text-body-sm text-on-surface-variant">Disponible</p>
+                                    </div>
+                                </div>
+                                <button class="opacity-0 group-hover:opacity-100 transition-opacity text-error hover:bg-error-container p-xs rounded">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                            <div class="flex items-center justify-between p-md bg-surface-container-lowest rounded-lg border border-outline-variant hover:shadow-md transition-all group border-l-4 border-l-tertiary">
+                                <div class="flex items-center gap-md">
+                                    <div class="h-10 w-10 bg-tertiary/10 rounded flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-tertiary">person</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-label-md text-on-surface">09:00 - 09:30</p>
+                                        <p class="text-body-sm text-on-surface-variant">Reservado: Ana García</p>
+                                    </div>
+                                </div>
+                                <span class="material-symbols-outlined text-tertiary">check_circle</span>
+                            </div>
+                            <div class="flex items-center justify-between p-md bg-surface-container-lowest rounded-lg border border-outline-variant hover:shadow-md transition-all group">
+                                <div class="flex items-center gap-md">
+                                    <div class="h-10 w-10 bg-primary-container/10 rounded flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-primary">schedule</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-label-md text-on-surface">09:30 - 10:00</p>
+                                        <p class="text-body-sm text-on-surface-variant">Disponible</p>
+                                    </div>
+                                </div>
+                                <button class="opacity-0 group-hover:opacity-100 transition-opacity text-error hover:bg-error-container p-xs rounded">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                            <div class="flex items-center justify-between p-md bg-surface-container-lowest rounded-lg border border-outline-variant hover:shadow-md transition-all group">
+                                <div class="flex items-center gap-md">
+                                    <div class="h-10 w-10 bg-primary-container/10 rounded flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-primary">schedule</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-label-md text-on-surface">10:00 - 10:30</p>
+                                        <p class="text-body-sm text-on-surface-variant">Disponible</p>
+                                    </div>
+                                </div>
+                                <button class="opacity-0 group-hover:opacity-100 transition-opacity text-error hover:bg-error-container p-xs rounded">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                            <div class="flex items-center justify-between p-md bg-error-container/20 rounded-lg border border-error/20 hover:shadow-md transition-all group">
+                                <div class="flex items-center gap-md">
+                                    <div class="h-10 w-10 bg-error/10 rounded flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-error">block</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-label-md text-on-surface">10:30 - 11:00</p>
+                                        <p class="text-body-sm text-on-surface-variant">Bloqueado (Administrativo)</p>
+                                    </div>
+                                </div>
+                                <button class="text-primary hover:underline font-label-sm">Desbloquear</button>
+                            </div>
+                            <div class="flex items-center justify-between p-md bg-surface-container-lowest rounded-lg border border-outline-variant hover:shadow-md transition-all group">
+                                <div class="flex items-center gap-md">
+                                    <div class="h-10 w-10 bg-primary-container/10 rounded flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-primary">schedule</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-label-md text-on-surface">11:00 - 11:30</p>
+                                        <p class="text-body-sm text-on-surface-variant">Disponible</p>
+                                    </div>
+                                </div>
+                                <button class="opacity-0 group-hover:opacity-100 transition-opacity text-error hover:bg-error-container p-xs rounded">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                            <div class="flex items-center justify-between p-md bg-surface-container-lowest rounded-lg border border-outline-variant hover:shadow-md transition-all group">
+                                <div class="flex items-center gap-md">
+                                    <div class="h-10 w-10 bg-primary-container/10 rounded flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-primary">schedule</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-label-md text-on-surface">11:30 - 12:00</p>
+                                        <p class="text-body-sm text-on-surface-variant">Disponible</p>
+                                    </div>
+                                </div>
+                                <button class="opacity-0 group-hover:opacity-100 transition-opacity text-error hover:bg-error-container p-xs rounded">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Empty Space or CTA for more slots -->
+                        <button class="w-full mt-lg border-2 border-dashed border-outline-variant py-md rounded-xl text-on-surface-variant hover:bg-surface-container-low transition-colors flex items-center justify-center gap-sm">
+                            <span class="material-symbols-outlined">add_circle</span>
+                            <span class="font-label-md">Agregar turno manual</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Footer -->
+<footer class="lg:ml-[280px] w-full py-xl px-lg mt-auto flex flex-col md:flex-row justify-between items-center gap-md bg-surface-container-lowest border-t border-outline-variant">
+    <div class="flex flex-col gap-xs">
+        <span class="font-label-md text-label-md font-bold text-on-surface">M.A.S.S.</span>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 Sistema de Gestión de Citas Médicas (M.A.S.S.). Todos los derechos reservados.</p>
+    </div>
+    <div class="flex gap-lg">
+        <a class="text-on-surface-variant hover:text-primary transition-colors font-body-sm" href="#">Política de Privacidad</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors font-body-sm" href="#">Términos de Servicio</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors font-body-sm" href="#">Contactar Soporte</a>
+    </div>
+</footer>
+<!-- Configuration Modal (Auto-generate Schedule) -->
+<div class="fixed inset-0 z-[100] hidden items-center justify-center p-md bg-on-surface/40 backdrop-blur-sm transition-all" id="config-modal">
+    <div class="glass-panel w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+        <div class="p-lg bg-primary-container text-on-primary-container flex justify-between items-center">
+            <div class="flex items-center gap-md">
+                <span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">tune</span>
+                <div>
+                    <h2 class="font-headline-sm text-headline-sm">Generación Automática</h2>
+                    <p class="text-label-sm opacity-80">Configurar parámetros de agenda</p>
+                </div>
+            </div>
+            <button class="hover:bg-white/10 p-sm rounded-full transition-colors" onclick="toggleModal()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="p-lg grid grid-cols-1 md:grid-cols-2 gap-xl max-h-[716px] overflow-y-auto">
+            <!-- Duración de Cita -->
+            <div class="flex flex-col gap-sm">
+                <label class="font-label-md text-on-surface flex items-center gap-xs">
+                    <span class="material-symbols-outlined text-sm">timer</span>
+                    Duración de Cita (min)
+                </label>
+                <select class="w-full bg-surface border border-outline-variant rounded-lg p-sm focus:ring-2 focus:ring-primary-container/20 transition-all outline-none">
+                    <option>20 minutos</option>
+                    <option selected="">30 minutos</option>
+                    <option>45 minutos</option>
+                    <option>60 minutos</option>
+                </select>
+            </div>
+            <!-- Buffer Time -->
+            <div class="flex flex-col gap-sm">
+                <label class="font-label-md text-on-surface flex items-center gap-xs">
+                    <span class="material-symbols-outlined text-sm">hourglass_empty</span>
+                    Tiempo de Descanso (Buffer)
+                </label>
+                <select class="w-full bg-surface border border-outline-variant rounded-lg p-sm focus:ring-2 focus:ring-primary-container/20 outline-none">
+                    <option>0 minutos</option>
+                    <option selected="">5 minutos</option>
+                    <option>10 minutos</option>
+                </select>
+            </div>
+            <!-- Días Laborales -->
+            <div class="col-span-full">
+                <label class="font-label-md text-on-surface block mb-sm">Días Laborales</label>
+                <div class="flex flex-wrap gap-sm">
+                    <label class="cursor-pointer">
+                        <input checked="" class="hidden peer" type="checkbox"/>
+                        <div class="px-md py-sm rounded-full border border-outline-variant peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-label-md">Lunes</div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input checked="" class="hidden peer" type="checkbox"/>
+                        <div class="px-md py-sm rounded-full border border-outline-variant peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-label-md">Martes</div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input checked="" class="hidden peer" type="checkbox"/>
+                        <div class="px-md py-sm rounded-full border border-outline-variant peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-label-md">Miércoles</div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input checked="" class="hidden peer" type="checkbox"/>
+                        <div class="px-md py-sm rounded-full border border-outline-variant peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-label-md">Jueves</div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input checked="" class="hidden peer" type="checkbox"/>
+                        <div class="px-md py-sm rounded-full border border-outline-variant peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-label-md">Viernes</div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input class="hidden peer" type="checkbox"/>
+                        <div class="px-md py-sm rounded-full border border-outline-variant peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-label-md">Sábado</div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input class="hidden peer" type="checkbox"/>
+                        <div class="px-md py-sm rounded-full border border-outline-variant peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-label-md">Domingo</div>
+                    </label>
+                </div>
+            </div>
+            <!-- Sesiones -->
+            <div class="col-span-full border-t border-outline-variant pt-lg mt-sm">
+                <h3 class="font-label-md text-on-surface mb-md flex items-center gap-sm">
+                    <span class="material-symbols-outlined text-primary">wb_sunny</span>
+                    Horario de Atención
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+                    <div class="p-md bg-surface-container rounded-lg flex flex-col gap-sm">
+                        <span class="font-label-sm text-primary uppercase">Jornada Mañana</span>
+                        <div class="flex items-center gap-md">
+                            <div class="flex-1">
+                                <label class="text-xs text-on-surface-variant block mb-1">Inicio</label>
+                                <input class="w-full bg-white border border-outline-variant rounded p-xs text-body-sm outline-none focus:ring-2 focus:ring-primary/20" type="time" value="08:00"/>
+                            </div>
+                            <span class="pt-4">—</span>
+                            <div class="flex-1">
+                                <label class="text-xs text-on-surface-variant block mb-1">Fin</label>
+                                <input class="w-full bg-white border border-outline-variant rounded p-xs text-body-sm outline-none focus:ring-2 focus:ring-primary/20" type="time" value="12:00"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-md bg-surface-container rounded-lg flex flex-col gap-sm">
+                        <span class="font-label-sm text-primary uppercase">Jornada Tarde</span>
+                        <div class="flex items-center gap-md">
+                            <div class="flex-1">
+                                <label class="text-xs text-on-surface-variant block mb-1">Inicio</label>
+                                <input class="w-full bg-white border border-outline-variant rounded p-xs text-body-sm outline-none focus:ring-2 focus:ring-primary/20" type="time" value="14:00"/>
+                            </div>
+                            <span class="pt-4">—</span>
+                            <div class="flex-1">
+                                <label class="text-xs text-on-surface-variant block mb-1">Fin</label>
+                                <input class="w-full bg-white border border-outline-variant rounded p-xs text-body-sm outline-none focus:ring-2 focus:ring-primary/20" type="time" value="18:00"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-lg bg-surface-container-low border-t border-outline-variant flex justify-end gap-md">
+            <button class="px-lg py-sm border border-outline-variant text-on-surface-variant rounded-lg hover:bg-surface-variant transition-colors font-label-md" onclick="toggleModal()">Cancelar</button>
+            <button class="px-xl py-sm bg-primary text-on-primary rounded-lg shadow-lg hover:opacity-90 active:scale-95 transition-all font-label-md flex items-center gap-sm" id="generate-btn" onclick="simulateGeneration()">
+                Generar Bloques de Horarios
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+    function toggleModal() {
+        const modal = document.getElementById('config-modal');
+        modal.classList.toggle('hidden');
+        modal.classList.toggle('flex');
+    }
+
+    function simulateGeneration() {
+        const btn = document.getElementById('generate-btn');
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '&lt;span class="material-symbols-outlined animate-spin">sync&lt;/span> Procesando...';
+
+        setTimeout(() => {
+            btn.innerHTML = '&lt;span class="material-symbols-outlined">check_circle&lt;/span> ¡Generado!';
+            setTimeout(() => {
+                toggleModal();
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+                // Trigger toast or update UI view logic would go here
+            }, 800);
+        }, 1500);
+    }
+
+    // Close modal on click outside
+    window.addEventListener('click', (e) => {
+        const modal = document.getElementById('config-modal');
+        if (e.target === modal) {
+            toggleModal();
+        }
+    });
+</script>
+</body></html>

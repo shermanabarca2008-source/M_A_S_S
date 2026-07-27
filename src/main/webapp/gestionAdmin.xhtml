@@ -342,8 +342,22 @@
                 <p class="text-label-sm text-on-surface-variant uppercase tracking-wider">Canceladas</p>
                 <p class="text-headline-md font-bold">#{administradorBean.citasCanceladasTotal}</p>
             </div>
-            <!-- Card 5 -->
-
+            <!-- Card 5 - Generación Automática de Horarios -->
+            <div class="glass-card p-lg rounded-xl border-l-4 border-tertiary">
+                <div class="flex justify-between mb-md">
+                    <div class="p-2 bg-tertiary/10 text-tertiary rounded-lg">
+                        <span class="material-symbols-outlined">auto_schedule</span>
+                    </div>
+                    <span class="text-tertiary text-label-sm font-bold">Automático</span>
+                </div>
+                <p class="text-label-sm text-on-surface-variant uppercase tracking-wider">Generar Horarios</p>
+                <h:form>
+                    <h:commandLink styleClass="text-tertiary font-bold hover:underline" action="#{administradorBean.generarHorariosTodosMedicos}">
+                        <f:ajax execute="@none" render="@form"/>
+                        Generar para todos
+                    </h:commandLink>
+                </h:form>
+            </div>
         </div>
         <!-- Central Content Section -->
         <div class="grid grid-cols-10 gap-gutter">

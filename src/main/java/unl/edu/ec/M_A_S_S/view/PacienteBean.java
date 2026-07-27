@@ -17,6 +17,9 @@ import unl.edu.ec.M_A_S_S.domain.Paciente;
 
 import java.io.Serializable;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -148,11 +151,12 @@ public class PacienteBean implements Serializable {
             return null;
         }
 
-        Cita cita = new Cita(Date.from(horario.getFechaDisponible().atStartOfDay(java.time.ZoneId.systemDefault()).toInstant()),
+        Cita cita = new Cita(Date.from(horario.getFecha().atStartOfDay(java.time.ZoneId.systemDefault()).toInstant()),
                 Time.valueOf(horario.getHoraInicio()), medico, paciente);
         cita.agendar();
         paciente.agendarCita(cita);
-        horario.reservarHorario();
+        horario.setEstado(unl.edu.ec.M_A_S_S.domain.EstadoHorario.OCUPADO);
+        horario.setPaciente(paciente);
         medico.agregarCita(cita);
         cita.setNotificacion(new Notificacion("Cita agendada correctamente", new Date(), cita));
 
@@ -241,8 +245,8 @@ public class PacienteBean implements Serializable {
             return new ArrayList<>();
         }
         return em.createQuery(
-                        "SELECT h FROM HorarioMedico h WHERE h.medico = :medico AND h.disponible = true "
-                                + "ORDER BY h.fechaDisponible, h.horaInicio",
+                        "SELECT h FROM HorarioMedico h WHERE h.medico = :medico AND h.estado = 'DISPONIBLE' "
+                                + "ORDER BY h.fecha, h.horaInicio",
                         HorarioMedico.class)
                 .setParameter("medico", medico)
                 .getResultList();
@@ -314,7 +318,7 @@ public class PacienteBean implements Serializable {
             return null;
         }
         for (HorarioMedico horario : medico.getHorarios()) {
-            String valor = horario.getFechaDisponible().toString() + " " + horario.getHoraInicio().toString();
+            String valor = horario.getFecha().toString() + " " + horario.getHoraInicio().toString();
             if (valor.equals(texto)) {
                 return horario;
             }
@@ -392,5 +396,27 @@ public class PacienteBean implements Serializable {
 
     public void setTabActiva(String tabActiva) {
         this.tabActiva = tabActiva;
+    }
+
+    public String getFechaActualFormateada() {
+        LocalDate hoy = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy", new java.util.Locale("es"));
+        return hoy.format(formatter);
+    }
+
+    public String getFechaActualISO() {
+        LocalDate hoy = LocalDate.now();
+        return hoy.toString();
+    }
+
+    public String getHorarioConFecha(String hora) {
+        LocalDate hoy = LocalDate.now();
+        return hoy.toString() + " " + hora;
+    }
+
+    public String getFechaActualConDia() {
+        LocalDate hoy = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, d 'de' MMMM", new java.util.Locale("es"));
+        return hoy.format(formatter);
     }
 }

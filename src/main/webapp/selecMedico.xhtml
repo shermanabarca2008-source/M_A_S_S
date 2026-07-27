@@ -127,20 +127,10 @@
     <div class="flex justify-between items-center px-lg py-sm max-w-max_container mx-auto w-full">
         <div class="flex items-center gap-xl">
             <span class="text-headline-md font-headline-md font-bold text-primary">M.A.S.S.</span>
-            <nav class="hidden md:flex gap-lg">
-                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer" href="#">Dashboard</a>
-                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer" href="#">Find Doctor</a>
-                <a class="font-body-md text-body-md text-primary border-b-2 border-primary font-bold pb-1 cursor-pointer" href="#">My Bookings</a>
-                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer" href="#">Help</a>
-            </nav>
         </div>
         <div class="flex items-center gap-md">
             <div class="hidden sm:flex items-center bg-surface-container-low px-md py-xs rounded-full border border-outline-variant">
-                <span class="material-symbols-outlined text-on-surface-variant text-[20px]">search</span>
-                <input class="bg-transparent border-none focus:ring-0 text-body-sm w-32 lg:w-48" placeholder="Buscar..." type="text"/>
             </div>
-            <button class="material-symbols-outlined p-xs text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors">notifications</button>
-            <button class="material-symbols-outlined p-xs text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors">settings</button>
             <div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant cursor-pointer active:opacity-80">
                 <img class="w-full h-full object-cover" data-alt="A professional headshot of a female medical administrative professional with a friendly smile, wearing a modern clinical uniform. The background is a clean, softly lit medical office with a palette of soft blues and whites. The lighting is bright and professional, creating a trustworthy and efficient medical environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMxFn3qTwfzLFJXUd1wXZ24BB-FzpcgcJbxFmeLq_phQ0xrYl1V_iedAp2oSGfmr4kB_tpkBq8i1m0oq8hx5e_6CrIJ-HOQVQnbbpL5Yugum-VkjorOrhnwLMG2D4Hu8SngBB5oomDqOtAIfHpdP8S1h_4ykgXBTs5yNnbnIO3-7pnpec5CYLzG7K5IymIHUOGi8nD27TQ7KyqksINO0BQMklpCd_mnJThIbAPyMmvmMzKg8VvjdwRev99fch3LW4is22fn4kExXc"/>
             </div>
@@ -207,7 +197,7 @@
                     <div class="mt-auto pt-md border-t border-outline-variant flex items-center justify-between">
                         <span class="text-label-sm text-on-surface-variant">#{med.horarios.size()} horario(s) registrados</span>
                         <h:commandLink value="Seleccionar" styleClass="bg-primary text-white px-xl py-sm rounded-lg font-label-md hover:shadow-lg active:scale-95 transition-all"
-                                       action="horario?faces-redirect=true">
+                                       action="calendarioPacientes?faces-redirect=true">
                             <f:setPropertyActionListener target="#{pacienteBean.medicoSeleccionado}" value="#{med.nombreCompleto}"/>
                         </h:commandLink>
                     </div>

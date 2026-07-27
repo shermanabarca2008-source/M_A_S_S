@@ -63,7 +63,11 @@ public class HorarioMedicoBean implements Serializable {
         }
 
         Medico administrado = em.find(Medico.class, medicoSeleccionado.getId());
-        HorarioMedico nuevo = new HorarioMedico(fechaDisponible, horaInicio, horaFin, true);
+        HorarioMedico nuevo = new HorarioMedico();
+        nuevo.setFecha(fechaDisponible);
+        nuevo.setHoraInicio(horaInicio);
+        nuevo.setHoraFin(horaFin);
+        nuevo.setDisponible(true);
         administrado.gestionarDisponibilidad(nuevo);
         em.persist(nuevo);
         medicoSeleccionado = administrado;
@@ -101,7 +105,7 @@ public class HorarioMedicoBean implements Serializable {
             return new ArrayList<>();
         }
         return em.createQuery(
-                        "SELECT h FROM HorarioMedico h WHERE h.medico = :medico ORDER BY h.fechaDisponible, h.horaInicio",
+                        "SELECT h FROM HorarioMedico h WHERE h.medico = :medico ORDER BY h.fecha, h.horaInicio",
                         HorarioMedico.class)
                 .setParameter("medico", medicoSeleccionado)
                 .getResultList();
@@ -109,7 +113,7 @@ public class HorarioMedicoBean implements Serializable {
 
     private boolean existeCruce() {
         for (HorarioMedico horario : getHorariosMedicoSeleccionado()) {
-            if (fechaDisponible.equals(horario.getFechaDisponible())
+            if (fechaDisponible.equals(horario.getFecha())
                     && horaInicio.isBefore(horario.getHoraFin())
                     && horaFin.isAfter(horario.getHoraInicio())) {
                 return true;

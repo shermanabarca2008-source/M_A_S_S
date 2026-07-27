@@ -186,9 +186,18 @@
     </header>
     <!-- Content Canvas -->
     <div class="p-gutter max-w-max_container mx-auto w-full flex-1">
-        <div class="mb-xl">
-            <h2 class="font-headline-lg text-headline-lg text-on-surface">Disponibilidad de Médicos</h2>
-            <p class="font-body-md text-body-md text-on-surface-variant">Selecciona un médico para registrar y administrar sus horarios de atención.</p>
+        <div class="mb-xl flex justify-between items-center">
+            <div>
+                <h2 class="font-headline-lg text-headline-lg text-on-surface">Disponibilidad de Médicos</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant">Selecciona un médico para registrar y administrar sus horarios de atención.</p>
+            </div>
+            <h:form>
+                <h:commandLink action="horariosMedicos?faces-redirect=true"
+                               styleClass="flex items-center gap-sm bg-primary text-on-primary px-lg py-sm rounded-lg font-label-md shadow-sm hover:opacity-90 transition-all">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_schedule</span>
+                    Generar Horarios Automáticamente
+                </h:commandLink>
+            </h:form>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
@@ -206,10 +215,10 @@
                                     <div class="w-9 h-9 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
                                         <span class="material-symbols-outlined text-[18px]">person</span>
                                     </div>
-                                    <span>
+                                    <div>
                                         <p class="font-label-md text-label-md text-on-surface">#{medico.nombreCompleto}</p>
                                         <p class="font-body-sm text-body-sm text-on-surface-variant">#{medico.especialidadesTexto}</p>
-                                    </span>
+                                    </div>
                                     <f:ajax execute="@this" render="@form panelHorarios"/>
                                 </h:commandLink>
                             </li>
@@ -291,7 +300,7 @@
                             <ui:repeat value="#{horarioMedicoBean.horariosMedicoSeleccionado}" var="horario">
                                 <tr class="hover:bg-surface-container-lowest transition-colors">
                                     <td class="px-lg py-3">
-                                        <h:outputText value="#{horario.fechaDisponible}">
+                                        <h:outputText value="#{horario.fecha}">
                                             <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
                                         </h:outputText>
                                     </td>
@@ -301,14 +310,14 @@
                                         <h:outputText value="#{horario.horaFin}"><f:convertDateTime type="localTime" pattern="HH:mm"/></h:outputText>
                                     </td>
                                     <td class="px-lg py-3 text-center">
-                                        <span class="px-3 py-1 rounded-full text-label-sm text-label-sm font-bold #{horario.disponible ? 'bg-tertiary-container/20 text-tertiary' : 'bg-secondary-container text-secondary'}">
-                                            #{horario.disponible ? 'Disponible' : 'Reservado'}
+                                        <span class="px-3 py-1 rounded-full text-label-sm text-label-sm font-bold #{horario.disponible() ? 'bg-tertiary-container/20 text-tertiary' : 'bg-secondary-container text-secondary'}">
+                                            #{horario.disponible() ? 'Disponible' : 'Reservado'}
                                         </span>
                                     </td>
                                     <td class="px-lg py-3 text-right">
                                         <div class="flex items-center justify-end gap-2">
                                             <h:commandLink styleClass="p-2 text-primary hover:bg-primary-container/20 rounded-lg transition-all inline-block" title="Liberar"
-                                                           action="#{horarioMedicoBean.liberarHorario(horario)}" rendered="#{not horario.disponible}">
+                                                           action="#{horarioMedicoBean.liberarHorario(horario)}" rendered="#{not horario.disponible()}">
                                                 <span class="material-symbols-outlined">restart_alt</span>
                                                 <f:ajax execute="@none" render=":formListaHorarios"/>
                                             </h:commandLink>

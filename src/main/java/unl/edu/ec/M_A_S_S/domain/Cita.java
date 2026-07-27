@@ -57,6 +57,10 @@ public class Cita implements Serializable {
     @OneToOne(mappedBy = "cita", cascade = CascadeType.ALL, orphanRemoval = true)
     private Notificacion notificacion;
 
+    @OneToOne
+    @JoinColumn(name = "horario_id")
+    private HorarioMedico horario;
+
     // Constructor vacío
     public Cita() {
         this.estado = EstadoCita.AGENDADA;
@@ -131,6 +135,10 @@ public class Cita implements Serializable {
     public void setNotificacion(Notificacion notificacion) {
         this.notificacion = notificacion;
     }
+
+    public HorarioMedico getHorario() {return horario;}
+
+    public void setHorario(HorarioMedico horario) {this.horario = horario;}
 
     // Método para agendar cita
     public void agendar() {
