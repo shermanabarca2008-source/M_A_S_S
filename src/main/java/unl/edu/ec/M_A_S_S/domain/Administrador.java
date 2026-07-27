@@ -54,7 +54,7 @@ public class Administrador implements Serializable {
         this.contrasena = contrasena;
     }
 
-    // Mostrar información
+    // Mostrar Información 
     @Override
     public String toString() {
         return "Administrador: " +
