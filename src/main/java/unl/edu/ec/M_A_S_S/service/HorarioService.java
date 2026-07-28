@@ -44,7 +44,7 @@ public class HorarioService {
 
         LocalTime hora = LocalTime.of(8,30);
 
-        while(!hora.isAfter(LocalTime.of(16,30))){
+        while(!hora.isAfter(LocalTime.of(17,30))){
 
             // Hora de almuerzo
 

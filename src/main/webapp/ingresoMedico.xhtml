@@ -254,47 +254,47 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left">
                         <thead class="bg-surface-container-low text-xs uppercase tracking-wider text-on-surface-variant">
-                            <tr>
-                                <th class="px-lg py-3">Fecha</th>
-                                <th class="px-lg py-3">Hora</th>
-                                <th class="px-lg py-3">Paciente</th>
-                                <th class="px-lg py-3">Estado</th>
-                            </tr>
+                        <tr>
+                            <th class="px-lg py-3">Fecha</th>
+                            <th class="px-lg py-3">Hora</th>
+                            <th class="px-lg py-3">Paciente</th>
+                            <th class="px-lg py-3">Estado</th>
+                        </tr>
                         </thead>
                         <tbody class="divide-y divide-outline-variant">
-                            <ui:repeat value="#{medicoSesionBean.citasFiltradas}" var="cita">
-                                <tr class="hover:bg-surface-container-low/60">
-                                    <td class="px-lg py-md">
-                                        <h:outputText value="#{cita.fecha}">
-                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                        </h:outputText>
-                                    </td>
-                                    <td class="px-lg py-md">
-                                        <h:outputText value="#{cita.hora}">
-                                            <f:convertDateTime pattern="HH:mm"/>
-                                        </h:outputText>
-                                    </td>
-                                    <td class="px-lg py-md">
-                                        <p class="font-semibold">#{cita.paciente.nombreCompleto}</p>
-                                        <p class="text-xs text-on-surface-variant">#{cita.paciente.cedula}</p>
-                                    </td>
-                                    <td class="px-lg py-md">
+                        <ui:repeat value="#{medicoSesionBean.citasFiltradas}" var="cita">
+                            <tr class="hover:bg-surface-container-low/60">
+                                <td class="px-lg py-md">
+                                    <h:outputText value="#{cita.fecha}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+                                </td>
+                                <td class="px-lg py-md">
+                                    <h:outputText value="#{cita.hora}">
+                                        <f:convertDateTime pattern="HH:mm"/>
+                                    </h:outputText>
+                                </td>
+                                <td class="px-lg py-md">
+                                    <p class="font-semibold">#{cita.paciente.nombreCompleto}</p>
+                                    <p class="text-xs text-on-surface-variant">#{cita.paciente.cedula}</p>
+                                </td>
+                                <td class="px-lg py-md">
                                         <span class="px-3 py-1 rounded-full text-xs font-bold
                                               #{cita.estado eq 'CANCELADA' ? 'bg-red-100 text-red-700' :
                                                 cita.estado eq 'FINALIZADA' ? 'bg-green-100 text-green-700' :
                                                 'bg-primary-fixed text-primary'}">
                                             #{cita.estado}
                                         </span>
-                                    </td>
-                                </tr>
-                            </ui:repeat>
-                            <ui:fragment rendered="#{empty medicoSesionBean.citasFiltradas}">
-                                <tr>
-                                    <td class="px-lg py-xl text-center text-on-surface-variant" colspan="4">
-                                        No existen citas que coincidan con la búsqueda.
-                                    </td>
-                                </tr>
-                            </ui:fragment>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                        <ui:fragment rendered="#{empty medicoSesionBean.citasFiltradas}">
+                            <tr>
+                                <td class="px-lg py-xl text-center text-on-surface-variant" colspan="4">
+                                    No existen citas que coincidan con la búsqueda.
+                                </td>
+                            </tr>
+                        </ui:fragment>
                         </tbody>
                     </table>
                 </div>

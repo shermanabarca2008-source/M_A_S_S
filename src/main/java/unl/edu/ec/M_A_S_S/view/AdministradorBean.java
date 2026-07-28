@@ -54,6 +54,9 @@ public class AdministradorBean implements Serializable {
 
     private boolean formularioVisible = false;
 
+    private Long medicoSeleccionadoHorariosId;
+    private LocalDate fechaSeleccionadaHorarios;
+
     private String terminoBusqueda;
     private boolean busquedaRealizada;
 
@@ -315,10 +318,34 @@ public class AdministradorBean implements Serializable {
             AgendaService agendaService = new AgendaService();
             agendaService.registrarAgenda(administrado);
             em.merge(administrado);
+            this.medicoSeleccionadoHorariosId = administrado.getId();
+            this.fechaSeleccionadaHorarios = LocalDate.now();
             mensajeAdmin = "Horarios generados automáticamente para " + administrado.getNombreCompleto();
             errorAdmin = false;
         } else {
             mensajeAdmin = "No se pudo generar los horarios.";
+            errorAdmin = true;
+        }
+    }
+
+    @Transactional
+    public void generarHorarioAutomaticoPorId(Long medicoId) {
+        if (medicoId != null) {
+            Medico administrado = em.find(Medico.class, medicoId);
+            if (administrado != null) {
+                AgendaService agendaService = new AgendaService();
+                agendaService.registrarAgenda(administrado);
+                em.merge(administrado);
+                this.medicoSeleccionadoHorariosId = administrado.getId();
+                this.fechaSeleccionadaHorarios = LocalDate.now();
+                mensajeAdmin = "Horarios generados automáticamente para " + administrado.getNombreCompleto();
+                errorAdmin = false;
+            } else {
+                mensajeAdmin = "Médico no encontrado.";
+                errorAdmin = true;
+            }
+        } else {
+            mensajeAdmin = "Seleccione un médico para generar horarios.";
             errorAdmin = true;
         }
     }
@@ -614,6 +641,111 @@ public class AdministradorBean implements Serializable {
         LocalDate hoy = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM, yyyy", new java.util.Locale("es"));
         return hoy.format(formatter);
+    }
+
+    public List<unl.edu.ec.M_A_S_S.domain.HorarioMedico> getHorariosDelDia() {
+        if (medicoSeleccionadoHorariosId == null || fechaSeleccionadaHorarios == null) {
+            return new ArrayList<>();
+        }
+        
+        Medico medico = em.find(Medico.class, medicoSeleccionadoHorariosId);
+        if (medico == null) {
+            return new ArrayList<>();
+        }
+        
+        List<unl.edu.ec.M_A_S_S.domain.HorarioMedico> horarios = new ArrayList<>();
+        
+        if (medico.getAgendaMedico() != null) {
+            unl.edu.ec.M_A_S_S.domain.DiaAgenda dia = medico.getAgendaMedico().getDiaPorFecha(fechaSeleccionadaHorarios);
+            if (dia != null) {
+                horarios.addAll(dia.getHorarios());
+            }
+        }
+        
+        return horarios;
+    }
+
+    public void seleccionarMedicoHorarios(Medico medico) {
+        if (medico != null) {
+            this.medicoSeleccionadoHorariosId = medico.getId();
+        }
+        if (this.fechaSeleccionadaHorarios == null) {
+            this.fechaSeleccionadaHorarios = LocalDate.now();
+        }
+    }
+
+    public void navegarDia(int dias) {
+        if (fechaSeleccionadaHorarios != null) {
+            fechaSeleccionadaHorarios = fechaSeleccionadaHorarios.plusDays(dias);
+        }
+    }
+
+    @Transactional
+    public void guardarHorarios() {
+        if (medicoSeleccionadoHorariosId != null) {
+            Medico medico = em.find(Medico.class, medicoSeleccionadoHorariosId);
+            if (medico != null) {
+                em.merge(medico);
+                mensajeAdmin = "Horarios guardados correctamente para " + medico.getNombreCompleto();
+                errorAdmin = false;
+            } else {
+                mensajeAdmin = "Médico no encontrado.";
+                errorAdmin = true;
+            }
+        } else {
+            mensajeAdmin = "Seleccione un médico para guardar los horarios.";
+            errorAdmin = true;
+        }
+    }
+
+    @Transactional
+    public void limpiarAgenda() {
+        if (medicoSeleccionadoHorariosId != null) {
+            Medico medico = em.find(Medico.class, medicoSeleccionadoHorariosId);
+            if (medico != null && medico.getAgendaMedico() != null) {
+                medico.getAgendaMedico().getAgenda().clear();
+                em.merge(medico);
+                mensajeAdmin = "Agenda limpiada correctamente para " + medico.getNombreCompleto();
+                errorAdmin = false;
+            } else {
+                mensajeAdmin = "Seleccione un médico con agenda para limpiar.";
+                errorAdmin = true;
+            }
+        } else {
+            mensajeAdmin = "Seleccione un médico para limpiar la agenda.";
+            errorAdmin = true;
+        }
+    }
+
+    public String getFechaSeleccionadaFormateada() {
+        if (fechaSeleccionadaHorarios == null) {
+            return getFechaActualFormateada();
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM, yyyy", new java.util.Locale("es"));
+        return fechaSeleccionadaHorarios.format(formatter);
+    }
+
+    public Long getMedicoSeleccionadoHorariosId() {
+        return medicoSeleccionadoHorariosId;
+    }
+
+    public void setMedicoSeleccionadoHorariosId(Long medicoSeleccionadoHorariosId) {
+        this.medicoSeleccionadoHorariosId = medicoSeleccionadoHorariosId;
+    }
+
+    public Medico getMedicoSeleccionadoHorarios() {
+        if (medicoSeleccionadoHorariosId == null) {
+            return null;
+        }
+        return em.find(Medico.class, medicoSeleccionadoHorariosId);
+    }
+
+    public LocalDate getFechaSeleccionadaHorarios() {
+        return fechaSeleccionadaHorarios;
+    }
+
+    public void setFechaSeleccionadaHorarios(LocalDate fechaSeleccionadaHorarios) {
+        this.fechaSeleccionadaHorarios = fechaSeleccionadaHorarios;
     }
 
 }

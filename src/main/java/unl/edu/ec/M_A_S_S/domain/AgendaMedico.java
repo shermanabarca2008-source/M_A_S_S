@@ -3,6 +3,7 @@ package unl.edu.ec.M_A_S_S.domain;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,5 +46,14 @@ public class AgendaMedico implements Serializable {
 
     public void setAgenda(List<DiaAgenda> agenda) {
         this.agenda = agenda;
+    }
+
+    public DiaAgenda getDiaPorFecha(LocalDate fecha) {
+        for (DiaAgenda dia : agenda) {
+            if (dia.getFecha().equals(fecha)) {
+                return dia;
+            }
+        }
+        return null;
     }
 }

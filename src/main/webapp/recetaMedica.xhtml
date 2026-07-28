@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="jakarta.faces.facelets"><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Creación de Indicaciones | M.A.S.S.</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4faff;
+        }
+        .clinical-shadow {
+            box-shadow: 0px 2px 4px rgba(38, 50, 56, 0.05);
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#d7e4ec",
+                        "outline": "#727783",
+                        "primary": "#004d99",
+                        "on-error": "#ffffff",
+                        "background": "#f4faff",
+                        "on-surface": "#111d23",
+                        "inverse-surface": "#263238",
+                        "surface-tint": "#005db7",
+                        "on-secondary-container": "#616363",
+                        "on-primary-container": "#dae5ff",
+                        "tertiary-fixed-dim": "#7ddc7a",
+                        "secondary": "#5d5f5f",
+                        "secondary-container": "#dfe0e0",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-background": "#111d23",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#ddeaf2",
+                        "primary-container": "#1565c0",
+                        "on-primary-fixed": "#001b3d",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#d6e3ff",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#0f7623",
+                        "outline-variant": "#c2c6d4",
+                        "surface-dim": "#cfdce4",
+                        "on-tertiary-container": "#9afa95",
+                        "on-tertiary-fixed-variant": "#005313",
+                        "surface-container-low": "#e9f6fd",
+                        "on-tertiary-fixed": "#002204",
+                        "inverse-on-surface": "#e6f3fb",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-surface-variant": "#424752",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#f4faff",
+                        "surface": "#f4faff",
+                        "on-secondary-fixed-variant": "#454747",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#98f994",
+                        "tertiary": "#005b15",
+                        "surface-container": "#e3f0f8",
+                        "on-primary-fixed-variant": "#00468c",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "inverse-primary": "#a9c7ff",
+                        "surface-container-highest": "#d7e4ec"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sidebar_width": "280px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "base": "4px",
+                        "max_container": "1440px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-lg h-16 bg-surface-container-highest dark:bg-surface-container-high border-b border-outline-variant dark:border-outline shadow-sm">
+    <div class="flex items-center gap-md">
+        <span class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary">M.A.S.S.</span>
+        <div class="ml-xl hidden md:flex items-center bg-surface-container-low px-md py-xs rounded-full border border-outline-variant">
+            <span class="material-symbols-outlined text-on-surface-variant text-[20px] mr-sm">search</span>
+            <input class="bg-transparent border-none focus:ring-0 text-body-sm w-64" placeholder="Buscar paciente o registro..." type="text"/>
+        </div>
+    </div>
+    <div class="flex items-center gap-md">
+        <button class="material-symbols-outlined p-sm rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors">notifications</button>
+        <button class="material-symbols-outlined p-sm rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors">settings</button>
+        <div class="w-8 h-8 rounded-full overflow-hidden border border-primary">
+            <img alt="Perfil del médico" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuxS8-Fx2cnCM_HuhnUFklcBmLP5AMNOwoXajW47AaoVrwRjKh4tA2_NVR4CMPY5vNiRbwB40gRq1CtiI42Qp_ruWL8kknU4O84v78rY5JD4iZpdfoKqPGhXQdvBaSAOA2DaShQdCUUJiz9TRGjIGerrzkMcDf3kyY5njUdgCT3dFljdzNCTlGqc3vh9PCuduZddPqmZDxm7r18tGdEMaXl36F44Cx7FBjGOOR3PA4DPoCWkBhjdF9qkDS__qYQDMIdZX7wv4Gicc"/>
+        </div>
+    </div>
+</nav>
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col w-[280px] h-screen fixed left-0 top-0 pt-16 pb-lg px-md bg-surface-container-low dark:bg-surface-dim border-r border-outline-variant dark:border-outline">
+    <div class="py-lg px-md">
+        <h2 class="font-headline-sm text-headline-sm font-black text-primary dark:text-inverse-primary">M.A.S.S.</h2>
+        <p class="font-label-md text-label-md text-on-surface-variant">Portal Clínico</p>
+    </div>
+    <nav class="flex-1 space-y-sm mt-md">
+        <a class="flex items-center gap-md px-md py-sm font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg" href="#">
+            <span class="material-symbols-outlined">dashboard</span> Tablero
+        </a>
+        <a class="flex items-center gap-md px-md py-sm font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg" href="#">
+            <span class="material-symbols-outlined">calendar_today</span> Agenda
+        </a>
+        <a class="flex items-center gap-md px-md py-sm font-label-md text-label-md bg-primary-container text-on-primary-container border-l-4 border-primary rounded-r-full transition-all duration-200" href="#">
+            <span class="material-symbols-outlined">description</span> Indicaciones
+        </a>
+    </nav>
+    <div class="mt-auto border-t border-outline-variant pt-md space-y-sm">
+        <button class="w-full flex items-center gap-md px-md py-sm font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg">
+            <span class="material-symbols-outlined">help</span> Centro de Ayuda
+        </button>
+        <button class="w-full flex items-center gap-md px-md py-sm font-label-md text-label-md text-error hover:bg-error-container transition-all duration-200 rounded-lg">
+            <span class="material-symbols-outlined">logout</span> Cerrar Sesión
+        </button>
+    </div>
+</aside>
+<!-- Main Content -->
+<main class="lg:ml-[280px] pt-24 px-lg pb-xl flex-1 flex flex-col max-w-[1440px]">
+    <!-- Header Section -->
+    <header class="mb-xl flex flex-col md:flex-row md:items-end justify-between gap-md">
+        <div>
+            <nav class="flex items-center gap-xs text-on-surface-variant mb-xs">
+                <span class="font-label-sm text-label-sm">Agenda</span>
+                <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+                <span class="font-label-sm text-label-sm">Consulta</span>
+                <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+                <span class="font-label-sm text-label-sm text-primary">Nuevas Indicaciones</span>
+            </nav>
+            <h1 class="font-headline-lg text-headline-lg text-on-surface">Crear Indicaciones Médicas</h1>
+            <p class="font-body-md text-body-md text-on-surface-variant mt-xs">Registro de indicaciones finales para el paciente.</p>
+        </div>
+        <div class="flex items-center gap-md">
+            <button class="px-lg h-10 border border-outline-variant text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-low transition-all">Guardar Borrador</button>
+            <button class="px-lg h-10 bg-primary text-white font-label-md text-label-md rounded-lg hover:bg-primary-container shadow-sm active:scale-95 transition-all flex items-center gap-sm">
+                <span class="material-symbols-outlined text-[20px]">send</span> Enviar al Paciente
+            </button>
+        </div>
+    </header>
+    <!-- Form Layout -->
+    <div class="max-w-4xl space-y-lg">
+        <!-- Patient Selector Section -->
+        <section class="bg-surface-container-lowest clinical-shadow border border-outline-variant p-lg rounded-xl">
+            <div class="flex items-center gap-sm mb-md text-primary">
+                <span class="material-symbols-outlined">person_search</span>
+                <h3 class="font-headline-sm text-headline-sm">Seleccionar Paciente</h3>
+            </div>
+            <div class="relative">
+                <label class="block font-label-sm text-label-sm text-on-surface-variant mb-xs">Buscar por nombre o ID de paciente</label>
+                <div class="flex items-center bg-surface-container-low border border-outline-variant rounded-lg px-md focus-within:ring-2 focus-within:ring-primary/10 focus-within:border-primary transition-all">
+                    <span class="material-symbols-outlined text-outline">search</span>
+                    <input class="w-full h-12 bg-transparent border-none focus:ring-0 text-body-md" placeholder="Ej: Alex Thompson o #4492-B" type="text" value="Alex Thompson (#4492-B)"/>
+                </div>
+            </div>
+        </section>
+        <!-- Diagnosis Section -->
+        <section class="bg-surface-container-lowest clinical-shadow border border-outline-variant p-lg rounded-xl">
+            <div class="flex items-center gap-sm mb-md text-primary">
+                <span class="material-symbols-outlined">medical_information</span>
+                <h3 class="font-headline-sm text-headline-sm">Diagnóstico y CIE-10</h3>
+            </div>
+            <div class="space-y-md">
+                <div class="relative">
+                    <label class="block font-label-sm text-label-sm text-on-surface-variant mb-xs">Buscar Diagnóstico (Código CIE-10 o Nombre)</label>
+                    <div class="flex items-center bg-surface-container-low border border-outline-variant rounded-lg px-md focus-within:ring-2 focus-within:ring-primary/10 focus-within:border-primary transition-all">
+                        <span class="material-symbols-outlined text-outline">search</span>
+                        <input class="w-full h-12 bg-transparent border-none focus:ring-0 text-body-md" placeholder="Ej: J45.909 - Asma no especificada" type="text"/>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-sm">
+                    <div class="bg-primary-fixed text-on-primary-fixed px-md py-sm rounded-full flex items-center gap-xs font-label-sm text-label-sm border border-primary/20">
+                        <span class="font-bold">J45.909</span> Asma no especificada, no complicada
+                        <button class="material-symbols-outlined text-[16px] hover:text-error">close</button>
+                    </div>
+                    <div class="bg-secondary-container text-on-secondary-container px-md py-sm rounded-full flex items-center gap-xs font-label-sm text-label-sm border border-outline-variant">
+                        <span class="font-bold">I10</span> Hipertensión esencial (primaria)
+                        <button class="material-symbols-outlined text-[16px] hover:text-error">close</button>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-label-sm text-label-sm text-on-surface-variant mb-xs">Notas Clínicas e Indicaciones Adicionales</label>
+                    <textarea class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary/10 focus:border-primary text-body-md" placeholder="Ingrese las indicaciones específicas, plan de tratamiento y notas para el paciente..." rows="8"></textarea>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-xl px-lg mt-auto flex flex-col md:flex-row justify-between items-center gap-md bg-surface-container-lowest dark:bg-surface-dim border-t border-outline-variant">
+    <div class="flex flex-col gap-xs">
+        <span class="font-label-md text-label-md font-bold text-on-surface">Sistema M.A.S.S.</span>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 Sistema de Agenda Médica (M.A.S.S.). Todos los derechos reservados.</p>
+    </div>
+    <div class="flex flex-wrap gap-lg">
+        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Política de Privacidad</a>
+        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Términos de Servicio</a>
+        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Soporte</a>
+        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Ubicaciones</a>
+    </div>
+</footer>
+<!-- Interaction script -->
+<script>
+    document.querySelectorAll('input, textarea').forEach(el => {
+        el.addEventListener('focus', () => {
+            el.parentElement.classList.add('shadow-lg', 'scale-[1.002]');
+            el.parentElement.style.transition = 'all 0.2s ease-out';
+        });
+        el.addEventListener('blur', () => {
+            el.parentElement.classList.remove('shadow-lg', 'scale-[1.002]');
+        });
+    });
+
+    const sendBtn = document.querySelector('button.bg-primary');
+    sendBtn.addEventListener('click', () => {
+        const originalContent = sendBtn.innerHTML;
+        sendBtn.innerHTML = `&lt;span class="material-symbols-outlined animate-spin text-[20px]">sync&lt;/span> Enviando...`;
+        sendBtn.disabled = true;
+        setTimeout(() => {
+            sendBtn.innerHTML = `&lt;span class="material-symbols-outlined text-[20px]">check_circle&lt;/span> Enviado con éxito`;
+            sendBtn.classList.replace('bg-primary', 'bg-tertiary-container');
+            setTimeout(() => {
+                sendBtn.innerHTML = originalContent;
+                sendBtn.classList.replace('bg-tertiary-container', 'bg-primary');
+                sendBtn.disabled = false;
+            }, 3000);
+        }, 1200);
+    });
+</script>
+</body></html>
