@@ -125,14 +125,11 @@
             <span class="text-headline-md font-headline-md font-bold text-primary">M.A.S.S.</span>
         </div>
         <nav class="hidden md:flex items-center gap-xl">
-            <a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-200 cursor-pointer">Dashboard</a>
-            <a class="text-primary border-b-2 border-primary font-bold pb-1 font-body-md text-body-md cursor-pointer">Find Doctor</a>
-            <a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-200 cursor-pointer">My Bookings</a>
-            <a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-200 cursor-pointer">Help</a>
+            <h:link outcome="gestionPacientes" styleClass="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-200 cursor-pointer">Inicio</h:link>
+            <h:link outcome="aggCitas" styleClass="text-primary border-b-2 border-primary font-bold pb-1 font-body-md text-body-md cursor-pointer">Buscar médico</h:link>
+            <h:link outcome="misCitas" styleClass="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-200 cursor-pointer">Mis citas</h:link>
         </nav>
         <div class="flex items-center gap-md">
-            <button class="material-symbols-outlined text-primary p-2 cursor-pointer active:opacity-80">notifications</button>
-            <button class="material-symbols-outlined text-primary p-2 cursor-pointer active:opacity-80">settings</button>
             <div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden border border-outline-variant">
                 <img class="w-full h-full object-cover" data-alt="Professional profile portrait of a modern healthcare administrator in a bright clinical setting. The subject has a warm, trustworthy expression. The lighting is soft and high-key, reflecting a high-end, clean medical facility with blue and white tones and clinical minimalism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpI8l7yLZTPAgChTpwWdnXQRFRiTINyabzMZsYNnx_bzhyVD5Xx9OZTKzlsaLNyuCwIV4vlbiPSIpn8nO3dEAYCoXAmEUsLLSWRvxydQ0CH9KNNjHMjSfYst-b-XWCvNFjxmIDSUk-2A1OSM2P3yNxXYjZ3gxmnlbnQL0xmvI7WkLSlP88etCzEZBQDNbV1liifvNhffEBNMH8RFmZuolNzwCcS0WeLyDgcdpVMjrboEJbneQEVU1wgElHIqv7frtci8l3Wy5p3Wc"/>
             </div>
@@ -225,15 +222,18 @@
                 </p>
             </div>
             <!-- Actions -->
-            <div class="flex flex-col md:flex-row gap-md mt-sm">
-                <button class="bg-transparent border border-primary text-primary py-md px-xl rounded-lg font-label-md text-label-md hover:bg-primary/5 active:opacity-80 transition-all duration-200 flex items-center justify-center gap-md flex-1">
+            <h:form styleClass="flex flex-col md:flex-row gap-md mt-sm">
+                <h:link outcome="horario"
+                        styleClass="bg-transparent border border-primary text-primary py-md px-xl rounded-lg font-label-md text-label-md hover:bg-primary/5 active:opacity-80 transition-all duration-200 flex items-center justify-center gap-md flex-1">
                     <span class="material-symbols-outlined">arrow_back</span>
                     Volver
-                </button>
-                <button class="bg-primary text-on-primary py-md px-xl rounded-lg font-label-md text-label-md hover:opacity-90 active:opacity-80 transition-all duration-200 flex items-center justify-center gap-md flex-1">
+                </h:link>
+                <h:commandLink id="confirmarCita" action="#{pacienteBean.agendarCita}"
+                        styleClass="bg-primary text-on-primary py-md px-xl rounded-lg font-label-md text-label-md hover:opacity-90 active:opacity-80 transition-all duration-200 flex items-center justify-center gap-md flex-1">
                     Confirmar Cita
                     <span class="material-symbols-outlined">check_circle</span>
-                </button></div>
+                </h:commandLink>
+            </h:form>
         </div>
         <!-- Footer Help Text -->
         <div class="flex justify-center items-center gap-sm text-on-secondary-container">
@@ -245,16 +245,12 @@
 <!-- SideNavBar (Hidden on Mobile, Visible on Desktop) -->
 <script>
     // Micro-interaction for the confirm button
-    const confirmBtn = document.querySelector('button.bg-primary');
-    confirmBtn.addEventListener('click', function() {
-        this.innerHTML = '&lt;span class="material-symbols-outlined animate-spin">sync&lt;/span> Procesando...';
-        this.classList.add('opacity-80');
-        setTimeout(() => {
-            this.innerHTML = '¡Cita Confirmada! &lt;span class="material-symbols-outlined">verified&lt;/span>';
-            this.classList.remove('bg-primary');
-            this.classList.add('bg-tertiary-container', 'text-on-tertiary-container');
-        }, 1500);
-    });
+    const confirmBtn = document.querySelector('[id$="confirmarCita"]');
+    if (confirmBtn) {
+        confirmBtn.addEventListener('click', function() {
+            this.classList.add('opacity-80');
+        });
+    }
 
     // Simple animation on load for the details grid items
     document.addEventListener('DOMContentLoaded', () => {

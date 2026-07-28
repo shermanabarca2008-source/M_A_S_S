@@ -122,6 +122,7 @@
         }
     </style>
 </head>
+<<<<<<< HEAD
 <body class="bg-background text-on-background font-body-md min-h-screen flex">
 
 <!-- Sidebar Navigation Azul -->
@@ -129,6 +130,25 @@
     <div class="mb-xl px-sm">
         <h1 class="font-headline-sm text-headline-sm font-black text-white">Portal del Paciente</h1>
         <p class="text-label-sm text-white/80">Gestiona tu salud</p>
+=======
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar (Shared Component) -->
+<header class="w-full top-0 sticky z-50 bg-surface border-b border-outline-variant shadow-sm">
+    <div class="flex justify-between items-center px-lg py-sm max-w-max_container mx-auto w-full">
+        <div class="flex items-center gap-md">
+            <span class="text-headline-md font-headline-md font-bold text-primary">M.A.S.S.</span>
+        </div>
+        <nav class="hidden md:flex items-center gap-xl">
+            <h:link outcome="gestionPacientes" styleClass="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-200">Tablero</h:link>
+            <h:link outcome="aggCitas" styleClass="text-primary border-b-2 border-primary font-bold pb-1 font-body-md text-body-md">Buscar Doctor</h:link>
+            <h:link outcome="misCitas" styleClass="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-200">Mis Citas</h:link>
+        </nav>
+        <div class="flex items-center gap-md">
+            <div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">
+                <img class="w-full h-full object-cover" data-alt="A professional close-up portrait of a medical administrator in a bright, modern clinical office. The person is smiling warmly, wearing a crisp white consultation coat over a soft blue shirt. The background is softly blurred with hints of high-tech medical monitors and glass partitions. The lighting is clean and natural, reflecting a high-trust healthcare environment with a blue and white color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA57Mprrnf6Xtf6qe2Vz6pnR6xeicb7x3CWUZE7aZHvLgs8sNSt68g_MRTfHCD6xNrVCoWiD0TAWMwxuf9X4QsgwejHOF4URaW6g5fNrsc0Nv1P4nBf-CIzW3HqjVyK6lXyIuAPtI7ardrIZxWwiA21qmeb7pAkLnt7xF9YUsjC-8azR9VjlAQr7CpLWqqmjEmTf4328SnYkjO1PSH-6BXJcBSAFCQsoBqEvIdJzxxmL_7aChIwXzlgBh1e5X6Px3Xfr5mI-L79vXY"/>
+            </div>
+        </div>
+>>>>>>> 5bd8cf7f5c6b65511a5c5a4fd7862f8efbfab71c
     </div>
     <nav class="flex-1 space-y-1">
         <!-- 1. Inicio -->
@@ -253,5 +273,11 @@
         </h:form>
     </div>
 </main>
+<<<<<<< HEAD
 </body>
 </html>
+=======
+<!-- SideNavBar (Shared Component - Hidden on Desktop Layout by instructions, but integrated if needed) -->
+<!-- Not rendered as per 'Main Content' instruction to focus on Step 1 Selection UI -->
+</body></html>
+>>>>>>> 5bd8cf7f5c6b65511a5c5a4fd7862f8efbfab71c

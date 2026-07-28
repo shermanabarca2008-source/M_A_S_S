@@ -2,6 +2,7 @@ package unl.edu.ec.M_A_S_S.view;
 
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.FacesContext;
+import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
@@ -45,6 +46,8 @@ public class PacienteBean implements Serializable {
 
     private String cedula;
     private String contrasena;
+    private String confirmacionContrasena;
+    private boolean aceptaTerminos;
     private String mensaje;
     private boolean error;
     private Paciente pacienteActual;
@@ -55,6 +58,8 @@ public class PacienteBean implements Serializable {
     private String citaSeleccionada;
     private String tabActiva = "agendar";
     private Cita ultimaCitaAgendada;
+    private String terminoBusquedaPaciente;
+    private boolean busquedaPacienteRealizada;
 
     public String iniciarSesion() {
         if ("admin".equals(cedula) && "admin123".equals(contrasena)) {
@@ -76,7 +81,7 @@ public class PacienteBean implements Serializable {
             medicoSesionBean.setMedicoActual(medico);
             mensaje = "Bienvenido " + medico.getNombreCompleto() + ".";
             error = false;
-            return "panelMedico?faces-redirect=true";
+            return "ingresoMedico?faces-redirect=true";
         }
 
         mensaje = "Cédula o contraseña incorrecta.";
@@ -101,6 +106,24 @@ public class PacienteBean implements Serializable {
 
     public String registrarPaciente() {
 
+        if (nuevoPaciente.getContrasena() == null || nuevoPaciente.getContrasena().trim().isEmpty()) {
+            mensaje = "Debe ingresar una contraseña.";
+            error = true;
+            return null;
+        }
+
+        if (!nuevoPaciente.getContrasena().equals(confirmacionContrasena)) {
+            mensaje = "Las contraseñas no coinciden. Vuelva a escribirlas.";
+            error = true;
+            return null;
+        }
+
+        if (!aceptaTerminos) {
+            mensaje = "Debe aceptar los términos y condiciones para crear la cuenta.";
+            error = true;
+            return null;
+        }
+
         // Verificar que la cédula no exista
         if (pacienteRepositorioBean.existeCedula(nuevoPaciente.getCedula())) {
             mensaje = "Ya existe un paciente registrado con esa cédula.";
@@ -123,6 +146,8 @@ public class PacienteBean implements Serializable {
         error = false;
 
         nuevoPaciente = new Paciente();
+        confirmacionContrasena = "";
+        aceptaTerminos = false;
 
         return "/index.xhtml?faces-redirect=true";
     }
@@ -302,6 +327,116 @@ public class PacienteBean implements Serializable {
         return result;
     }
 
+    public void buscarEnPortal(AjaxBehaviorEvent event) {
+        busquedaPacienteRealizada = terminoBusquedaPaciente != null
+                && !terminoBusquedaPaciente.trim().isEmpty();
+    }
+
+    public List<Medico> getResultadosMedicosBusquedaPaciente() {
+        if (!busquedaPacienteRealizada) {
+            return List.of();
+        }
+        String termino = "%" + terminoBusquedaPaciente.trim().toLowerCase() + "%";
+        return em.createQuery(
+                        "SELECT DISTINCT m FROM Medico m LEFT JOIN m.especialidades e "
+                                + "WHERE LOWER(m.nombreCompleto) LIKE :termino "
+                                + "OR LOWER(e.nombre) LIKE :termino ORDER BY m.nombreCompleto",
+                        Medico.class)
+                .setParameter("termino", termino)
+                .getResultList();
+    }
+
+    public List<Especialidad> getResultadosEspecialidadesBusquedaPaciente() {
+        if (!busquedaPacienteRealizada) {
+            return List.of();
+        }
+        String termino = "%" + terminoBusquedaPaciente.trim().toLowerCase() + "%";
+        return em.createQuery(
+                        "SELECT e FROM Especialidad e WHERE LOWER(e.nombre) LIKE :termino ORDER BY e.nombre",
+                        Especialidad.class)
+                .setParameter("termino", termino)
+                .getResultList();
+    }
+
+    public List<Cita> getResultadosCitasBusquedaPaciente() {
+        List<Cita> resultado = new ArrayList<>();
+        if (!busquedaPacienteRealizada || pacienteActual == null || pacienteActual.getCitas() == null) {
+            return resultado;
+        }
+
+        String termino = terminoBusquedaPaciente.trim().toLowerCase();
+        for (Cita cita : pacienteActual.getCitas()) {
+            String medico = cita.getMedico() == null ? "" : cita.getMedico().getNombreCompleto();
+            String especialidades = cita.getMedico() == null ? "" : cita.getMedico().getEspecialidadesTexto();
+            String estado = cita.getEstado() == null ? "" : cita.getEstado().name();
+            String fecha = cita.getFecha() == null ? "" : cita.getFecha().toString();
+            if (medico.toLowerCase().contains(termino)
+                    || especialidades.toLowerCase().contains(termino)
+                    || estado.toLowerCase().contains(termino)
+                    || fecha.contains(termino)) {
+                resultado.add(cita);
+            }
+        }
+        resultado.sort(Comparator.comparing(Cita::getFecha).reversed());
+        return resultado;
+    }
+
+    public String abrirMedicoDesdeBusqueda(Medico medico) {
+        if (medico == null) {
+            return null;
+        }
+        medicoSeleccionado = medico.getNombreCompleto();
+        if (medico.getEspecialidades() != null && !medico.getEspecialidades().isEmpty()) {
+            especialidadSeleccionada = medico.getEspecialidades().get(0).getNombre();
+        }
+        limpiarBusquedaPaciente();
+        return "horario?faces-redirect=true";
+    }
+
+    public String abrirEspecialidadDesdeBusqueda(Especialidad especialidad) {
+        if (especialidad == null) {
+            return null;
+        }
+        especialidadSeleccionada = especialidad.getNombre();
+        limpiarBusquedaPaciente();
+        return "selecMedico?faces-redirect=true";
+    }
+
+    private void limpiarBusquedaPaciente() {
+        terminoBusquedaPaciente = "";
+        busquedaPacienteRealizada = false;
+    }
+
+    public int getTotalCitasPaciente() {
+        return pacienteActual == null || pacienteActual.getCitas() == null
+                ? 0 : pacienteActual.getCitas().size();
+    }
+
+    public int getCitasAgendadasPaciente() {
+        return contarCitasPorEstado(Cita.EstadoCita.AGENDADA);
+    }
+
+    public int getCitasFinalizadasPaciente() {
+        return contarCitasPorEstado(Cita.EstadoCita.FINALIZADA);
+    }
+
+    public int getCitasCanceladasPaciente() {
+        return contarCitasPorEstado(Cita.EstadoCita.CANCELADA);
+    }
+
+    private int contarCitasPorEstado(Cita.EstadoCita estado) {
+        if (pacienteActual == null || pacienteActual.getCitas() == null) {
+            return 0;
+        }
+        int total = 0;
+        for (Cita cita : pacienteActual.getCitas()) {
+            if (cita.getEstado() == estado) {
+                total++;
+            }
+        }
+        return total;
+    }
+
     private Medico encontrarMedicoPorNombre(String nombre) {
         if (nombre == null) {
             return null;
@@ -340,6 +475,22 @@ public class PacienteBean implements Serializable {
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    public String getConfirmacionContrasena() {
+        return confirmacionContrasena;
+    }
+
+    public void setConfirmacionContrasena(String confirmacionContrasena) {
+        this.confirmacionContrasena = confirmacionContrasena;
+    }
+
+    public boolean isAceptaTerminos() {
+        return aceptaTerminos;
+    }
+
+    public void setAceptaTerminos(boolean aceptaTerminos) {
+        this.aceptaTerminos = aceptaTerminos;
     }
 
     public Paciente getNuevoPaciente() {
@@ -388,6 +539,18 @@ public class PacienteBean implements Serializable {
 
     public Paciente getPacienteActual() {
         return pacienteActual;
+    }
+
+    public String getTerminoBusquedaPaciente() {
+        return terminoBusquedaPaciente;
+    }
+
+    public void setTerminoBusquedaPaciente(String terminoBusquedaPaciente) {
+        this.terminoBusquedaPaciente = terminoBusquedaPaciente;
+    }
+
+    public boolean isBusquedaPacienteRealizada() {
+        return busquedaPacienteRealizada;
     }
 
     public String getTabActiva() {

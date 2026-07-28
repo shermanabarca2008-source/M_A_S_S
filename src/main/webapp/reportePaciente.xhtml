@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html class="light" lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="jakarta.faces.facelets">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>M.A.S.S. - Reporte Médico del Paciente</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#004d99",
+                        "primary-container": "#1565c0",
+                        "primary-fixed": "#d6e3ff",
+                        tertiary: "#005b15",
+                        "tertiary-fixed": "#98f994",
+                        error: "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        surface: "#f4faff",
+                        "surface-container": "#e3f0f8",
+                        "surface-container-low": "#e9f6fd",
+                        "surface-container-high": "#ddeaf2",
+                        "surface-container-highest": "#d7e4ec",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#111d23",
+                        "on-surface-variant": "#424752",
+                        "outline-variant": "#c2c6d4"
+                    },
+                    spacing: {
+                        xs: "4px",
+                        sm: "8px",
+                        md: "16px",
+                        lg: "24px",
+                        xl: "32px",
+                        gutter: "24px",
+                        max_container: "1440px"
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4faff;
+            color: #111d23;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .report-card {
+            background: #ffffff;
+            border: 1px solid #c2c6d4;
+            box-shadow: 0 2px 4px rgba(38, 50, 56, 0.05);
+        }
+        @media print {
+            @page {
+                size: A4;
+                margin: 14mm;
+            }
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background: #ffffff !important;
+            }
+            main {
+                margin-left: 0 !important;
+                padding: 0 !important;
+            }
+            .report-card {
+                box-shadow: none !important;
+                break-inside: avoid;
+            }
+            .print-header {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Navegación del paciente -->
+<aside class="no-print hidden lg:flex flex-col w-[280px] h-screen fixed left-0 top-0 pt-16 pb-lg px-md bg-surface-container-low border-r border-outline-variant z-40">
+    <div class="mb-xl px-md">
+        <h1 class="text-xl font-extrabold text-primary">M.A.S.S.</h1>
+        <p class="text-sm text-on-surface-variant">Portal de Pacientes</p>
+    </div>
+    <nav class="flex-1 space-y-1">
+        <h:link outcome="gestionPacientes"
+                styleClass="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="font-semibold">Inicio</span>
+        </h:link>
+        <h:link outcome="misCitas"
+                styleClass="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <span class="font-semibold">Mis Citas</span>
+        </h:link>
+        <h:link outcome="aggCitas"
+                styleClass="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+            <span class="material-symbols-outlined">edit_calendar</span>
+            <span class="font-semibold">Agendar Cita</span>
+        </h:link>
+        <h:link outcome="historialMedico"
+                styleClass="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+            <span class="material-symbols-outlined">history_edu</span>
+            <span class="font-semibold">Historial</span>
+        </h:link>
+        <h:link outcome="reportePaciente"
+                styleClass="flex items-center gap-md px-md py-3 bg-primary-container text-white border-l-4 border-primary rounded-r-full transition-all">
+            <span class="material-symbols-outlined">description</span>
+            <span class="font-semibold">Reporte Médico</span>
+        </h:link>
+    </nav>
+    <div class="mt-auto pt-lg border-t border-outline-variant">
+        <h:form>
+            <h:commandLink action="#{pacienteBean.cerrarSesion}"
+                           styleClass="flex items-center gap-md px-md py-3 text-error hover:bg-error-container rounded-lg transition-all w-full">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-semibold">Cerrar Sesión</span>
+            </h:commandLink>
+        </h:form>
+    </div>
+</aside>
+
+<!-- Barra superior sin campana ni configuración -->
+<header class="no-print fixed top-0 left-0 lg:left-[280px] right-0 h-16 bg-surface-container-highest flex justify-between items-center px-lg z-50 shadow-sm border-b border-outline-variant">
+    <div class="flex items-center gap-md">
+        <span class="material-symbols-outlined text-primary">clinical_notes</span>
+        <span class="font-semibold text-primary">Reporte del Paciente</span>
+    </div>
+    <div class="flex items-center gap-sm">
+        <div class="text-right hidden sm:block">
+            <p class="font-semibold">#{pacienteBean.pacienteActual.nombreCompleto}</p>
+            <p class="text-xs text-on-surface-variant">Cédula: #{pacienteBean.pacienteActual.cedula}</p>
+        </div>
+        <div class="w-10 h-10 rounded-full border-2 border-primary bg-primary-fixed flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined">person</span>
+        </div>
+    </div>
+</header>
+
+<main class="lg:ml-[280px] pt-24 pb-xl px-lg min-h-screen">
+    <div class="max-w-max_container mx-auto">
+        <div class="hidden print-header mb-lg border-b-2 border-primary pb-md">
+            <h1 class="text-2xl font-bold text-primary">M.A.S.S. - Reporte Médico</h1>
+            <p class="text-sm text-on-surface-variant">Documento generado desde el Portal de Pacientes</p>
+        </div>
+
+        <section class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-xl">
+            <div>
+                <h1 class="text-3xl font-bold">Reporte Médico del Paciente</h1>
+                <p class="text-on-surface-variant mt-1">
+                    Resumen de información personal, citas e indicaciones registradas.
+                </p>
+                <p class="text-sm text-on-surface-variant mt-1">Generado: #{pacienteBean.fechaActualConDia}</p>
+            </div>
+            <button type="button" onclick="window.print(); return false;"
+                    class="no-print flex items-center justify-center gap-sm bg-primary text-white px-lg py-3 rounded-lg font-semibold hover:bg-primary-container transition-all shadow-md">
+                <span class="material-symbols-outlined">picture_as_pdf</span>
+                Guardar como PDF
+            </button>
+        </section>
+
+        <!-- Información del paciente -->
+        <section class="report-card rounded-xl p-lg mb-lg">
+            <div class="flex items-center gap-sm mb-lg">
+                <span class="material-symbols-outlined text-primary">badge</span>
+                <h2 class="text-xl font-semibold">Información del Paciente</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+                <div>
+                    <p class="text-xs uppercase tracking-wider text-on-surface-variant">Nombre completo</p>
+                    <p class="font-semibold">#{pacienteBean.pacienteActual.nombreCompleto}</p>
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-wider text-on-surface-variant">Cédula</p>
+                    <p class="font-semibold">#{pacienteBean.pacienteActual.cedula}</p>
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-wider text-on-surface-variant">Fecha de nacimiento</p>
+                    <p class="font-semibold">
+                        <h:outputText value="#{pacienteBean.pacienteActual.fechaNacimiento}">
+                            <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p>
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-wider text-on-surface-variant">Correo electrónico</p>
+                    <p class="font-semibold">#{pacienteBean.pacienteActual.correoElectronico}</p>
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-wider text-on-surface-variant">Teléfono</p>
+                    <p class="font-semibold">#{pacienteBean.pacienteActual.telefono}</p>
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-wider text-on-surface-variant">Dirección</p>
+                    <p class="font-semibold">#{pacienteBean.pacienteActual.direccion}</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Estadísticas -->
+        <section class="grid grid-cols-2 lg:grid-cols-4 gap-lg mb-lg">
+            <div class="report-card rounded-xl p-lg">
+                <span class="material-symbols-outlined text-primary">calendar_month</span>
+                <p class="text-sm text-on-surface-variant mt-sm">Citas Totales</p>
+                <p class="text-3xl font-bold">#{pacienteBean.totalCitasPaciente}</p>
+            </div>
+            <div class="report-card rounded-xl p-lg">
+                <span class="material-symbols-outlined text-primary">event_available</span>
+                <p class="text-sm text-on-surface-variant mt-sm">Agendadas</p>
+                <p class="text-3xl font-bold">#{pacienteBean.citasAgendadasPaciente}</p>
+            </div>
+            <div class="report-card rounded-xl p-lg">
+                <span class="material-symbols-outlined text-tertiary">task_alt</span>
+                <p class="text-sm text-on-surface-variant mt-sm">Finalizadas</p>
+                <p class="text-3xl font-bold">#{pacienteBean.citasFinalizadasPaciente}</p>
+            </div>
+            <div class="report-card rounded-xl p-lg">
+                <span class="material-symbols-outlined text-error">event_busy</span>
+                <p class="text-sm text-on-surface-variant mt-sm">Canceladas</p>
+                <p class="text-3xl font-bold">#{pacienteBean.citasCanceladasPaciente}</p>
+            </div>
+        </section>
+
+        <!-- Historial -->
+        <section class="report-card rounded-xl overflow-hidden">
+            <div class="p-lg border-b border-outline-variant bg-surface-container-low flex items-center gap-sm">
+                <span class="material-symbols-outlined text-primary">medical_information</span>
+                <h2 class="text-xl font-semibold">Detalle del Historial Médico</h2>
+            </div>
+            <div class="divide-y divide-outline-variant">
+                <ui:repeat value="#{pacienteBean.pacienteActual.citas}" var="cita">
+                    <article class="p-lg">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-md">
+                            <div>
+                                <p class="text-xs uppercase tracking-wider text-on-surface-variant">Fecha y hora</p>
+                                <p class="font-semibold">
+                                    <h:outputText value="#{cita.fecha}"><f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>
+                                    -
+                                    <h:outputText value="#{cita.hora}"><f:convertDateTime pattern="HH:mm"/></h:outputText>
+                                </p>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase tracking-wider text-on-surface-variant">Médico</p>
+                                <p class="font-semibold">#{cita.medico.nombreCompleto}</p>
+                                <p class="text-sm text-on-surface-variant">#{cita.medico.especialidadesTexto}</p>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase tracking-wider text-on-surface-variant">Estado</p>
+                                <p class="font-semibold">#{cita.estado}</p>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase tracking-wider text-on-surface-variant">Indicaciones</p>
+                                <ui:fragment rendered="#{empty cita.indicaciones}">
+                                    <p class="text-sm text-on-surface-variant">Sin indicaciones registradas.</p>
+                                </ui:fragment>
+                                <ui:repeat value="#{cita.indicaciones}" var="indicacion">
+                                    <div class="mb-sm">
+                                        <p class="font-semibold">#{indicacion.diagnostico}</p>
+                                        <p class="text-sm text-on-surface-variant">#{indicacion.tratamiento}</p>
+                                    </div>
+                                </ui:repeat>
+                            </div>
+                        </div>
+                    </article>
+                </ui:repeat>
+                <ui:fragment rendered="#{empty pacienteBean.pacienteActual.citas}">
+                    <div class="p-xl text-center">
+                        <span class="material-symbols-outlined text-4xl text-on-surface-variant">folder_off</span>
+                        <p class="text-on-surface-variant mt-sm">No existen citas registradas para generar el historial.</p>
+                    </div>
+                </ui:fragment>
+            </div>
+        </section>
+
+        <p class="text-xs text-on-surface-variant text-center mt-lg">
+            Este documento contiene información personal y médica confidencial. Consérvelo de forma segura.
+        </p>
+    </div>
+</main>
+
+<!-- Navegación móvil -->
+<nav class="no-print lg:hidden fixed bottom-0 left-0 w-full bg-white border-t border-outline-variant z-50 flex items-center justify-around h-16 px-4">
+    <h:link outcome="gestionPacientes" styleClass="flex flex-col items-center text-on-surface-variant">
+        <span class="material-symbols-outlined">home</span>
+        <span class="text-[10px]">Inicio</span>
+    </h:link>
+    <h:link outcome="misCitas" styleClass="flex flex-col items-center text-on-surface-variant">
+        <span class="material-symbols-outlined">calendar_today</span>
+        <span class="text-[10px]">Citas</span>
+    </h:link>
+    <h:link outcome="historialMedico" styleClass="flex flex-col items-center text-on-surface-variant">
+        <span class="material-symbols-outlined">history_edu</span>
+        <span class="text-[10px]">Historial</span>
+    </h:link>
+    <h:link outcome="reportePaciente" styleClass="flex flex-col items-center text-primary">
+        <span class="material-symbols-outlined">description</span>
+        <span class="text-[10px] font-bold">Reporte</span>
+    </h:link>
+</nav>
+</body>
+</html>

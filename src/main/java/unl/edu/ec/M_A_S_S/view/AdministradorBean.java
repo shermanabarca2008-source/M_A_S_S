@@ -1,5 +1,6 @@
 package unl.edu.ec.M_A_S_S.view;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.inject.Named;
@@ -8,6 +9,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import unl.edu.ec.M_A_S_S.domain.Administrador;
 import unl.edu.ec.M_A_S_S.domain.Cita;
+import unl.edu.ec.M_A_S_S.domain.ConfiguracionSistema;
 import unl.edu.ec.M_A_S_S.domain.Especialidad;
 import unl.edu.ec.M_A_S_S.domain.Medico;
 import unl.edu.ec.M_A_S_S.domain.Paciente;
@@ -44,10 +46,26 @@ public class AdministradorBean implements Serializable {
     private List<String> especialidadesSeleccionadasEdicion = new ArrayList<>();
     private boolean modoEdicion;
 
+    private String nombreInstitucion;
+    private String registroSanitario;
+    private String direccionInstitucion;
+    private String correoSoporte;
+    private String telefonoEmergencia;
+
     private boolean formularioVisible = false;
 
     private String terminoBusqueda;
     private boolean busquedaRealizada;
+
+    @PostConstruct
+    public void inicializar() {
+        ConfiguracionSistema configuracion = em.find(ConfiguracionSistema.class, 1L);
+        if (configuracion == null) {
+            cargarConfiguracionPredeterminada();
+        } else {
+            cargarConfiguracion(configuracion);
+        }
+    }
 
     public Date getFechaActual() {
         return new Date();
@@ -240,31 +258,54 @@ public class AdministradorBean implements Serializable {
         administrado.setNombreCompleto(nombreMedicoEdicion.trim());
         administrado.setEspecialidades(nuevasEspecialidades);
 
+        limpiarEdicion();
         mensajeAdmin = "Médico actualizado correctamente.";
         errorAdmin = false;
-        cancelarEdicion();
     }
 
     public void cancelarEdicion() {
+        limpiarEdicion();
+        mensajeAdmin = "Edición cancelada.";
+        errorAdmin = false;
+    }
+
+    private void limpiarEdicion() {
         modoEdicion = false;
         medicoSeleccionado = null;
         nombreMedicoEdicion = "";
         especialidadesSeleccionadasEdicion = new ArrayList<>();
-        mensajeAdmin = "Edición cancelada.";
-        errorAdmin = false;
     }
 
     @Transactional
     public void eliminarMedico(Medico medico) {
         Medico administrado = medico != null ? em.find(Medico.class, medico.getId()) : null;
-        if (administrado != null) {
-            em.remove(administrado);
-            mensajeAdmin = "Médico eliminado correctamente.";
-            errorAdmin = false;
-        } else {
+        if (administrado == null) {
             mensajeAdmin = "No se pudo eliminar el médico.";
             errorAdmin = true;
+            return;
         }
+
+        Long citasRegistradas = em.createQuery(
+                        "SELECT COUNT(c) FROM Cita c WHERE c.medico = :medico", Long.class)
+                .setParameter("medico", administrado)
+                .getSingleResult();
+        Long indicacionesRegistradas = em.createQuery(
+                        "SELECT COUNT(i) FROM IndicacionesMedicas i WHERE i.medico = :medico", Long.class)
+                .setParameter("medico", administrado)
+                .getSingleResult();
+
+        if (citasRegistradas > 0 || indicacionesRegistradas > 0) {
+            mensajeAdmin = "No se puede eliminar al médico porque tiene citas o indicaciones registradas.";
+            errorAdmin = true;
+            return;
+        }
+
+        if (medicoSeleccionado != null && medicoSeleccionado.getId().equals(administrado.getId())) {
+            limpiarEdicion();
+        }
+        em.remove(administrado);
+        mensajeAdmin = "Médico eliminado correctamente.";
+        errorAdmin = false;
     }
 
     @Transactional
@@ -310,6 +351,56 @@ public class AdministradorBean implements Serializable {
             }
         }
         return resultado;
+    }
+
+    @Transactional
+    public void guardarConfiguracion() {
+        if (nombreInstitucion == null || nombreInstitucion.trim().isEmpty()
+                || direccionInstitucion == null || direccionInstitucion.trim().isEmpty()) {
+            mensajeAdmin = "El nombre y la dirección de la institución son obligatorios.";
+            errorAdmin = true;
+            return;
+        }
+
+        ConfiguracionSistema configuracion = em.find(ConfiguracionSistema.class, 1L);
+        boolean esNueva = configuracion == null;
+        if (esNueva) {
+            configuracion = new ConfiguracionSistema(1L);
+        }
+
+        configuracion.setNombreInstitucion(nombreInstitucion.trim());
+        configuracion.setRegistroSanitario(limpiarTexto(registroSanitario));
+        configuracion.setDireccionInstitucion(direccionInstitucion.trim());
+        configuracion.setCorreoSoporte(limpiarTexto(correoSoporte));
+        configuracion.setTelefonoEmergencia(limpiarTexto(telefonoEmergencia));
+
+        if (esNueva) {
+            em.persist(configuracion);
+        }
+
+        cargarConfiguracion(configuracion);
+        mensajeAdmin = "Configuración guardada correctamente.";
+        errorAdmin = false;
+    }
+
+    private void cargarConfiguracion(ConfiguracionSistema configuracion) {
+        nombreInstitucion = configuracion.getNombreInstitucion();
+        registroSanitario = configuracion.getRegistroSanitario();
+        direccionInstitucion = configuracion.getDireccionInstitucion();
+        correoSoporte = configuracion.getCorreoSoporte();
+        telefonoEmergencia = configuracion.getTelefonoEmergencia();
+    }
+
+    private void cargarConfiguracionPredeterminada() {
+        nombreInstitucion = "Centro Médico de Alta Especialidad M.A.S.S.";
+        registroSanitario = "HE-2023-MEX-0941";
+        direccionInstitucion = "Av. Insurgentes Sur 1450, Col. Actipan, CDMX";
+        correoSoporte = "contacto@mass-salud.mx";
+        telefonoEmergencia = "+52 (55) 5555-0199";
+    }
+
+    private String limpiarTexto(String texto) {
+        return texto == null ? "" : texto.trim();
     }
 
     public String validarAccesoAdministrador() {
@@ -445,6 +536,46 @@ public class AdministradorBean implements Serializable {
 
     public boolean isErrorAdmin() {
         return errorAdmin;
+    }
+
+    public String getNombreInstitucion() {
+        return nombreInstitucion;
+    }
+
+    public void setNombreInstitucion(String nombreInstitucion) {
+        this.nombreInstitucion = nombreInstitucion;
+    }
+
+    public String getRegistroSanitario() {
+        return registroSanitario;
+    }
+
+    public void setRegistroSanitario(String registroSanitario) {
+        this.registroSanitario = registroSanitario;
+    }
+
+    public String getDireccionInstitucion() {
+        return direccionInstitucion;
+    }
+
+    public void setDireccionInstitucion(String direccionInstitucion) {
+        this.direccionInstitucion = direccionInstitucion;
+    }
+
+    public String getCorreoSoporte() {
+        return correoSoporte;
+    }
+
+    public void setCorreoSoporte(String correoSoporte) {
+        this.correoSoporte = correoSoporte;
+    }
+
+    public String getTelefonoEmergencia() {
+        return telefonoEmergencia;
+    }
+
+    public void setTelefonoEmergencia(String telefonoEmergencia) {
+        this.telefonoEmergencia = telefonoEmergencia;
     }
 
     public Medico getMedicoSeleccionado() {
