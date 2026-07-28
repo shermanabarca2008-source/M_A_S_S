@@ -8,171 +8,175 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script id="tailwind-config">try{
-    tailwind.config = {
-        darkMode: "class",
-        theme: {
-            extend: {
-                "colors": {
-                    "primary-fixed-dim": "#a9c7ff",
-                    "inverse-primary": "#a9c7ff",
-                    "tertiary-fixed": "#98f994",
-                    "outline": "#727783",
-                    "surface-dim": "#cfdce4",
-                    "on-tertiary-fixed-variant": "#005313",
-                    "inverse-on-surface": "#e6f3fb",
-                    "primary": "#004d99",
-                    "on-tertiary-container": "#9afa95",
-                    "on-error-container": "#93000a",
-                    "tertiary": "#005b15",
-                    "surface-variant": "#d7e4ec",
-                    "surface-container-high": "#ddeaf2",
-                    "surface-container": "#e3f0f8",
-                    "surface-bright": "#f4faff",
-                    "on-primary-container": "#dae5ff",
-                    "tertiary-fixed-dim": "#7ddc7a",
-                    "on-secondary-fixed": "#1a1c1c",
-                    "error": "#ba1a1a",
-                    "on-secondary-fixed-variant": "#454747",
-                    "secondary": "#5d5f5f",
-                    "on-secondary-container": "#616363",
-                    "on-surface": "#111d23",
-                    "surface-tint": "#005db7",
-                    "outline-variant": "#c2c6d4",
-                    "on-secondary": "#ffffff",
-                    "on-primary": "#ffffff",
-                    "primary-container": "#1565c0",
-                    "on-surface-variant": "#424752",
-                    "on-error": "#ffffff",
-                    "inverse-surface": "#263238",
-                    "surface-container-lowest": "#ffffff",
-                    "secondary-container": "#dfe0e0",
-                    "on-primary-fixed-variant": "#00468c",
-                    "tertiary-container": "#0f7623",
-                    "surface-container-low": "#e9f6fd",
-                    "secondary-fixed": "#e2e2e2",
-                    "primary-fixed": "#d6e3ff",
-                    "on-background": "#111d23",
-                    "surface-container-highest": "#d7e4ec",
-                    "on-tertiary": "#ffffff",
-                    "secondary-fixed-dim": "#c6c6c7",
-                    "on-tertiary-fixed": "#002204",
-                    "background": "#f4faff",
-                    "surface": "#f4faff",
-                    "error-container": "#ffdad6",
-                    "on-primary-fixed": "#001b3d"
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#a9c7ff",
+                        "inverse-primary": "#a9c7ff",
+                        "tertiary-fixed": "#98f994",
+                        "outline": "#727783",
+                        "surface-dim": "#cfdce4",
+                        "on-tertiary-fixed-variant": "#005313",
+                        "inverse-on-surface": "#e6f3fb",
+                        "primary": "#004d99",
+                        "on-tertiary-container": "#9afa95",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#005b15",
+                        "surface-variant": "#d7e4ec",
+                        "surface-container-high": "#ddeaf2",
+                        "surface-container": "#e3f0f8",
+                        "surface-bright": "#f4faff",
+                        "on-primary-container": "#dae5ff",
+                        "tertiary-fixed-dim": "#7ddc7a",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#454747",
+                        "secondary": "#5d5f5f",
+                        "on-secondary-container": "#616363",
+                        "on-surface": "#111d23",
+                        "surface-tint": "#005db7",
+                        "outline-variant": "#c2c6d4",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#1565c0",
+                        "on-surface-variant": "#424752",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#263238",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#dfe0e0",
+                        "on-primary-fixed-variant": "#00468c",
+                        "tertiary-container": "#0f7623",
+                        "surface-container-low": "#e9f6fd",
+                        "secondary-fixed": "#e2e2e2",
+                        "primary-fixed": "#d6e3ff",
+                        "on-background": "#111d23",
+                        "surface-container-highest": "#d7e4ec",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-tertiary-fixed": "#002204",
+                        "background": "#f4faff",
+                        "surface": "#f4faff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#001b3d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "sidebar_width": "280px",
+                        "md": "16px",
+                        "max_container": "1440px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
                 },
-                "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-                },
-                "spacing": {
-                    "sm": "8px",
-                    "base": "4px",
-                    "xl": "32px",
-                    "xs": "4px",
-                    "lg": "24px",
-                    "sidebar_width": "280px",
-                    "md": "16px",
-                    "max_container": "1440px",
-                    "gutter": "24px"
-                },
-                "fontFamily": {
-                    "label-md": ["Inter"],
-                    "headline-lg": ["Inter"],
-                    "body-sm": ["Inter"],
-                    "label-sm": ["Inter"],
-                    "body-md": ["Inter"],
-                    "body-lg": ["Inter"],
-                    "headline-sm": ["Inter"],
-                    "headline-md": ["Inter"]
-                },
-                "fontSize": {
-                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
-                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
-                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
-                }
             },
-        },
-    }
-}catch(_e){}</script><meta charset="utf-8"/>
-</head><body class="flex min-h-screen">
-<!-- SideNavBar Component -->
-<aside class="fixed left-0 top-0 h-screen w-sidebar_width bg-surface-container border-r border-outline-variant flex flex-col py-lg z-50">
+        }
+    }catch(_e){}</script><meta charset="utf-8"/>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar Component (Formato Azul) -->
+<aside class="fixed left-0 top-0 h-screen w-sidebar_width bg-primary text-white border-r border-primary-container flex flex-col py-lg z-50 shadow-lg">
     <div class="px-lg mb-xl">
-        <h1 class="font-headline-sm text-headline-sm font-bold text-primary">M.A.S.S.</h1>
-        <p class="text-label-sm text-on-surface-variant">Panel de Administración</p>
+        <h1 class="font-headline-sm text-headline-sm font-bold text-white">M.A.S.S.</h1>
+        <p class="text-label-sm text-blue-100 opacity-90">Panel de Administración</p>
     </div>
     <nav class="flex-1 overflow-y-auto px-md space-y-1 custom-scrollbar">
 
         <h:link outcome="gestionAdmin"
-                styleClass="flex items-center gap-md px-lg py-md sidebar-active rounded-r-lg transition-all duration-200">
-
+                styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
             <span class="material-symbols-outlined">dashboard</span>
             <span class="font-body-md text-body-md">Tablero</span>
-
         </h:link>
 
         <h:link outcome="gestionMedicos"
-                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
-
+                styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
             <span class="material-symbols-outlined">medical_services</span>
             <span class="font-body-md text-body-md">Doctores</span>
-
         </h:link>
 
         <h:link outcome="gestionEspecialidades"
-                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
-
+                styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
             <span class="material-symbols-outlined">category</span>
             <span class="font-body-md text-body-md">Especialidades</span>
-
         </h:link>
 
         <h:link outcome="reportes"
-                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
-
+                styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
             <span class="material-symbols-outlined">assessment</span>
             <span class="font-body-md text-body-md">Reportes</span>
-
         </h:link>
 
         <h:link outcome="configuracionSistema"
-                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
-
+                styleClass="flex items-center gap-md px-lg py-md bg-white/20 text-white font-bold rounded-lg transition-all duration-200 shadow-sm">
             <span class="material-symbols-outlined">settings</span>
             <span class="font-body-md text-body-md">Configuración</span>
-
         </h:link>
 
         <h:form>
             <h:commandLink action="#{pacienteBean.cerrarSesion}"
-                    styleClass="flex items-center gap-md px-lg py-md text-error hover:bg-error-container/20 rounded-lg transition-all duration-200 w-full">
+                           styleClass="flex items-center gap-md px-lg py-md text-red-200 hover:bg-red-500/20 rounded-lg transition-all duration-200 w-full mt-2">
                 <span class="material-symbols-outlined">logout</span>
                 <span class="font-body-md text-body-md">Cerrar Sesión</span>
             </h:commandLink>
         </h:form>
 
     </nav>
-    <div class="px-lg mt-auto pt-lg border-t border-outline-variant">
+    <div class="px-lg mt-auto pt-lg border-t border-white/20">
         <div class="flex items-center gap-md">
-            <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary font-bold">AD</div>
+            <div class="w-10 h-10 rounded-full bg-white/20 text-white flex items-center justify-center font-bold border border-white/30">AD</div>
             <div>
-                <p class="font-label-md text-on-surface">Admin Principal</p>
-                <p class="text-label-sm text-on-surface-variant">admin@mass.com</p>
+                <p class="font-label-md text-white">Admin Principal</p>
+                <p class="text-label-sm text-blue-100 opacity-80">admin@mass.com</p>
             </div>
         </div>
     </div>
 </aside>
+
 <!-- Main Canvas -->
 <main class="ml-[280px] flex-1 min-h-screen flex flex-col bg-background">
-    <!-- TopNavBar Component -->
+    <!-- TopNavBar Component (Sin cambios, estilo original) -->
     <header class="sticky top-0 w-full h-16 bg-surface border-b border-outline-variant flex justify-between items-center px-gutter z-40 shadow-sm">
         <div class="flex items-center gap-md">
             <span class="material-symbols-outlined text-primary cursor-pointer lg:hidden">menu</span>
@@ -189,9 +193,10 @@
                 <span class="material-symbols-outlined text-on-surface-variant">apps</span>
             </button>
             <div class="h-8 w-px bg-outline-variant mx-2"></div>
-            <img class="w-8 h-8 rounded-full border border-primary-fixed cursor-pointer" data-alt="A professional close-up studio portrait of a healthcare administrator in a bright, modern medical facility. The lighting is soft and even, highlighting a clean-shaven man in a crisp white shirt. The background is a blurred hospital reception area with soft blue and white tones, reflecting a state-of-the-art clinical environment that conveys reliability and expertise." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkEUT-mweD7J-hIWLlIS7KbsjOeEx5uR4SnCgnaL_oEUp7CtZ18cscEOGrGXcYv85wIeqyb8P5Zo3nnLcw1TkkRk34vQ9wKUD6cwMLr6IAKZsLhlVsCzqje71JeR09wVEbzvNK8a1PnNfldTqfDma1KsZzWM3EV8nLPAvRohh030MMhItuTtqSyjWKb-jD3HIQbLtN54VM4Q2j-dYqVU-r18bF1crOHwEQrGMYsDInIanEnM5Qbh4_PoLDEEnRXilpzreP3W3Szyg"/>
+            <img class="w-8 h-8 rounded-full border border-primary-fixed cursor-pointer" data-alt="A professional close-up studio portrait of a healthcare administrator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkEUT-mweD7J-hIWLlIS7KbsjOeEx5uR4SnCgnaL_oEUp7CtZ18cscEOGrGXcYv85wIeqyb8P5Zo3nnLcw1TkkRk34vQ9wKUD6cwMLr6IAKZsLhlVsCzqje71JeR09wVEbzvNK8a1PnNfldTqfDma1KsZzWM3EV8nLPAvRohh030MMhItuTtqSyjWKb-jD3HIQbLtN54VM4Q2j-dYqVU-r18bF1crOHwEQrGMYsDInIanEnM5Qbh4_PoLDEEnRXilpzreP3W3Szyg"/>
         </div>
     </header>
+
     <!-- Content Area -->
     <div class="p-xl max-w-max_container mx-auto w-full">
         <div class="mb-xl">
@@ -202,7 +207,7 @@
         <div class="grid grid-cols-12 gap-lg">
             <!-- Section: Clinic Information (Col-span 8) -->
             <section class="col-span-12 lg:col-span-8 space-y-lg">
-                <div class="glass-card rounded-xl p-lg">
+                <div class="glass-card rounded-xl p-lg border border-outline-variant shadow-sm">
                     <div class="flex items-center justify-between mb-lg">
                         <h3 class="font-headline-sm text-headline-sm flex items-center gap-sm">
                             <span class="material-symbols-outlined text-primary">local_hospital</span>
@@ -233,88 +238,88 @@
                         </div>
                     </div>
                 </div>
-                <!-- Section: Role Management (Bento Part) -->
+                <!-- Section: Role Management -->
                 <h:form>
-                <div class="glass-card rounded-xl p-lg">
-                    <div class="flex items-center justify-between mb-lg">
-                        <h3 class="font-headline-sm text-headline-sm flex items-center gap-sm">
-                            <span class="material-symbols-outlined text-primary">group</span>
-                            Gestión de Roles y Accesos
-                        </h3>
-                        <h:commandLink action="#{administradorBean.mostrarFormulario}" styleClass="text-primary border border-primary px-lg py-2 rounded-lg font-label-md hover:bg-primary-fixed/10 transition-colors" rendered="#{not administradorBean.formularioVisible}">
-                            <span class="material-symbols-outlined">add</span>
-                            Añadir Administrador
-                        </h:commandLink>
+                    <div class="glass-card rounded-xl p-lg border border-outline-variant shadow-sm">
+                        <div class="flex items-center justify-between mb-lg">
+                            <h3 class="font-headline-sm text-headline-sm flex items-center gap-sm">
+                                <span class="material-symbols-outlined text-primary">group</span>
+                                Gestión de Roles y Accesos
+                            </h3>
+                            <h:commandLink action="#{administradorBean.mostrarFormulario}" styleClass="text-primary border border-primary px-lg py-2 rounded-lg font-label-md hover:bg-primary-fixed/10 transition-colors flex items-center gap-xs" rendered="#{not administradorBean.formularioVisible}">
+                                <span class="material-symbols-outlined text-[18px]">add</span>
+                                Añadir Administrador
+                            </h:commandLink>
+                        </div>
+                        <!-- Formulario para agregar administrador -->
+                        <h:panelGroup rendered="#{administradorBean.formularioVisible}" styleClass="mb-lg p-md bg-surface-container-low rounded-lg border border-outline-variant block">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-md mb-md">
+                                <div class="space-y-sm">
+                                    <label class="font-label-sm text-on-surface-variant">Usuario</label>
+                                    <h:inputText value="#{administradorBean.usuarioAdmin}" class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-primary-container text-body-md"/>
+                                </div>
+                                <div class="space-y-sm">
+                                    <label class="font-label-sm text-on-surface-variant">Contraseña</label>
+                                    <h:inputSecret value="#{administradorBean.passwordAdmin}" class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-primary-container text-body-md"/>
+                                </div>
+                            </div>
+                            <div class="flex gap-sm">
+                                <h:commandButton action="#{administradorBean.validarAccesoAdministrador}" value="Guardar" styleClass="bg-primary text-on-primary px-lg py-2 rounded-lg font-label-md hover:bg-primary-container transition-colors shadow-sm">
+                                    <f:ajax execute="@form" render="@form"/>
+                                </h:commandButton>
+                                <h:commandButton action="#{administradorBean.ocultarFormulario}" value="Cancelar" styleClass="border border-outline-variant px-lg py-2 rounded-lg font-label-md hover:bg-surface-container-highest transition-colors">
+                                    <f:ajax execute="@form" render="@form"/>
+                                </h:commandButton>
+                            </div>
+                        </h:panelGroup>
+                        <div class="space-y-md">
+                            <!-- Administradores -->
+                            <div class="flex items-center justify-between p-md bg-surface-container-low rounded-lg border border-outline-variant hover:shadow-md transition-all">
+                                <div class="flex items-center gap-lg">
+                                    <div class="w-12 h-12 rounded-lg bg-primary-container flex items-center justify-center text-white">
+                                        <span class="material-symbols-outlined">admin_panel_settings</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-label-md text-on-surface">Administradores</p>
+                                        <p class="text-body-sm text-on-surface-variant">Control total del sistema y gestión de base de datos.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-md">
+                                    <span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed text-label-sm rounded-full font-bold">#{administradorBean.medicos.size() + 1} Usuarios</span>
+                                </div>
+                            </div>
+                            <!-- Médicos -->
+                            <div class="flex items-center justify-between p-md bg-surface-container-low rounded-lg border border-outline-variant hover:shadow-md transition-all">
+                                <div class="flex items-center gap-lg">
+                                    <div class="w-12 h-12 rounded-lg bg-tertiary-container flex items-center justify-center text-white">
+                                        <span class="material-symbols-outlined">medical_information</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-label-md text-on-surface">Personal Médico</p>
+                                        <p class="text-body-sm text-on-surface-variant">Consulta de expedientes, recetas y agenda médica.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-md">
+                                    <span class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant text-label-sm rounded-full font-bold">#{administradorBean.medicos.size()} Usuarios</span>
+                                </div>
+                            </div>
+                            <!-- Pacientes -->
+                            <div class="flex items-center justify-between p-md bg-surface-container-low rounded-lg border border-outline-variant hover:shadow-md transition-all">
+                                <div class="flex items-center gap-lg">
+                                    <div class="w-12 h-12 rounded-lg bg-secondary-container flex items-center justify-center text-on-secondary-container">
+                                        <span class="material-symbols-outlined">person</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-label-md text-on-surface">Pacientes</p>
+                                        <p class="text-body-sm text-on-surface-variant">Usuarios del sistema que pueden agendar citas.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-md">
+                                    <span class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed-variant text-label-sm rounded-full font-bold">#{administradorBean.totalPacientesRegistrados} Usuarios</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <!-- Formulario para agregar administrador -->
-                    <h:panelGroup rendered="#{administradorBean.formularioVisible}" styleClass="mb-lg p-md bg-surface-container-low rounded-lg border border-outline-variant">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-md mb-md">
-                            <div class="space-y-sm">
-                                <label class="font-label-sm text-on-surface-variant">Usuario</label>
-                                <h:inputText value="#{administradorBean.usuarioAdmin}" class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-primary-container text-body-md"/>
-                            </div>
-                            <div class="space-y-sm">
-                                <label class="font-label-sm text-on-surface-variant">Contraseña</label>
-                                <h:inputSecret value="#{administradorBean.passwordAdmin}" class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-primary-container text-body-md"/>
-                            </div>
-                        </div>
-                        <div class="flex gap-sm">
-                            <h:commandButton action="#{administradorBean.validarAccesoAdministrador}" value="Guardar" styleClass="bg-primary text-on-primary px-lg py-2 rounded-lg font-label-md hover:bg-primary-container transition-colors shadow-sm">
-                                <f:ajax execute="@form" render="@form"/>
-                            </h:commandButton>
-                            <h:commandButton action="#{administradorBean.ocultarFormulario}" value="Cancelar" styleClass="border border-outline-variant px-lg py-2 rounded-lg font-label-md hover:bg-surface-container-highest transition-colors">
-                                <f:ajax execute="@form" render="@form"/>
-                            </h:commandButton>
-                        </div>
-                    </h:panelGroup>
-                    <div class="space-y-md">
-                        <!-- Administradores -->
-                        <div class="flex items-center justify-between p-md bg-surface-container-low rounded-lg border border-outline-variant hover:shadow-md transition-all">
-                            <div class="flex items-center gap-lg">
-                                <div class="w-12 h-12 rounded-lg bg-primary-container flex items-center justify-center text-white">
-                                    <span class="material-symbols-outlined">admin_panel_settings</span>
-                                </div>
-                                <div>
-                                    <p class="font-label-md text-on-surface">Administradores</p>
-                                    <p class="text-body-sm text-on-surface-variant">Control total del sistema y gestión de base de datos.</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-md">
-                                <span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed text-label-sm rounded-full">#{administradorBean.medicos.size() + 1} Usuarios</span>
-                            </div>
-                        </div>
-                        <!-- Médicos -->
-                        <div class="flex items-center justify-between p-md bg-surface-container-low rounded-lg border border-outline-variant hover:shadow-md transition-all">
-                            <div class="flex items-center gap-lg">
-                                <div class="w-12 h-12 rounded-lg bg-tertiary-container flex items-center justify-center text-white">
-                                    <span class="material-symbols-outlined">medical_information</span>
-                                </div>
-                                <div class="">
-                                    <p class="font-label-md text-on-surface">Personal Médico</p>
-                                    <p class="text-body-sm text-on-surface-variant">Consulta de expedientes, recetas y agenda médica.</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-md">
-                                <span class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant text-label-sm rounded-full">#{administradorBean.medicos.size()} Usuarios</span>
-                            </div>
-                        </div>
-                        <!-- Pacientes -->
-                        <div class="flex items-center justify-between p-md bg-surface-container-low rounded-lg border border-outline-variant hover:shadow-md transition-all">
-                            <div class="flex items-center gap-lg">
-                                <div class="w-12 h-12 rounded-lg bg-secondary-container flex items-center justify-center text-on-secondary-container">
-                                    <span class="material-symbols-outlined">person</span>
-                                </div>
-                                <div>
-                                    <p class="font-label-md text-on-surface">Pacientes</p>
-                                    <p class="text-body-sm text-on-surface-variant">Usuarios del sistema que pueden agendar citas.</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-md">
-                                <span class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed-variant text-label-sm rounded-full">#{administradorBean.totalPacientesRegistrados} Usuarios</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 </h:form>
             </section>
             <!-- Section: System Health & Quick Config (Col-span 4) -->
@@ -329,8 +334,8 @@
                         </div>
                         <div class="space-y-sm">
                             <div class="flex justify-between text-label-sm opacity-80">
-                                <span class="">Almacenamiento en la Nube</span>
-                                <span class="">1.2 TB / 5 TB</span>
+                                <span>Almacenamiento en la Nube</span>
+                                <span>1.2 TB / 5 TB</span>
                             </div>
                             <div class="w-full bg-on-primary/20 h-2 rounded-full overflow-hidden">
                                 <div class="bg-white h-full" style="width: 24%;"></div>
@@ -343,7 +348,7 @@
                     </div>
                 </div>
                 <!-- Backup Schedule Card -->
-                <div class="glass-card rounded-xl p-lg">
+                <div class="glass-card rounded-xl p-lg border border-outline-variant shadow-sm">
                     <h3 class="font-label-md text-on-surface mb-lg uppercase tracking-wider">Respaldos Automáticos</h3>
                     <div class="flex items-start gap-md">
                         <div class="p-md bg-surface-container rounded-lg">
@@ -360,20 +365,16 @@
         </div>
     </div>
 </main>
-<!-- Notification Toast (Micro-interaction) -->
+<!-- Notification Toast -->
 <div class="fixed bottom-lg right-lg transform translate-y-24 transition-transform duration-300 bg-inverse-surface text-inverse-on-surface px-lg py-md rounded-lg shadow-xl flex items-center gap-md z-[100]" id="save-toast">
     <span class="material-symbols-outlined text-green-400">check_circle</span>
     <span class="font-label-md">Configuración guardada exitosamente</span>
 </div>
 <script>
-    // Simple micro-interaction for Save button
-    const saveButtons = document.querySelectorAll('button:contains("Guardar")');
-    const toast = document.getElementById('save-toast');
-
-    // Note: Using alternative selection as standard querySelector doesn't support :contains
     document.querySelectorAll('button').forEach(btn => {
         if(btn.innerText.includes('Guardar')) {
             btn.onclick = () => {
+                const toast = document.getElementById('save-toast');
                 toast.classList.remove('translate-y-24');
                 setTimeout(() => {
                     toast.classList.add('translate-y-24');
@@ -382,12 +383,11 @@
         }
     });
 
-    // Add active states to sidebar icons when clicked
     const navItems = document.querySelectorAll('aside nav a');
     navItems.forEach(item => {
         item.onclick = (e) => {
-            navItems.forEach(nav => nav.classList.remove('sidebar-active'));
-            item.classList.add('sidebar-active');
+            navItems.forEach(nav => nav.classList.remove('bg-white/20', 'text-white', 'font-bold'));
+            item.classList.add('bg-white/20', 'text-white', 'font-bold');
         }
     });
 </script>

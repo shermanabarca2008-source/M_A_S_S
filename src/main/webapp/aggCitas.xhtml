@@ -1,13 +1,15 @@
-<!DOCTYPE html><html class="light" lang="es" xmlns="http://www.w3.org/1999/xhtml"
-                     xmlns:h="http://xmlns.jcp.org/jsf/html"
-                     xmlns:f="http://xmlns.jcp.org/jsf/core"
-                     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"><head>
+<!DOCTYPE html>
+<html class="light" lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>M.A.S.S. - Agendar Cita (Paso 1)</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <script id="tailwind-config">
         tailwind.config = {
@@ -120,91 +122,136 @@
         }
     </style>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
-<!-- TopNavBar (Shared Component) -->
-<header class="w-full top-0 sticky z-50 bg-surface border-b border-outline-variant shadow-sm">
-    <div class="flex justify-between items-center px-lg py-sm max-w-max_container mx-auto w-full">
-        <div class="flex items-center gap-md">
-            <span class="text-headline-md font-headline-md font-bold text-primary">M.A.S.S.</span>
-        </div>
-        <nav class="hidden md:flex items-center gap-xl">
-            <a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-200" href="#">Tablero</a>
-            <a class="text-primary border-b-2 border-primary font-bold pb-1 font-body-md text-body-md" href="#">Buscar Doctor</a>
-            <a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-200" href="#">Mis Citas</a>
-            <a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-200" href="#">Ayuda</a>
-        </nav>
-        <div class="flex items-center gap-md">
-            <div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">
-                <img class="w-full h-full object-cover" data-alt="A professional close-up portrait of a medical administrator in a bright, modern clinical office. The person is smiling warmly, wearing a crisp white consultation coat over a soft blue shirt. The background is softly blurred with hints of high-tech medical monitors and glass partitions. The lighting is clean and natural, reflecting a high-trust healthcare environment with a blue and white color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA57Mprrnf6Xtf6qe2Vz6pnR6xeicb7x3CWUZE7aZHvLgs8sNSt68g_MRTfHCD6xNrVCoWiD0TAWMwxuf9X4QsgwejHOF4URaW6g5fNrsc0Nv1P4nBf-CIzW3HqjVyK6lXyIuAPtI7ardrIZxWwiA21qmeb7pAkLnt7xF9YUsjC-8azR9VjlAQr7CpLWqqmjEmTf4328SnYkjO1PSH-6BXJcBSAFCQsoBqEvIdJzxxmL_7aChIwXzlgBh1e5X6Px3Xfr5mI-L79vXY"/>
-            </div>
-        </div>
+<body class="bg-background text-on-background font-body-md min-h-screen flex">
+
+<!-- Sidebar Navigation Azul -->
+<aside class="w-sidebar_width h-screen sticky left-0 top-0 bg-primary border-r border-white/10 flex flex-col p-md gap-sm hidden lg:flex z-50">
+    <div class="mb-xl px-sm">
+        <h1 class="font-headline-sm text-headline-sm font-black text-white">Portal del Paciente</h1>
+        <p class="text-label-sm text-white/80">Gestiona tu salud</p>
     </div>
-</header>
-<!-- Main Content Canvas -->
-<main class="flex-grow max-w-max_container mx-auto w-full px-lg py-xl">
-    <!-- Step Indicator -->
-    <div class="mb-xl max-w-4xl mx-auto">
-        <div class="flex items-center justify-between relative mb-sm">
-            <!-- Progress Line Background -->
-            <div class="absolute top-1/2 left-0 w-full h-1 bg-surface-container-high -translate-y-1/2 z-0"></div>
-            <!-- Active Progress Line -->
-            <div class="absolute top-1/2 left-0 w-1/6 h-1 bg-primary -translate-y-1/2 z-0 transition-all duration-500"></div>
-            <!-- Steps -->
-            <div class="relative z-10 flex flex-col items-center">
-                <div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold shadow-md">1</div>
-                <span class="text-label-sm font-label-sm mt-xs text-primary">Especialidad</span>
-            </div>
-            <div class="relative z-10 flex flex-col items-center">
-                <div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold">2</div>
-                <span class="text-label-sm font-label-sm mt-xs text-on-surface-variant">Médico</span>
-            </div>
-            <div class="relative z-10 flex flex-col items-center">
-                <div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold">3</div>
-                <span class="text-label-sm font-label-sm mt-xs text-on-surface-variant">Fecha</span>
-            </div>
-            <div class="relative z-10 flex flex-col items-center">
-                <div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold">4</div>
-                <span class="text-label-sm font-label-sm mt-xs text-on-surface-variant">Horario</span>
-            </div>
-            <div class="relative z-10 flex flex-col items-center">
-                <div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold">5</div>
-                <span class="text-label-sm font-label-sm mt-xs text-on-surface-variant">Paciente</span>
-            </div>
-            <div class="relative z-10 flex flex-col items-center">
-                <div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold">6</div>
-                <span class="text-label-sm font-label-sm mt-xs text-on-surface-variant">Resumen</span>
-            </div>
-        </div>
-    </div>
-    <!-- Header Section -->
-    <div class="text-center mb-xl">
-        <h1 class="font-headline-lg text-headline-lg text-on-background mb-sm">Seleccione una Especialidad</h1>
-        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Elija el área médica en la que requiere atención para mostrarle los profesionales disponibles.</p>
-    </div>
-    <!-- Specialty Bento Grid -->
-    <h:form>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter mb-xl">
-        <ui:repeat value="#{pacienteBean.especialidades}" var="esp">
-        <h:commandLink styleClass="specialty-card group cursor-pointer bg-surface p-xl rounded-xl border border-outline-variant shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center hover:border-primary active:scale-95"
-                       action="selecMedico?faces-redirect=true">
-            <f:setPropertyActionListener target="#{pacienteBean.especialidadSeleccionada}" value="#{esp.nombre}"/>
-            <div class="w-16 h-16 rounded-full bg-primary-container/10 text-primary flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors duration-300">
-                <span class="material-symbols-outlined text-4xl">medical_services</span>
-            </div>
-            <h3 class="font-headline-sm text-headline-sm mb-xs">#{esp.nombre}</h3>
-            <p class="text-label-sm font-label-sm text-on-surface-variant">#{esp.descripcion}</p>
-        </h:commandLink>
-        </ui:repeat>
-    </div>
-    <!-- Action Footer -->
-    <div class="flex justify-between items-center max-w-4xl mx-auto pt-lg border-t border-outline-variant">
-        <h:link outcome="gestionPacientes" styleClass="px-lg py-sm font-label-md text-label-md text-primary border border-primary rounded-lg hover:bg-primary/5 transition-all duration-200 flex items-center gap-sm">
-            <span class="material-symbols-outlined text-sm">arrow_back</span>
-            Cancelar
+    <nav class="flex-1 space-y-1">
+        <!-- 1. Inicio -->
+        <h:link outcome="gestionPacientes" styleClass="flex items-center gap-md px-md py-3 text-white/80 hover:bg-white/10 hover:text-white rounded-lg font-label-md transition-all">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span>Inicio</span>
         </h:link>
+
+        <!-- 2. Mis Citas -->
+        <h:link outcome="misCitas" styleClass="flex items-center gap-md px-md py-3 text-white/80 hover:bg-white/10 hover:text-white rounded-lg font-label-md transition-all">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <span>Mis Citas</span>
+        </h:link>
+
+        <!-- 3. Agendar Cita (Activo) -->
+        <h:link outcome="aggCitas" styleClass="flex items-center gap-md px-md py-3 bg-white/20 text-white border-l-4 border-white rounded-r-full font-label-md transition-all font-bold">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">edit_calendar</span>
+            <span>Agendar Cita</span>
+        </h:link>
+
+        <!-- 4. Historial -->
+        <h:link outcome="historialMedico" styleClass="flex items-center gap-md px-md py-3 text-white/80 hover:bg-white/10 hover:text-white rounded-lg font-label-md transition-all">
+            <span class="material-symbols-outlined">history_edu</span>
+            <span>Historial</span>
+        </h:link>
+    </nav>
+    <div class="mt-auto pt-lg border-t border-white/20">
+        <a class="flex items-center gap-md px-md py-3 text-white/80 hover:bg-white/10 hover:text-white rounded-lg transition-all duration-200 group" href="#">
+            <span class="material-symbols-outlined">help</span>
+            <span class="font-label-md text-label-md">Centro de Ayuda</span>
+        </a>
+        <h:form>
+            <h:commandLink action="#{pacienteBean.cerrarSesion}" styleClass="flex items-center gap-md px-md py-3 text-white/80 hover:bg-white/10 hover:text-white rounded-lg transition-all duration-200 group w-full">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-md text-label-md">Cerrar Sesión</span>
+            </h:commandLink>
+        </h:form>
     </div>
-    </h:form>
+</aside>
+
+<!-- Main Canvas -->
+<main class="flex-1 flex flex-col overflow-x-hidden">
+    <!-- TopNavBar Azul -->
+    <header class="w-full top-0 sticky z-40 bg-primary border-b border-white/10 shadow-md px-lg py-sm flex justify-between items-center">
+        <div class="flex items-center gap-lg">
+            <span class="font-headline-md text-headline-md font-bold text-white">M.A.S.S.</span>
+        </div>
+        <div class="flex items-center gap-md">
+            <div class="text-right hidden sm:block">
+                <p class="font-label-md text-label-md text-white font-semibold">#{pacienteBean.pacienteActual.nombreCompleto}</p>
+                <p class="text-label-sm text-white/80">ID: #{pacienteBean.pacienteActual.cedula}</p>
+            </div>
+            <img class="w-10 h-10 rounded-full object-cover border border-white/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA57Mprrnf6Xtf6qe2Vz6pnR6xeicb7x3CWUZE7aZHvLgs8sNSt68g_MRTfHCD6xNrVCoWiD0TAWMwxuf9X4QsgwejHOF4URaW6g5fNrsc0Nv1P4nBf-CIzW3HqjVyK6lXyIuAPtI7ardrIZxWwiA21qmeb7pAkLnt7xF9YUsjC-8azR9VjlAQr7CpLWqqmjEmTf4328SnYkjO1PSH-6BXJcBSAFCQsoBqEvIdJzxxmL_7aChIwXzlgBh1e5X6Px3Xfr5mI-L79vXY" alt="Perfil"/>
+        </div>
+    </header>
+
+    <!-- Content Area -->
+    <div class="p-lg max-w-max_container mx-auto w-full">
+        <!-- Step Indicator -->
+        <div class="mb-xl max-w-4xl mx-auto">
+            <div class="flex items-center justify-between relative mb-sm">
+                <!-- Progress Line Background -->
+                <div class="absolute top-1/2 left-0 w-full h-1 bg-surface-container-high -translate-y-1/2 z-0"></div>
+                <!-- Active Progress Line -->
+                <div class="absolute top-1/2 left-0 w-1/6 h-1 bg-primary -translate-y-1/2 z-0 transition-all duration-500"></div>
+                <!-- Steps -->
+                <div class="relative z-10 flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold shadow-md">1</div>
+                    <span class="text-label-sm font-label-sm mt-xs text-primary font-bold">Especialidad</span>
+                </div>
+                <div class="relative z-10 flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold">2</div>
+                    <span class="text-label-sm font-label-sm mt-xs text-on-surface-variant">Médico</span>
+                </div>
+                <div class="relative z-10 flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold">3</div>
+                    <span class="text-label-sm font-label-sm mt-xs text-on-surface-variant">Fecha</span>
+                </div>
+                <div class="relative z-10 flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold">4</div>
+                    <span class="text-label-sm font-label-sm mt-xs text-on-surface-variant">Horario</span>
+                </div>
+                <div class="relative z-10 flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold">5</div>
+                    <span class="text-label-sm font-label-sm mt-xs text-on-surface-variant">Paciente</span>
+                </div>
+                <div class="relative z-10 flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold">6</div>
+                    <span class="text-label-sm font-label-sm mt-xs text-on-surface-variant">Resumen</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Header Section -->
+        <div class="text-center mb-xl">
+            <h1 class="font-headline-lg text-headline-lg text-on-background mb-sm">Seleccione una Especialidad</h1>
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Elija el área médica en la que requiere atención para mostrarle los profesionales disponibles.</p>
+        </div>
+
+        <!-- Specialty Bento Grid -->
+        <h:form id="especialidadForm">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter mb-xl">
+                <ui:repeat value="#{pacienteBean.especialidades}" var="esp">
+                    <h:commandLink styleClass="specialty-card group cursor-pointer bg-surface p-xl rounded-xl border border-outline-variant shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center hover:border-primary active:scale-95"
+                                   action="#{pacienteBean.seleccionarEspecialidad(esp)}">
+                        <div class="w-16 h-16 rounded-full bg-primary-container/10 text-primary flex items-center justify-center mb-md group-hover:bg-primary group-hover:text-on-primary transition-colors duration-300">
+                            <span class="material-symbols-outlined text-4xl">medical_services</span>
+                        </div>
+                        <h3 class="font-headline-sm text-headline-sm mb-xs">#{esp.nombre}</h3>
+                        <p class="text-label-sm font-label-sm text-on-surface-variant">#{esp.descripcion}</p>
+                    </h:commandLink>
+                </ui:repeat>
+            </div>
+
+            <!-- Action Footer -->
+            <div class="flex justify-between items-center max-w-4xl mx-auto pt-lg border-t border-outline-variant">
+                <h:link outcome="gestionPacientes" styleClass="px-lg py-sm font-label-md text-label-md text-primary border border-primary rounded-lg hover:bg-primary/5 transition-all duration-200 flex items-center gap-sm">
+                    <span class="material-symbols-outlined text-sm">arrow_back</span>
+                    Cancelar
+                </h:link>
+            </div>
+        </h:form>
+    </div>
 </main>
-<!-- SideNavBar (Shared Component - Hidden on Desktop Layout by instructions, but integrated if needed) -->
-<!-- Not rendered as per 'Main Content' instruction to focus on Step 1 Selection UI -->
-</body></html>
+</body>
+</html>

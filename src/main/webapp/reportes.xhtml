@@ -11,7 +11,6 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -121,94 +120,77 @@
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        .sidebar-active-pill {
-            position: absolute;
-            left: 0;
-            width: 4px;
-            height: 32px;
-            background-color: #004d99;
-            border-radius: 0 4px 4px 0;
-        }
         .chart-bar {
             transition: height 1s ease-out;
         }
     </style>
 </head>
 <body class="text-on-surface">
-<!-- Sidebar -->
-<aside class="fixed left-0 top-0 h-screen w-sidebar_width bg-surface-container border-r border-outline-variant flex flex-col py-lg z-50">
+<!-- Sidebar Azul -->
+<aside class="fixed left-0 top-0 h-screen w-sidebar_width bg-primary border-r border-primary-container flex flex-col py-lg z-50 text-white shadow-lg">
     <div class="px-gutter mb-xl">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center">
+            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
                 <span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">health_metrics</span>
             </div>
             <div>
-                <h1 class="font-headline-sm text-headline-sm font-bold text-primary">M.A.S.S.</h1>
-                <p class="text-label-sm text-on-surface-variant leading-none">Panel de Administración</p>
+                <h1 class="font-headline-sm text-headline-sm font-bold text-white">M.A.S.S.</h1>
+                <p class="text-label-sm text-blue-200 leading-none">Panel de Administración</p>
             </div>
         </div>
     </div>
     <nav class="flex-1 overflow-y-auto px-md space-y-1 custom-scrollbar">
 
         <h:link outcome="gestionAdmin"
-                styleClass="flex items-center gap-md px-lg py-md sidebar-active rounded-r-lg transition-all duration-200">
-
+                styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
             <span class="material-symbols-outlined">dashboard</span>
             <span class="font-body-md text-body-md">Tablero</span>
-
         </h:link>
 
         <h:link outcome="gestionMedicos"
-                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
-
+                styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
             <span class="material-symbols-outlined">medical_services</span>
             <span class="font-body-md text-body-md">Doctores</span>
-
         </h:link>
 
         <h:link outcome="gestionEspecialidades"
-                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
-
+                styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
             <span class="material-symbols-outlined">category</span>
             <span class="font-body-md text-body-md">Especialidades</span>
-
         </h:link>
 
         <h:link outcome="reportes"
-                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
-
+                styleClass="flex items-center gap-md px-lg py-md text-white bg-white/20 font-semibold rounded-lg transition-all duration-200 shadow-sm">
             <span class="material-symbols-outlined">assessment</span>
             <span class="font-body-md text-body-md">Reportes</span>
-
         </h:link>
 
         <h:link outcome="configuracionSistema"
-                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
-
+                styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
             <span class="material-symbols-outlined">settings</span>
             <span class="font-body-md text-body-md">Configuración</span>
-
         </h:link>
 
         <h:form>
             <h:commandLink action="#{pacienteBean.cerrarSesion}"
-                    styleClass="flex items-center gap-md px-lg py-md text-error hover:bg-error-container/20 rounded-lg transition-all duration-200 w-full">
+                           styleClass="flex items-center gap-md px-lg py-md text-red-200 hover:bg-red-500/20 rounded-lg transition-all duration-200 w-full">
                 <span class="material-symbols-outlined">logout</span>
                 <span class="font-body-md text-body-md">Cerrar Sesión</span>
             </h:commandLink>
         </h:form>
 
     </nav>
-    <div class="px-gutter pt-lg mt-auto border-t border-outline-variant">
-        <div class="flex items-center gap-3 p-2 rounded-xl bg-surface-container-low">
-            <img class="w-10 h-10 rounded-full object-cover" data-alt="A professional headshot of a senior medical administrator with graying hair, wearing a clean white clinical coat and a subtle smile. The background is a blurred high-end hospital corridor with soft blue and white lighting, emphasizing a clean and reliable clinical environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAf6QxTf5cZhLYGf22vz-D0F-6CG3HlMIL9LNO1X8d_k9p8uz_MakmPEsfy60XaKyZiUAxFaX4nFIiaYwiiZeWwIOG_FCn8TGLTpDlSBFSoVna0AoLFRBD-WTwWkiErV22tHAcezopKudx3M85TMvIA2Z652LHKO_fJL_FP17lvAieYJyPx93G8daj5ln3qHN6dppTA-Z2KPf969Us4twq3-YNtYfjpTp00O5z8j-IwfwAtb4tWlVfVF3nh5AFZJKTR3QpZsA9sIO4"/>
+    <div class="px-gutter pt-lg mt-auto border-t border-white/10">
+        <div class="flex items-center gap-3 p-2 rounded-xl bg-white/10 backdrop-blur-sm">
+            <img class="w-10 h-10 rounded-full object-cover border border-white/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAf6QxTf5cZhLYGf22vz-D0F-6CG3HlMIL9LNO1X8d_k9p8uz_MakmPEsfy60XaKyZiUAxFaX4nFIiaYwiiZeWwIOG_FCn8TGLTpDlSBFSoVna0AoLFRBD-WTwWkiErV22tHAcezopKudx3M85TMvIA2Z652LHKO_fJL_FP17lvAieYJyPx93G8daj5ln3qHN6dppTA-Z2KPf969Us4twq3-YNtYfjpTp00O5z8j-IwfwAtb4tWlVfVF3nh5AFZJKTR3QpZsA9sIO4"/>
             <div class="overflow-hidden">
-                <p class="text-label-md text-on-surface font-bold truncate">Dr. Ricardo Alva</p>
-                <p class="text-label-sm text-on-surface-variant truncate">Admin Superior</p>
+                <p class="text-label-md text-white font-bold truncate">Dr. Ricardo Alva</p>
+                <p class="text-label-sm text-blue-200 truncate">Admin Superior</p>
             </div>
         </div>
     </div>
 </aside>
+
 <!-- Main Content Area -->
 <main class="ml-[280px] min-h-screen flex flex-col">
     <!-- Top Bar -->
@@ -232,6 +214,7 @@
             </button>
         </div>
     </header>
+
     <!-- Content Canvas -->
     <div class="p-gutter max-w-max_container mx-auto w-full">
         <!-- Header Section -->
@@ -252,6 +235,7 @@
                 </button>
             </div>
         </div>
+
         <!-- Bento Grid Dashboard -->
         <div class="grid grid-cols-12 gap-lg">
             <!-- KPI Cards -->
@@ -283,6 +267,7 @@
                 <div class="text-headline-md font-bold text-on-surface">#{reporteBean.citasCanceladas}</div>
                 <p class="text-body-sm text-on-surface-variant mt-1">De un total de #{reporteBean.totalCitas} citas</p>
             </div>
+
             <!-- Main Chart: Citas por estado -->
             <div class="col-span-12 lg:col-span-8 glass-card p-lg rounded-xl">
                 <div class="flex items-center justify-between mb-lg">
@@ -315,6 +300,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Secondary Chart: Specialty Distribution -->
             <div class="col-span-12 lg:col-span-4 glass-card p-lg rounded-xl flex flex-col">
                 <h3 class="font-headline-sm text-headline-sm text-on-surface mb-lg">Médicos por Especialidad</h3>
@@ -335,6 +321,7 @@
                     </ui:fragment>
                 </div>
             </div>
+
             <!-- Doctor Performance Table -->
             <div class="col-span-12 glass-card rounded-xl overflow-hidden">
                 <div class="p-lg border-b border-outline-variant flex items-center justify-between">
@@ -352,26 +339,26 @@
                         </thead>
                         <tbody class="divide-y divide-outline-variant">
                         <ui:repeat value="#{reporteBean.medicosPorCantidadDeCitas}" var="medico">
-                        <tr class="hover:bg-surface-container-low/50 transition-colors">
-                            <td class="px-lg py-md">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
-                                        <span class="material-symbols-outlined text-[18px]">person</span>
+                            <tr class="hover:bg-surface-container-low/50 transition-colors">
+                                <td class="px-lg py-md">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+                                            <span class="material-symbols-outlined text-[18px]">person</span>
+                                        </div>
+                                        <span class="text-body-md font-medium text-on-surface">#{medico.nombreCompleto}</span>
                                     </div>
-                                    <span class="text-body-md font-medium text-on-surface">#{medico.nombreCompleto}</span>
-                                </div>
-                            </td>
-                            <td class="px-lg py-md text-body-md text-on-surface-variant">#{medico.especialidadesTexto}</td>
-                            <td class="px-lg py-md text-center text-body-md font-bold">#{medico.citas.size()}</td>
-                            <td class="px-lg py-md text-center text-body-md text-on-surface-variant">#{medico.horarios.size()}</td>
-                        </tr>
+                                </td>
+                                <td class="px-lg py-md text-body-md text-on-surface-variant">#{medico.especialidadesTexto}</td>
+                                <td class="px-lg py-md text-center text-body-md font-bold">#{medico.citas.size()}</td>
+                                <td class="px-lg py-md text-center text-body-md text-on-surface-variant">#{medico.horarios.size()}</td>
+                            </tr>
                         </ui:repeat>
                         <ui:fragment rendered="#{empty reporteBean.medicosPorCantidadDeCitas}">
-                        <tr>
-                            <td class="px-lg py-6 text-center" colspan="4">
-                                <p class="text-body-md text-on-surface-variant">No hay médicos registrados todavía.</p>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td class="px-lg py-6 text-center" colspan="4">
+                                    <p class="text-body-md text-on-surface-variant">No hay médicos registrados todavía.</p>
+                                </td>
+                            </tr>
                         </ui:fragment>
                         </tbody>
                     </table>
@@ -379,11 +366,13 @@
             </div>
         </div>
     </div>
+
     <!-- Footer -->
     <footer class="mt-auto py-lg px-gutter border-t border-outline-variant text-center">
         <p class="text-label-sm text-on-surface-variant">© 2024 M.A.S.S. Medical Administration Support System. Todos los derechos reservados. Generado para Dr. Ricardo Alva.</p>
     </footer>
 </main>
+
 <script>
     // Micro-interactions and subtle animations
     document.addEventListener('DOMContentLoaded', () => {

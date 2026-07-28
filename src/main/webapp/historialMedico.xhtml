@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html class="light" lang="es" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -8,7 +7,6 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <style>
         .material-symbols-outlined {
@@ -134,57 +132,60 @@
     </script>
 </head>
 <body class="bg-surface font-body-md text-on-surface custom-scrollbar overflow-x-hidden">
-<!-- TopNavBar -->
-<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-lg h-16 bg-surface-container-highest border-b border-outline-variant shadow-sm">
+<!-- TopNavBar Azul -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-lg h-16 bg-primary border-b border-white/10 shadow-md">
     <div class="flex items-center gap-md">
-        <span class="lg:hidden material-symbols-outlined cursor-pointer" onclick="toggleSidebar()">menu</span>
-        <span class="font-headline-md text-headline-md font-bold text-primary">M.A.S.S.</span>
+        <span class="lg:hidden material-symbols-outlined cursor-pointer text-white" onclick="toggleSidebar()">menu</span>
+        <span class="font-headline-md text-headline-md font-bold text-white">M.A.S.S.</span>
     </div>
     <div class="hidden md:flex items-center flex-1 max-w-xl mx-xl">
         <div class="relative w-full">
-            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-            <input class="w-full pl-10 pr-4 py-2 bg-surface-container rounded-full border-none focus:ring-2 focus:ring-primary text-body-sm transition-all" placeholder="Buscar en historial médico..." type="text"/>
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-white/70">search</span>
+            <input class="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-full text-body-sm text-white placeholder-white/70 focus:ring-2 focus:ring-white focus:bg-white/20 focus:border-transparent outline-none transition-all" placeholder="Buscar en historial médico..." type="text"/>
         </div>
     </div>
     <div class="flex items-center gap-md">
-        <button class="p-2 rounded-full hover:bg-surface-container-low transition-colors duration-200">
-            <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+        <button class="p-2 rounded-full hover:bg-white/10 text-white/80 hover:text-white transition-colors duration-200">
+            <span class="material-symbols-outlined">notifications</span>
         </button>
-        <button class="p-2 rounded-full hover:bg-surface-container-low transition-colors duration-200">
-            <span class="material-symbols-outlined text-on-surface-variant">settings</span>
+        <button class="p-2 rounded-full hover:bg-white/10 text-white/80 hover:text-white transition-colors duration-200">
+            <span class="material-symbols-outlined">settings</span>
         </button>
-        <div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant">
-            <img class="w-full h-full object-cover" data-alt="Close-up professional portrait of a medical practitioner in a clean clinical setting, soft natural lighting, high-fidelity digital photography, modern healthcare aesthetic with a blue and white color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxGMybQ4XgmId_QUb1DXQ9GqVES2Srqf1BlmVzFcbJ9IqQrPovvPPzVXR5Tw6rk1Jzuso8qo_L4bICACENaOXUbm2iDvsgBDaRJWL-2kqRntzK1qrbFRfcSLw6LeJ9C_auKZhpQL32qJuOMaHaMTVIcFv8aMgrOw7yT3OjptRqd01RZbfbiRQuKkXuhmDX7e50EKl4OpkMiydTv_jrOyRilDUkBKHpYqL8HtGhZA9-o92P404womdY"/>
+        <div class="h-8 w-8 rounded-full overflow-hidden border border-white/30">
+            <img class="w-full h-full object-cover" data-alt="Perfil de usuario" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxGMybQ4XgmId_QUb1DXQ9GqVES2Srqf1BlmVzFcbJ9IqQrPovvPPzVXR5Tw6rk1Jzuso8qo_L4bICACENaOXUbm2iDvsgBDaRJWL-2kqRntzK1qrbFRfcSLw6LeJ9C_auKZhpQL32qJuOMaHaMTVIcFv8aMgrOw7yT3OjptRqd01RZbfbiRQuKkXuhmDX7e50EKl4OpkMiydTv_jrOyRilDUkBKHpYqL8HtGhZA9-o92P404womdY"/>
         </div>
     </div>
 </nav>
-<!-- SideNavBar -->
-<aside class="hidden lg:flex flex-col w-[280px] h-screen fixed left-0 top-0 pt-16 pb-lg px-md bg-surface-container-low border-r border-outline-variant z-40 transition-transform duration-300" id="sidebar">
+<!-- SideNavBar Azul -->
+<aside class="hidden lg:flex flex-col w-[280px] h-screen fixed left-0 top-0 pt-16 pb-lg px-md bg-primary border-r border-white/10 z-40 transition-transform duration-300" id="sidebar">
     <div class="mt-lg mb-xl px-sm">
-        <h2 class="font-headline-sm text-headline-sm font-black text-primary">M.A.S.S.</h2>
-        <p class="font-label-md text-label-md text-on-surface-variant">Portal del Paciente</p>
+        <h2 class="font-headline-sm text-headline-sm font-black text-white">Portal de Pacientes</h2>
     </div>
     <nav class="flex-1 space-y-1">
-        <h:link outcome="gestionPacientes" styleClass="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group">
-            <span class="material-symbols-outlined group-hover:text-primary">dashboard</span>
-            <span class="font-label-md text-label-md">Dashboard</span>
+        <h:link outcome="gestionPacientes" styleClass="flex items-center gap-md px-md py-3 text-white/80 hover:bg-white/10 hover:text-white rounded-lg font-label-md transition-all group">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span>Inicio</span>
         </h:link>
-        <h:link outcome="misCitas" styleClass="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group">
-            <span class="material-symbols-outlined group-hover:text-primary">calendar_today</span>
-            <span class="font-label-md text-label-md">Citas</span>
+        <h:link outcome="misCitas" styleClass="flex items-center gap-md px-md py-3 text-white/80 hover:bg-white/10 hover:text-white rounded-lg font-label-md transition-all group">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <span>Mis Citas</span>
         </h:link>
-        <h:link outcome="historialMedico" styleClass="flex items-center gap-md px-md py-3 bg-primary-container text-on-primary-container border-l-4 border-primary rounded-r-full group">
+        <h:link outcome="aggCitas" styleClass="flex items-center gap-md px-md py-3 text-white/80 hover:bg-white/10 hover:text-white rounded-lg font-label-md transition-all">
+            <span class="material-symbols-outlined">edit_calendar</span>
+            <span>Agendar Cita</span>
+        </h:link>
+        <h:link outcome="historialMedico" styleClass="flex items-center gap-md px-md py-3 bg-white/20 text-white border-l-4 border-white rounded-r-full font-label-md transition-all active-pill">
             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">history_edu</span>
-            <span class="font-label-md text-label-md">Historial</span>
+            <span>Historial</span>
         </h:link>
     </nav>
-    <div class="mt-auto pt-lg border-t border-outline-variant">
-        <a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group" href="#">
+    <div class="mt-auto pt-lg border-t border-white/20">
+        <a class="flex items-center gap-md px-md py-3 text-white/80 hover:bg-white/10 hover:text-white rounded-lg transition-all duration-200 group" href="#">
             <span class="material-symbols-outlined">help</span>
             <span class="font-label-md text-label-md">Centro de Ayuda</span>
         </a>
         <h:form>
-            <h:commandLink action="#{pacienteBean.cerrarSesion}" styleClass="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group w-full">
+            <h:commandLink action="#{pacienteBean.cerrarSesion}" styleClass="flex items-center gap-md px-md py-3 text-white/80 hover:bg-white/10 hover:text-white rounded-lg transition-all duration-200 group w-full">
                 <span class="material-symbols-outlined">logout</span>
                 <span class="font-label-md text-label-md">Cerrar Sesión</span>
             </h:commandLink>
@@ -195,15 +196,9 @@
 <main class="lg:ml-[280px] pt-20 px-lg pb-xl min-h-screen flex flex-col">
     <!-- Header Section -->
     <header class="mb-lg animate-fade-in" style="animation-delay: 0.1s;">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-lg">
-            <div>
-                <h1 class="font-headline-lg text-headline-lg text-on-background">Historial Médico</h1>
-                <p class="font-body-md text-on-surface-variant">Accede a tus consultas previas, diagnósticos y tratamientos realizados.</p>
-            </div>
-            <button class="bg-primary hover:bg-primary-container text-white px-lg py-2.5 rounded-full font-label-md flex items-center gap-2 transition-all shadow-md active:scale-95">
-                <span class="material-symbols-outlined text-[20px]">download</span>
-                Descargar Historial Completo
-            </button>
+        <div class="mb-lg">
+            <h1 class="font-headline-lg text-headline-lg text-on-background">Historial Médico</h1>
+            <p class="font-body-md text-on-surface-variant">Accede a tus consultas previas, diagnósticos y tratamientos realizados.</p>
         </div>
         <!-- Filters Bar -->
         <div class="glass-panel border border-outline-variant p-md rounded-xl flex flex-wrap items-center gap-md shadow-sm">
@@ -240,36 +235,36 @@
     <!-- Records Table / Bento List -->
     <div class="flex-1 space-y-md animate-fade-in" style="animation-delay: 0.2s;">
         <ui:repeat value="#{pacienteBean.pacienteActual.citas}" var="cita">
-        <div class="bg-white border border-outline-variant rounded-xl p-lg flex flex-col md:flex-row items-center gap-lg hover:shadow-md transition-all group border-l-4 border-l-primary">
-            <div class="flex-shrink-0 w-16 h-16 bg-surface-container-high rounded-full flex items-center justify-center text-primary">
-                <span class="material-symbols-outlined text-[32px]">monitor_heart</span>
+            <div class="bg-white border border-outline-variant rounded-xl p-lg flex flex-col md:flex-row items-center gap-lg hover:shadow-md transition-all group border-l-4 border-l-primary">
+                <div class="flex-shrink-0 w-16 h-16 bg-surface-container-high rounded-full flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined text-[32px]">monitor_heart</span>
+                </div>
+                <div class="flex-1 grid grid-cols-1 md:grid-cols-4 gap-md w-full">
+                    <div>
+                        <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Fecha</p>
+                        <p class="font-body-md font-semibold">
+                            <h:outputText value="#{cita.fecha}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+                        </p>
+                        <p class="text-[12px] text-on-surface-variant">
+                            <h:outputText value="#{cita.hora}"><f:convertDateTime pattern="HH:mm" /></h:outputText>
+                        </p>
+                    </div>
+                    <div>
+                        <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Médico</p>
+                        <p class="font-body-md font-semibold text-primary">#{cita.medico.nombreCompleto}</p>
+                        <p class="text-[12px] text-on-surface-variant">#{cita.medico.especialidadesTexto}</p>
+                    </div>
+                    <div class="md:col-span-2">
+                        <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Indicaciones</p>
+                        <ui:fragment rendered="#{empty cita.indicaciones}">
+                            <p class="font-body-md line-clamp-2 text-on-surface-variant">Sin indicaciones registradas.</p>
+                        </ui:fragment>
+                        <ui:repeat value="#{cita.indicaciones}" var="ind">
+                            <p class="font-body-md line-clamp-2">#{ind.diagnostico} — #{ind.tratamiento}</p>
+                        </ui:repeat>
+                    </div>
+                </div>
             </div>
-            <div class="flex-1 grid grid-cols-1 md:grid-cols-4 gap-md w-full">
-                <div>
-                    <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Fecha</p>
-                    <p class="font-body-md font-semibold">
-                        <h:outputText value="#{cita.fecha}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
-                    </p>
-                    <p class="text-[12px] text-on-surface-variant">
-                        <h:outputText value="#{cita.hora}"><f:convertDateTime pattern="HH:mm" /></h:outputText>
-                    </p>
-                </div>
-                <div>
-                    <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Médico</p>
-                    <p class="font-body-md font-semibold text-primary">#{cita.medico.nombreCompleto}</p>
-                    <p class="text-[12px] text-on-surface-variant">#{cita.medico.especialidadesTexto}</p>
-                </div>
-                <div class="md:col-span-2">
-                    <p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Indicaciones</p>
-                    <ui:fragment rendered="#{empty cita.indicaciones}">
-                        <p class="font-body-md line-clamp-2 text-on-surface-variant">Sin indicaciones registradas.</p>
-                    </ui:fragment>
-                    <ui:repeat value="#{cita.indicaciones}" var="ind">
-                        <p class="font-body-md line-clamp-2">#{ind.diagnostico} — #{ind.tratamiento}</p>
-                    </ui:repeat>
-                </div>
-            </div>
-        </div>
         </ui:repeat>
         <ui:fragment rendered="#{empty pacienteBean.pacienteActual.citas}">
             <p class="text-center text-on-surface-variant py-xl">No hay citas registradas todavía.</p>
@@ -307,7 +302,6 @@
         sidebar.classList.toggle('-translate-x-full');
     }
 
-    // Add some interaction effects to record cards
     document.querySelectorAll('.RecordCard').forEach(card => {
         card.addEventListener('mouseenter', () => {
             card.style.transform = 'translateY(-2px)';

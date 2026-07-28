@@ -1,8 +1,10 @@
-<!DOCTYPE html><html lang="es"
-                     xmlns="http://www.w3.org/1999/xhtml"
-                     xmlns:h="http://xmlns.jcp.org/jsf/html"
-                     xmlns:f="http://xmlns.jcp.org/jsf/core"
-                     xmlns:ui="jakarta.faces.facelets"><head>
+<!DOCTYPE html>
+<html lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="jakarta.faces.facelets">
+<head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>M.A.S.S. - Gestión de Horarios</title>
@@ -118,64 +120,74 @@
     </style>
 </head>
 <body class="text-on-surface">
-<!-- Side Navigation Bar -->
-<aside class="fixed left-0 top-0 h-screen w-[280px] bg-surface-container border-r border-outline-variant flex flex-col py-lg z-50">
+
+<!-- Side Navigation Bar (Formato Azul Unificado) -->
+<aside style="background-color: #004d99;" class="fixed left-0 top-0 h-screen w-[280px] text-white border-r border-blue-900 flex flex-col py-lg z-50 shadow-lg">
     <div class="px-lg mb-xl flex items-center gap-3">
-        <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white">
+        <div class="w-10 h-10 rounded-lg bg-white/20 text-white flex items-center justify-center border border-white/30">
             <span class="material-symbols-outlined text-2xl">medical_services</span>
         </div>
         <div>
-            <h1 class="font-headline-sm text-headline-sm font-bold text-primary">M.A.S.S.</h1>
-            <p class="text-[11px] uppercase tracking-wider text-on-surface-variant font-bold">Panel de Administración</p>
+            <h1 class="font-headline-sm text-headline-sm font-bold text-white">M.A.S.S.</h1>
+            <p class="text-[11px] uppercase tracking-wider text-blue-100 opacity-90 font-bold">Panel de Administración</p>
         </div>
     </div>
     <nav class="flex-1 space-y-1 px-md">
         <h:link outcome="gestionAdmin"
-                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+                styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
             <span class="material-symbols-outlined">dashboard</span>
             <span class="font-body-md text-body-md">Tablero</span>
         </h:link>
 
         <h:link outcome="gestionMedicos"
-                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+                styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
             <span class="material-symbols-outlined">medical_services</span>
             <span class="font-body-md text-body-md">Doctores</span>
         </h:link>
 
         <h:link outcome="gestionHorarios"
-                styleClass="flex items-center gap-md px-lg py-md sidebar-active rounded-r-lg transition-all duration-200"
-                style="border-left: 4px solid #004d99; background-color: rgba(0, 77, 153, 0.1); color: #004d99; font-weight: 700;">
+                styleClass="flex items-center gap-md px-lg py-md bg-white/20 text-white font-bold rounded-lg transition-all duration-200 shadow-sm">
             <span class="material-symbols-outlined">event_available</span>
             <span class="font-body-md text-body-md">Horarios</span>
         </h:link>
 
         <h:link outcome="gestionEspecialidades"
-                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+                styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
             <span class="material-symbols-outlined">category</span>
             <span class="font-body-md text-body-md">Especialidades</span>
         </h:link>
 
         <h:link outcome="reportes"
-                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+                styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
             <span class="material-symbols-outlined">assessment</span>
             <span class="font-body-md text-body-md">Reportes</span>
         </h:link>
 
         <h:link outcome="configuracionSistema"
-                styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+                styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
             <span class="material-symbols-outlined">settings</span>
             <span class="font-body-md text-body-md">Configuración</span>
         </h:link>
 
         <h:form>
             <h:commandLink action="#{pacienteBean.cerrarSesion}"
-                    styleClass="flex items-center gap-md px-lg py-md text-error hover:bg-error-container/20 rounded-lg transition-all duration-200 w-full">
+                           styleClass="flex items-center gap-md px-lg py-md text-red-200 hover:bg-red-500/20 rounded-lg transition-all duration-200 w-full mt-2">
                 <span class="material-symbols-outlined">logout</span>
                 <span class="font-body-md text-body-md">Cerrar Sesión</span>
             </h:commandLink>
         </h:form>
     </nav>
+    <div class="px-lg mt-auto pt-lg border-t border-white/20">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-white/20 text-white flex items-center justify-center font-bold border border-white/30">AD</div>
+            <div>
+                <p class="font-label-md text-white">Admin Principal</p>
+                <p class="text-label-sm text-blue-100 opacity-80">admin@mass.com</p>
+            </div>
+        </div>
+    </div>
 </aside>
+
 <!-- Main Content Wrapper -->
 <main class="ml-[280px] min-h-screen flex flex-col">
     <!-- Top Nav Bar -->
@@ -184,6 +196,7 @@
             <h2 class="font-headline-sm text-headline-sm text-on-surface">Gestión de Horarios</h2>
         </div>
     </header>
+
     <!-- Content Canvas -->
     <div class="p-gutter max-w-max_container mx-auto w-full flex-1">
         <div class="mb-xl flex justify-between items-center">
@@ -224,9 +237,9 @@
                             </li>
                         </ui:repeat>
                         <ui:fragment rendered="#{empty administradorBean.medicos}">
-                        <li class="px-lg py-6 text-center">
-                            <p class="font-body-md text-body-md text-on-surface-variant">No hay médicos registrados todavía.</p>
-                        </li>
+                            <li class="px-lg py-6 text-center">
+                                <p class="font-body-md text-body-md text-on-surface-variant">No hay médicos registrados todavía.</p>
+                            </li>
                         </ui:fragment>
                     </ul>
                 </h:form>
@@ -235,120 +248,122 @@
             <!-- Horarios panel -->
             <div class="lg:col-span-2 space-y-gutter">
                 <h:panelGroup id="panelHorarios" layout="block">
-                <ui:fragment rendered="#{horarioMedicoBean.medicoSeleccionado eq null}">
-                    <div class="bg-white rounded-xl border border-outline-variant clinical-shadow p-xl text-center">
-                        <span class="material-symbols-outlined text-outline text-[40px]">calendar_month</span>
-                        <p class="font-body-md text-body-md text-on-surface-variant mt-2">Selecciona un médico de la lista para ver y registrar sus horarios.</p>
-                    </div>
-                </ui:fragment>
+                    <ui:fragment rendered="#{horarioMedicoBean.medicoSeleccionado eq null}">
+                        <div class="bg-white rounded-xl border border-outline-variant clinical-shadow p-xl text-center">
+                            <span class="material-symbols-outlined text-outline text-[40px]">calendar_month</span>
+                            <p class="font-body-md text-body-md text-on-surface-variant mt-2">Selecciona un médico de la lista para ver y registrar sus horarios.</p>
+                        </div>
+                    </ui:fragment>
 
-                <ui:fragment rendered="#{horarioMedicoBean.medicoSeleccionado ne null}">
-                    <!-- New horario form -->
-                    <div class="bg-white rounded-xl border border-outline-variant clinical-shadow p-lg">
-                        <p class="font-label-md text-label-md text-on-surface mb-md">
-                            Nuevo horario para <span class="text-primary">#{horarioMedicoBean.medicoSeleccionado.nombreCompleto}</span>
-                        </p>
-                        <h:form id="formHorario">
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
-                                <div class="space-y-xs">
-                                    <label class="font-label-md text-label-md text-on-surface">Fecha</label>
-                                    <h:inputText value="#{horarioMedicoBean.fechaDisponible}" type="date"
-                                                 styleClass="w-full px-md py-sm rounded-lg border border-outline-variant">
-                                        <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
-                                    </h:inputText>
+                    <ui:fragment rendered="#{horarioMedicoBean.medicoSeleccionado ne null}">
+                        <!-- New horario form -->
+                        <div class="bg-white rounded-xl border border-outline-variant clinical-shadow p-lg">
+                            <p class="font-label-md text-label-md text-on-surface mb-md">
+                                Nuevo horario para <span class="text-primary">#{horarioMedicoBean.medicoSeleccionado.nombreCompleto}</span>
+                            </p>
+                            <h:form id="formHorario">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+                                    <div class="space-y-xs">
+                                        <label class="font-label-md text-label-md text-on-surface">Fecha</label>
+                                        <h:inputText value="#{horarioMedicoBean.fechaDisponible}" type="date"
+                                                     styleClass="w-full px-md py-sm rounded-lg border border-outline-variant">
+                                            <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
+                                        </h:inputText>
+                                    </div>
+                                    <div class="space-y-xs">
+                                        <label class="font-label-md text-label-md text-on-surface">Hora inicio</label>
+                                        <h:inputText value="#{horarioMedicoBean.horaInicio}" type="time"
+                                                     styleClass="w-full px-md py-sm rounded-lg border border-outline-variant">
+                                            <f:convertDateTime type="localTime" pattern="HH:mm"/>
+                                        </h:inputText>
+                                    </div>
+                                    <div class="space-y-xs">
+                                        <label class="font-label-md text-label-md text-on-surface">Hora fin</label>
+                                        <h:inputText value="#{horarioMedicoBean.horaFin}" type="time"
+                                                     styleClass="w-full px-md py-sm rounded-lg border border-outline-variant">
+                                            <f:convertDateTime type="localTime" pattern="HH:mm"/>
+                                        </h:inputText>
+                                    </div>
                                 </div>
-                                <div class="space-y-xs">
-                                    <label class="font-label-md text-label-md text-on-surface">Hora inicio</label>
-                                    <h:inputText value="#{horarioMedicoBean.horaInicio}" type="time"
-                                                 styleClass="w-full px-md py-sm rounded-lg border border-outline-variant">
-                                        <f:convertDateTime type="localTime" pattern="HH:mm"/>
-                                    </h:inputText>
+                                <h:outputText value="#{horarioMedicoBean.mensaje}" styleClass="text-error font-label-md block mt-3"
+                                              rendered="#{not empty horarioMedicoBean.mensaje and horarioMedicoBean.error}"/>
+                                <h:outputText value="#{horarioMedicoBean.mensaje}" styleClass="text-tertiary font-label-md block mt-3"
+                                              rendered="#{not empty horarioMedicoBean.mensaje and not horarioMedicoBean.error}"/>
+                                <div class="mt-md">
+                                    <h:commandButton value="Registrar Horario" action="#{horarioMedicoBean.registrarHorario}" styleClass="bg-primary text-white font-label-md px-lg py-2 rounded-lg hover:bg-primary-container transition-all cursor-pointer">
+                                        <f:ajax execute="@form" render="@form panelHorarios"/>
+                                    </h:commandButton>
                                 </div>
-                                <div class="space-y-xs">
-                                    <label class="font-label-md text-label-md text-on-surface">Hora fin</label>
-                                    <h:inputText value="#{horarioMedicoBean.horaFin}" type="time"
-                                                 styleClass="w-full px-md py-sm rounded-lg border border-outline-variant">
-                                        <f:convertDateTime type="localTime" pattern="HH:mm"/>
-                                    </h:inputText>
-                                </div>
-                            </div>
-                            <h:outputText value="#{horarioMedicoBean.mensaje}" styleClass="text-error font-label-md block mt-3"
-                                          rendered="#{not empty horarioMedicoBean.mensaje and horarioMedicoBean.error}"/>
-                            <h:outputText value="#{horarioMedicoBean.mensaje}" styleClass="text-tertiary font-label-md block mt-3"
-                                          rendered="#{not empty horarioMedicoBean.mensaje and not horarioMedicoBean.error}"/>
-                            <div class="mt-md">
-                                <h:commandButton value="Registrar Horario" action="#{horarioMedicoBean.registrarHorario}" styleClass="bg-primary text-white font-label-md px-lg py-2 rounded-lg hover:bg-primary-container transition-all">
-                                    <f:ajax execute="@form" render="@form panelHorarios"/>
-                                </h:commandButton>
-                            </div>
-                        </h:form>
-                    </div>
+                            </h:form>
+                        </div>
 
-                    <!-- Existing horarios table -->
-                    <div class="bg-white rounded-xl border border-outline-variant clinical-shadow overflow-hidden">
-                        <h:form id="formListaHorarios">
-                        <table class="w-full text-left border-collapse">
-                            <thead class="bg-surface-container-low border-b border-outline-variant">
-                            <tr>
-                                <th class="px-lg py-3 font-label-md text-label-md text-on-surface">Fecha</th>
-                                <th class="px-lg py-3 font-label-md text-label-md text-on-surface">Hora</th>
-                                <th class="px-lg py-3 font-label-md text-label-md text-on-surface text-center">Estado</th>
-                                <th class="px-lg py-3 font-label-md text-label-md text-on-surface text-right">Acciones</th>
-                            </tr>
-                            </thead>
-                            <tbody class="divide-y divide-outline-variant">
-                            <ui:repeat value="#{horarioMedicoBean.horariosMedicoSeleccionado}" var="horario">
-                                <tr class="hover:bg-surface-container-lowest transition-colors">
-                                    <td class="px-lg py-3">
-                                        <h:outputText value="#{horario.fecha}">
-                                            <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
-                                        </h:outputText>
-                                    </td>
-                                    <td class="px-lg py-3">
-                                        <h:outputText value="#{horario.horaInicio}"><f:convertDateTime type="localTime" pattern="HH:mm"/></h:outputText>
-                                        -
-                                        <h:outputText value="#{horario.horaFin}"><f:convertDateTime type="localTime" pattern="HH:mm"/></h:outputText>
-                                    </td>
-                                    <td class="px-lg py-3 text-center">
-                                        <span class="px-3 py-1 rounded-full text-label-sm text-label-sm font-bold #{horario.disponible() ? 'bg-tertiary-container/20 text-tertiary' : 'bg-secondary-container text-secondary'}">
+                        <!-- Existing horarios table -->
+                        <div class="bg-white rounded-xl border border-outline-variant clinical-shadow overflow-hidden">
+                            <h:form id="formListaHorarios">
+                                <table class="w-full text-left border-collapse">
+                                    <thead class="bg-surface-container-low border-b border-outline-variant">
+                                    <tr>
+                                        <th class="px-lg py-3 font-label-md text-label-md text-on-surface">Fecha</th>
+                                        <th class="px-lg py-3 font-label-md text-label-md text-on-surface">Hora</th>
+                                        <th class="px-lg py-3 font-label-md text-label-md text-on-surface text-center">Estado</th>
+                                        <th class="px-lg py-3 font-label-md text-label-md text-on-surface text-right">Acciones</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-outline-variant">
+                                    <ui:repeat value="#{horarioMedicoBean.horariosMedicoSeleccionado}" var="horario">
+                                        <tr class="hover:bg-surface-container-lowest transition-colors">
+                                            <td class="px-lg py-3">
+                                                <h:outputText value="#{horario.fecha}">
+                                                    <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
+                                                </h:outputText>
+                                            </td>
+                                            <td class="px-lg py-3">
+                                                <h:outputText value="#{horario.horaInicio}"><f:convertDateTime type="localTime" pattern="HH:mm"/></h:outputText>
+                                                -
+                                                <h:outputText value="#{horario.horaFin}"><f:convertDateTime type="localTime" pattern="HH:mm"/></h:outputText>
+                                            </td>
+                                            <td class="px-lg py-3 text-center">
+                                        <span class="px-3 py-1 rounded-full text-label-sm font-bold #{horario.disponible() ? 'bg-tertiary-container/20 text-tertiary' : 'bg-secondary-container text-secondary'}">
                                             #{horario.disponible() ? 'Disponible' : 'Reservado'}
                                         </span>
-                                    </td>
-                                    <td class="px-lg py-3 text-right">
-                                        <div class="flex items-center justify-end gap-2">
-                                            <h:commandLink styleClass="p-2 text-primary hover:bg-primary-container/20 rounded-lg transition-all inline-block" title="Liberar"
-                                                           action="#{horarioMedicoBean.liberarHorario(horario)}" rendered="#{not horario.disponible()}">
-                                                <span class="material-symbols-outlined">restart_alt</span>
-                                                <f:ajax execute="@none" render=":formListaHorarios"/>
-                                            </h:commandLink>
-                                            <h:commandLink styleClass="p-2 text-error hover:bg-error-container/30 rounded-lg transition-all inline-block" title="Eliminar"
-                                                           action="#{horarioMedicoBean.eliminarHorario(horario)}">
-                                                <span class="material-symbols-outlined">delete</span>
-                                                <f:ajax execute="@none" render=":formListaHorarios"/>
-                                            </h:commandLink>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </ui:repeat>
-                            <ui:fragment rendered="#{empty horarioMedicoBean.horariosMedicoSeleccionado}">
-                            <tr>
-                                <td class="px-lg py-6 text-center" colspan="4">
-                                    <p class="font-body-md text-body-md text-on-surface-variant">Este médico todavía no tiene horarios registrados.</p>
-                                </td>
-                            </tr>
-                            </ui:fragment>
-                            </tbody>
-                        </table>
-                        </h:form>
-                    </div>
-                </ui:fragment>
+                                            </td>
+                                            <td class="px-lg py-3 text-right">
+                                                <div class="flex items-center justify-end gap-2">
+                                                    <h:commandLink styleClass="p-2 text-primary hover:bg-primary-container/20 rounded-lg transition-all inline-block" title="Liberar"
+                                                                   action="#{horarioMedicoBean.liberarHorario(horario)}" rendered="#{not horario.disponible()}">
+                                                        <span class="material-symbols-outlined">restart_alt</span>
+                                                        <f:ajax execute="@none" render=":formListaHorarios"/>
+                                                    </h:commandLink>
+                                                    <h:commandLink styleClass="p-2 text-error hover:bg-error-container/30 rounded-lg transition-all inline-block" title="Eliminar"
+                                                                   action="#{horarioMedicoBean.eliminarHorario(horario)}">
+                                                        <span class="material-symbols-outlined">delete</span>
+                                                        <f:ajax execute="@none" render=":formListaHorarios"/>
+                                                    </h:commandLink>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ui:repeat>
+                                    <ui:fragment rendered="#{empty horarioMedicoBean.horariosMedicoSeleccionado}">
+                                        <tr>
+                                            <td class="px-lg py-6 text-center" colspan="4">
+                                                <p class="font-body-md text-body-md text-on-surface-variant">Este médico todavía no tiene horarios registrados.</p>
+                                            </td>
+                                        </tr>
+                                    </ui:fragment>
+                                    </tbody>
+                                </table>
+                            </h:form>
+                        </div>
+                    </ui:fragment>
                 </h:panelGroup>
             </div>
         </div>
     </div>
+
     <!-- Footer -->
-    <footer class="mt-auto py-md px-gutter border-t border-outline-variant text-center">
-        <p class="font-label-sm text-label-sm text-on-surface-variant">© 2024 M.A.S.S. Medical Administration System Software. Todos los derechos reservados.</p>
+    <footer class="mt-auto py-md px-gutter border-t border-outline-variant text-center bg-white">
+        <p class="font-label-sm text-label-sm text-on-surface-variant">© 2026 M.A.S.S. Medical Administration System Software. Todos los derechos reservados.</p>
     </footer>
 </main>
-</body></html>
+</body>
+</html>

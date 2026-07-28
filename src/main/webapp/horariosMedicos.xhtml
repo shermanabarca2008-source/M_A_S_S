@@ -146,43 +146,66 @@
     </div>
 </header>
 <!-- SideNavBar -->
-<aside class="hidden lg:flex flex-col w-[280px] h-screen fixed left-0 top-0 pt-20 pb-lg px-md bg-surface-container-low border-r border-outline-variant z-40">
-    <div class="flex flex-col gap-xs flex-grow">
-        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group" href="#">
-            <span class="material-symbols-outlined group-hover:text-primary">dashboard</span>
-            <span class="font-label-md text-label-md">Tablero</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container border-l-4 border-primary rounded-r-full active-tab-pill" href="#">
-            <span class="material-symbols-outlined">calendar_today</span>
-            <span class="font-label-md text-label-md">Citas</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group" href="#">
-            <span class="material-symbols-outlined group-hover:text-primary">groups</span>
-            <span class="font-label-md text-label-md">Pacientes</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group" href="#">
-            <span class="material-symbols-outlined group-hover:text-primary">history_edu</span>
-            <span class="font-label-md text-label-md">Historial Médico</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group" href="#">
-            <span class="material-symbols-outlined group-hover:text-primary">assessment</span>
-            <span class="font-label-md text-label-md">Reportes</span>
-        </a>
-    </div>
-    <button class="mt-lg bg-primary text-on-primary py-sm px-md rounded-lg font-label-md flex items-center justify-center gap-sm shadow-md hover:opacity-90 transition-all">
-        <span class="material-symbols-outlined">add</span>
-        Nueva Cita
-    </button>
-    <div class="mt-xl pt-lg border-t border-outline-variant flex flex-col gap-xs">
-        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">
-            <span class="material-symbols-outlined">help</span>
-            <span class="font-label-md text-label-md">Centro de Ayuda</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-error transition-colors" href="#">
-            <span class="material-symbols-outlined">logout</span>
-            <span class="font-label-md text-label-md">Cerrar Sesión</span>
-        </a>
-    </div>
+<aside class="fixed top-16 left-0 w-[280px] h-[calc(100vh-64px)] bg-primary py-md z-40 hidden lg:block overflow-y-auto">
+    <nav class="flex-1 overflow-y-auto px-md space-y-1 custom-scrollbar">
+
+        <h:link outcome="gestionAdmin"
+                styleClass="flex items-center gap-md px-lg py-md bg-white/20 text-white font-semibold rounded-lg transition-all duration-200">
+
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="font-body-md text-body-md">Tablero</span>
+
+        </h:link>
+
+        <h:link outcome="gestionMedicos"
+                styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
+
+            <span class="material-symbols-outlined">medical_services</span>
+            <span class="font-body-md text-body-md">Doctores</span>
+
+        </h:link>
+
+        <h:link outcome="gestionHorarios"
+                styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
+
+            <span class="material-symbols-outlined">event_available</span>
+            <span class="font-body-md text-body-md">Horarios</span>
+
+        </h:link>
+
+        <h:link outcome="gestionEspecialidades"
+                styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
+
+            <span class="material-symbols-outlined">category</span>
+            <span class="font-body-md text-body-md">Especialidades</span>
+
+        </h:link>
+
+        <h:link outcome="reportes"
+                styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
+
+            <span class="material-symbols-outlined">assessment</span>
+            <span class="font-body-md text-body-md">Reportes</span>
+
+        </h:link>
+
+        <h:link outcome="configuracionSistema"
+                styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
+
+            <span class="material-symbols-outlined">settings</span>
+            <span class="font-body-md text-body-md">Configuración</span>
+
+        </h:link>
+
+        <h:form>
+            <h:commandLink action="#{pacienteBean.cerrarSesion}"
+                           styleClass="flex items-center gap-md px-lg py-md text-red-200 hover:bg-red-500/20 rounded-lg transition-all duration-200 w-full">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-body-md text-body-md">Cerrar Sesión</span>
+            </h:commandLink>
+        </h:form>
+
+    </nav>
 </aside>
 <!-- Main Content Canvas -->
 <main class="lg:ml-[280px] pt-16 min-h-screen">
@@ -456,110 +479,11 @@
                 <div class="flex flex-wrap gap-sm">
                     <label class="cursor-pointer">
                         <input checked="" class="hidden peer" type="checkbox"/>
-                        <div class="px-md py-sm rounded-full border border-outline-variant peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-label-md">Lunes</div>
-                    </label>
-                    <label class="cursor-pointer">
-                        <input checked="" class="hidden peer" type="checkbox"/>
-                        <div class="px-md py-sm rounded-full border border-outline-variant peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-label-md">Martes</div>
-                    </label>
-                    <label class="cursor-pointer">
-                        <input checked="" class="hidden peer" type="checkbox"/>
-                        <div class="px-md py-sm rounded-full border border-outline-variant peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-label-md">Miércoles</div>
-                    </label>
-                    <label class="cursor-pointer">
-                        <input checked="" class="hidden peer" type="checkbox"/>
-                        <div class="px-md py-sm rounded-full border border-outline-variant peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-label-md">Jueves</div>
-                    </label>
-                    <label class="cursor-pointer">
-                        <input checked="" class="hidden peer" type="checkbox"/>
-                        <div class="px-md py-sm rounded-full border border-outline-variant peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-label-md">Viernes</div>
-                    </label>
-                    <label class="cursor-pointer">
-                        <input class="hidden peer" type="checkbox"/>
-                        <div class="px-md py-sm rounded-full border border-outline-variant peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-label-md">Sábado</div>
-                    </label>
-                    <label class="cursor-pointer">
-                        <input class="hidden peer" type="checkbox"/>
-                        <div class="px-md py-sm rounded-full border border-outline-variant peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-label-md">Domingo</div>
                     </label>
                 </div>
             </div>
-            <!-- Sesiones -->
-            <div class="col-span-full border-t border-outline-variant pt-lg mt-sm">
-                <h3 class="font-label-md text-on-surface mb-md flex items-center gap-sm">
-                    <span class="material-symbols-outlined text-primary">wb_sunny</span>
-                    Horario de Atención
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
-                    <div class="p-md bg-surface-container rounded-lg flex flex-col gap-sm">
-                        <span class="font-label-sm text-primary uppercase">Jornada Mañana</span>
-                        <div class="flex items-center gap-md">
-                            <div class="flex-1">
-                                <label class="text-xs text-on-surface-variant block mb-1">Inicio</label>
-                                <input class="w-full bg-white border border-outline-variant rounded p-xs text-body-sm outline-none focus:ring-2 focus:ring-primary/20" type="time" value="08:00"/>
-                            </div>
-                            <span class="pt-4">—</span>
-                            <div class="flex-1">
-                                <label class="text-xs text-on-surface-variant block mb-1">Fin</label>
-                                <input class="w-full bg-white border border-outline-variant rounded p-xs text-body-sm outline-none focus:ring-2 focus:ring-primary/20" type="time" value="12:00"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-md bg-surface-container rounded-lg flex flex-col gap-sm">
-                        <span class="font-label-sm text-primary uppercase">Jornada Tarde</span>
-                        <div class="flex items-center gap-md">
-                            <div class="flex-1">
-                                <label class="text-xs text-on-surface-variant block mb-1">Inicio</label>
-                                <input class="w-full bg-white border border-outline-variant rounded p-xs text-body-sm outline-none focus:ring-2 focus:ring-primary/20" type="time" value="14:00"/>
-                            </div>
-                            <span class="pt-4">—</span>
-                            <div class="flex-1">
-                                <label class="text-xs text-on-surface-variant block mb-1">Fin</label>
-                                <input class="w-full bg-white border border-outline-variant rounded p-xs text-body-sm outline-none focus:ring-2 focus:ring-primary/20" type="time" value="18:00"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="p-lg bg-surface-container-low border-t border-outline-variant flex justify-end gap-md">
-            <button class="px-lg py-sm border border-outline-variant text-on-surface-variant rounded-lg hover:bg-surface-variant transition-colors font-label-md" onclick="toggleModal()">Cancelar</button>
-            <button class="px-xl py-sm bg-primary text-on-primary rounded-lg shadow-lg hover:opacity-90 active:scale-95 transition-all font-label-md flex items-center gap-sm" id="generate-btn" onclick="simulateGeneration()">
-                Generar Bloques de Horarios
-            </button>
         </div>
     </div>
 </div>
-<script>
-    function toggleModal() {
-        const modal = document.getElementById('config-modal');
-        modal.classList.toggle('hidden');
-        modal.classList.toggle('flex');
-    }
-
-    function simulateGeneration() {
-        const btn = document.getElementById('generate-btn');
-        const originalText = btn.innerHTML;
-        btn.disabled = true;
-        btn.innerHTML = '&lt;span class="material-symbols-outlined animate-spin">sync&lt;/span> Procesando...';
-
-        setTimeout(() => {
-            btn.innerHTML = '&lt;span class="material-symbols-outlined">check_circle&lt;/span> ¡Generado!';
-            setTimeout(() => {
-                toggleModal();
-                btn.disabled = false;
-                btn.innerHTML = originalText;
-                // Trigger toast or update UI view logic would go here
-            }, 800);
-        }, 1500);
-    }
-
-    // Close modal on click outside
-    window.addEventListener('click', (e) => {
-        const modal = document.getElementById('config-modal');
-        if (e.target === modal) {
-            toggleModal();
-        }
-    });
-</script>
-</body></html>
+</body>
+</html>

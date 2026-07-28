@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html class="light" lang="es"
@@ -135,36 +134,36 @@
 </head>
 <body class="text-on-surface">
 <!-- Sidebar Navigation -->
-<aside class="hidden lg:flex flex-col w-[280px] h-screen fixed left-0 top-0 pt-16 pb-lg px-md bg-surface-container-low border-r border-outline-variant z-40">
+<aside class="hidden lg:flex flex-col w-[280px] h-screen fixed left-0 top-0 pt-16 pb-lg px-md bg-primary border-r border-white/10 z-50">
     <div class="mb-xl px-md">
-        <h1 class="font-headline-sm text-headline-sm font-black text-primary">M.A.S.S.</h1>
-        <p class="font-label-md text-label-md text-on-surface-variant">Portal de Pacientes</p>
+        <h1 class="font-headline-sm text-headline-sm font-black text-white">M.A.S.S.</h1>
+        <p class="font-label-md text-label-md text-white/80">Portal de Pacientes</p>
     </div>
     <nav class="flex-1 space-y-1">
-        <h:link outcome="gestionPacientes" styleClass="flex items-center gap-md px-md py-3 bg-primary-container text-on-primary-container border-l-4 border-primary rounded-r-full font-label-md transition-all active-pill">
+        <h:link outcome="gestionPacientes" styleClass="flex items-center gap-md px-md py-3 bg-white/20 text-white border-l-4 border-white rounded-r-full font-label-md transition-all active-pill">
             <span class="material-symbols-outlined">dashboard</span>
             <span>Inicio</span>
         </h:link>
-        <h:link outcome="misCitas" styleClass="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg font-label-md transition-all group">
+        <h:link outcome="misCitas" styleClass="flex items-center gap-md px-md py-3 text-white/80 hover:bg-white/10 hover:text-white rounded-lg font-label-md transition-all group">
             <span class="material-symbols-outlined">calendar_today</span>
             <span>Mis Citas</span>
         </h:link>
-        <h:link outcome="aggCitas" styleClass="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg font-label-md transition-all">
+        <h:link outcome="aggCitas" styleClass="flex items-center gap-md px-md py-3 text-white/80 hover:bg-white/10 hover:text-white rounded-lg font-label-md transition-all">
             <span class="material-symbols-outlined">edit_calendar</span>
             <span>Agendar Cita</span>
         </h:link>
-        <h:link outcome="historialMedico" styleClass="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg font-label-md transition-all">
+        <h:link outcome="historialMedico" styleClass="flex items-center gap-md px-md py-3 text-white/80 hover:bg-white/10 hover:text-white rounded-lg font-label-md transition-all">
             <span class="material-symbols-outlined">history_edu</span>
             <span>Historial</span>
         </h:link>
     </nav>
     <div class="mt-auto space-y-1">
-        <a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:text-primary transition-colors font-body-sm" href="#">
+        <a class="flex items-center gap-md px-md py-3 text-white/80 hover:text-white transition-colors font-body-sm" href="#">
             <span class="material-symbols-outlined">help</span>
             <span>Centro de Ayuda</span>
         </a>
         <h:form>
-            <h:commandLink action="#{pacienteBean.cerrarSesion}" styleClass="flex items-center gap-md px-md py-3 text-error hover:opacity-80 transition-opacity font-body-sm w-full">
+            <h:commandLink action="#{pacienteBean.cerrarSesion}" styleClass="flex items-center gap-md px-md py-3 text-red-200 hover:text-red-100 hover:bg-red-500/20 rounded-lg transition-opacity font-body-sm w-full">
                 <span class="material-symbols-outlined">logout</span>
                 <span>Cerrar Sesión</span>
             </h:commandLink>
@@ -172,28 +171,28 @@
     </div>
 </aside>
 <!-- Top AppBar -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-lg h-16 bg-surface-container-highest shadow-sm border-b border-outline-variant">
+<header class="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-lg h-16 bg-primary shadow-md border-b border-white/10">
     <div class="flex items-center gap-md lg:ml-[280px]">
         <div class="relative group hidden sm:block">
-            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
-            <input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none w-64 lg:w-96 transition-all" placeholder="Buscar citas, médicos..." type="text"/>
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-white/70">search</span>
+            <input class="pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-full text-body-sm text-white placeholder-white/70 focus:ring-2 focus:ring-white focus:bg-white/20 focus:border-transparent outline-none w-64 lg:w-96 transition-all" placeholder="Buscar citas, médicos..." type="text"/>
         </div>
     </div>
     <div class="flex items-center gap-md">
-        <button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors relative">
+        <button class="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-colors relative">
             <span class="material-symbols-outlined">notifications</span>
             <span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
         </button>
-        <button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors">
+        <button class="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-colors">
             <span class="material-symbols-outlined">settings</span>
         </button>
-        <div class="h-8 w-[1px] bg-outline-variant mx-2"></div>
+        <div class="h-8 w-[1px] bg-white/20 mx-2"></div>
         <div class="flex items-center gap-sm">
             <div class="text-right hidden sm:block">
-                <p class="font-label-md text-label-md text-on-surface">#{pacienteBean.pacienteActual.nombreCompleto}</p>
-                <p class="font-label-sm text-label-sm text-on-surface-variant">Cédula: #{pacienteBean.pacienteActual.cedula}</p>
+                <p class="font-label-md text-label-md text-white font-semibold">#{pacienteBean.pacienteActual.nombreCompleto}</p>
+                <p class="font-label-sm text-label-sm text-white/80">Cédula: #{pacienteBean.pacienteActual.cedula}</p>
             </div>
-            <div class="w-10 h-10 rounded-full border-2 border-primary bg-primary-fixed flex items-center justify-center text-primary overflow-hidden">
+            <div class="w-10 h-10 rounded-full border-2 border-white bg-white/20 flex items-center justify-center text-white overflow-hidden">
                 <span class="material-symbols-outlined">person</span>
             </div>
         </div>
@@ -214,48 +213,48 @@
         <div class="col-span-12 lg:col-span-8 space-y-gutter">
             <!-- "Próxima Cita" Featured Card -->
             <ui:fragment rendered="#{pacienteBean.proximaCita ne null}">
-            <article class="bento-card p-xl rounded-xl relative overflow-hidden flex flex-col md:flex-row gap-lg group">
-                <div class="absolute top-0 right-0 p-4">
-<span class="bg-tertiary-fixed text-on-tertiary-fixed px-3 py-1 rounded-full font-label-md flex items-center gap-xs">
-<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                <article class="bento-card p-xl rounded-xl relative overflow-hidden flex flex-col md:flex-row gap-lg group">
+                    <div class="absolute top-0 right-0 p-4">
+                        <span class="bg-tertiary-fixed text-on-tertiary-fixed px-3 py-1 rounded-full font-label-md flex items-center gap-xs">
+                            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
                             Agendada
                         </span>
-                </div>
-                <div class="flex-1 space-y-md">
-                    <div class="flex items-center gap-md">
-                        <div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
-                            <span class="material-symbols-outlined text-headline-md">medical_services</span>
+                    </div>
+                    <div class="flex-1 space-y-md">
+                        <div class="flex items-center gap-md">
+                            <div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+                                <span class="material-symbols-outlined text-headline-md">medical_services</span>
+                            </div>
+                            <div>
+                                <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Próxima Cita</h3>
+                                <p class="font-headline-sm text-headline-sm text-on-surface">#{pacienteBean.proximaCita.medico.nombreCompleto}</p>
+                                <p class="font-body-md text-body-md text-primary font-semibold">#{pacienteBean.proximaCita.medico.especialidadesTexto}</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Próxima Cita</h3>
-                            <p class="font-headline-sm text-headline-sm text-on-surface">#{pacienteBean.proximaCita.medico.nombreCompleto}</p>
-                            <p class="font-body-md text-body-md text-primary font-semibold">#{pacienteBean.proximaCita.medico.especialidadesTexto}</p>
+                        <div class="grid grid-cols-2 gap-md pt-md">
+                            <div class="flex items-center gap-sm text-on-surface-variant">
+                                <span class="material-symbols-outlined text-primary">calendar_month</span>
+                                <span class="font-body-md"><h:outputText value="#{pacienteBean.proximaCita.fecha}"><f:convertDateTime pattern="dd 'de' MMMM, yyyy"/></h:outputText></span>
+                            </div>
+                            <div class="flex items-center gap-sm text-on-surface-variant">
+                                <span class="material-symbols-outlined text-primary">schedule</span>
+                                <span class="font-body-md"><h:outputText value="#{pacienteBean.proximaCita.hora}"><f:convertDateTime pattern="HH:mm"/></h:outputText> hrs</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-md pt-lg">
+                            <h:form>
+                                <h:commandButton value="Cancelar" action="#{pacienteBean.cancelarCita(pacienteBean.proximaCita)}"
+                                                 styleClass="border border-error text-error px-lg py-2 rounded-lg font-label-md hover:bg-error/5 transition-all"/>
+                            </h:form>
                         </div>
                     </div>
-                    <div class="grid grid-cols-2 gap-md pt-md">
-                        <div class="flex items-center gap-sm text-on-surface-variant">
-                            <span class="material-symbols-outlined text-primary">calendar_month</span>
-                            <span class="font-body-md"><h:outputText value="#{pacienteBean.proximaCita.fecha}"><f:convertDateTime pattern="dd 'de' MMMM, yyyy"/></h:outputText></span>
-                        </div>
-                        <div class="flex items-center gap-sm text-on-surface-variant">
-                            <span class="material-symbols-outlined text-primary">schedule</span>
-                            <span class="font-body-md"><h:outputText value="#{pacienteBean.proximaCita.hora}"><f:convertDateTime pattern="HH:mm"/></h:outputText> hrs</span>
-                        </div>
-                    </div>
-                    <div class="flex gap-md pt-lg">
-                        <h:form>
-                            <h:commandButton value="Cancelar" action="#{pacienteBean.cancelarCita(pacienteBean.proximaCita)}"
-                                             styleClass="border border-error text-error px-lg py-2 rounded-lg font-label-md hover:bg-error/5 transition-all"/>
-                        </h:form>
-                    </div>
-                </div>
-            </article>
+                </article>
             </ui:fragment>
             <ui:fragment rendered="#{pacienteBean.proximaCita eq null}">
-            <article class="bento-card p-xl rounded-xl flex flex-col items-center justify-center text-center gap-md">
-                <span class="material-symbols-outlined text-outline text-[40px]">event_available</span>
-                <p class="font-body-md text-body-md text-on-surface-variant">No tienes citas agendadas próximamente.</p>
-            </article>
+                <article class="bento-card p-xl rounded-xl flex flex-col items-center justify-center text-center gap-md">
+                    <span class="material-symbols-outlined text-outline text-[40px]">event_available</span>
+                    <p class="font-body-md text-body-md text-on-surface-variant">No tienes citas agendadas próximamente.</p>
+                </article>
             </ui:fragment>
 
             <h:link
@@ -317,15 +316,15 @@
                 </div>
                 <div class="flex-1 overflow-y-auto p-md space-y-md">
                     <ui:repeat value="#{pacienteBean.notificaciones}" var="notificacion">
-                    <div class="flex gap-md p-sm rounded-lg hover:bg-surface-container-low transition-colors">
-                        <div class="flex-shrink-0 w-2 h-2 bg-primary rounded-full mt-2"></div>
-                        <div>
-                            <p class="font-body-sm text-body-sm text-on-surface-variant">#{notificacion.mensaje}</p>
-                            <p class="font-label-sm text-label-sm text-outline mt-1">
-                                <h:outputText value="#{notificacion.fechaEnvio}"><f:convertDateTime type="both" pattern="dd/MM/yyyy HH:mm"/></h:outputText>
-                            </p>
+                        <div class="flex gap-md p-sm rounded-lg hover:bg-surface-container-low transition-colors">
+                            <div class="flex-shrink-0 w-2 h-2 bg-primary rounded-full mt-2"></div>
+                            <div>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant">#{notificacion.mensaje}</p>
+                                <p class="font-label-sm text-label-sm text-outline mt-1">
+                                    <h:outputText value="#{notificacion.fechaEnvio}"><f:convertDateTime type="both" pattern="dd/MM/yyyy HH:mm"/></h:outputText>
+                                </p>
+                            </div>
                         </div>
-                    </div>
                     </ui:repeat>
                     <ui:fragment rendered="#{empty pacienteBean.notificaciones}">
                         <p class="font-body-sm text-body-sm text-on-surface-variant text-center py-lg">No tienes notificaciones todavía.</p>
