@@ -276,7 +276,14 @@
                             <p class="font-body-md line-clamp-2 text-on-surface-variant">Sin indicaciones registradas.</p>
                         </ui:fragment>
                         <ui:repeat value="#{cita.indicaciones}" var="ind">
-                            <p class="font-body-md line-clamp-2">#{ind.diagnostico} — #{ind.tratamiento}</p>
+                            <div class="flex items-start justify-between gap-md mb-sm">
+                                <p class="font-body-md line-clamp-2 flex-1">#{ind.diagnostico} — #{ind.tratamiento}</p>
+                                <h:outputLink value="/indicacionPdf?id=#{ind.id}"
+                                              styleClass="no-print flex items-center gap-xs text-primary hover:text-primary-container font-label-sm whitespace-nowrap">
+                                    <span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+                                    PDF
+                                </h:outputLink>
+                            </div>
                         </ui:repeat>
                     </div>
                 </div>

@@ -153,15 +153,15 @@
         <div class="glass-card rounded-xl p-xl shadow-sm flex flex-col gap-lg border border-outline-variant">
             <!-- Main Header: Medical Professional -->
             <div class="flex flex-col md:flex-row gap-lg items-center md:items-start border-b border-outline-variant pb-lg">
-                <div class="w-24 h-24 rounded-xl overflow-hidden bg-surface shadow-sm border border-outline-variant shrink-0">
-                    <img class="w-full h-full object-cover" data-alt="Clinical headshot of a female specialist doctor with a stethoscope, smiling confidently. She is set against a clean, blurred hospital background. The lighting is bright and professional, maintaining a minimalist medical aesthetic with soft blue accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLX4qeXrbG1UVLqFZQnB3V7ogOjOmNzDWy2Ewcv4pAqVIDRwS_wo_yqlOKS3Dg-NY1C5d7KxKR1ij4BnEd0DYEA7DNiIA0u0YMZj1YM4D9EvhoelhhGP1kd8kp7GnzWXbFGJV7ChxWDX0jro8zADPhMgyEYAlh_y3CmB7P_W2ssu4emKF_v5h97yJIlS8_rAhIQW2pxNG6qI6ZWn5BGd9GgKsPM3LjVXGZQiMLaXY5YEkjFUIrcUHJUFlM5XmkKnLn6PbO-R5c6xk"/>
+                <div class="w-24 h-24 rounded-xl overflow-hidden bg-surface shadow-sm border border-outline-variant shrink-0 flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined text-[48px]">person</span>
                 </div>
                 <div class="flex flex-col text-center md:text-left gap-xs">
                     <span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Médico Especialista</span>
-                    <h2 class="font-headline-md text-headline-md text-on-background">Dra. Elena Rodríguez</h2>
+                    <h2 class="font-headline-md text-headline-md text-on-background">#{pacienteBean.medicoSeleccionado}</h2>
                     <div class="flex items-center justify-center md:justify-start gap-sm">
                         <span class="material-symbols-outlined text-primary text-[20px]">medical_services</span>
-                        <span class="font-body-md text-body-md text-on-surface-variant">Cardiología Clínica</span>
+                        <span class="font-body-md text-body-md text-on-surface-variant">#{pacienteBean.especialidadSeleccionada}</span>
                     </div>
                 </div>
                 <div class="md:ml-auto flex flex-col items-center md:items-end">
@@ -180,17 +180,7 @@
                     </div>
                     <div class="flex flex-col">
                         <span class="font-label-sm text-label-sm text-on-surface-variant">Fecha y Hora</span>
-                        <span class="font-body-md text-body-md font-bold">Lunes, 24 Octubre • 10:30 AM</span>
-                    </div>
-                </div>
-                <!-- Location -->
-                <div class="bg-surface-container-low p-md rounded-lg flex gap-md items-center border border-outline-variant">
-                    <div class="bg-primary-container text-on-primary-container p-sm rounded-lg flex items-center justify-center">
-                        <span class="material-symbols-outlined">location_on</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="font-label-sm text-label-sm text-on-surface-variant">Consultorio</span>
-                        <span class="font-body-md text-body-md font-bold">Piso 4, Ala Sur • Cons. 402</span>
+                        <span class="font-body-md text-body-md font-bold">#{pacienteBean.fechaSeleccionadaFormateada} — #{pacienteBean.horaSeleccionadaFormateada}</span>
                     </div>
                 </div>
                 <!-- Duration -->
@@ -200,7 +190,7 @@
                     </div>
                     <div class="flex flex-col">
                         <span class="font-label-sm text-label-sm text-on-surface-variant">Duración Estimada</span>
-                        <span class="font-body-md text-body-md font-bold">45 Minutos</span>
+                        <span class="font-body-md text-body-md font-bold">30 Minutos</span>
                     </div>
                 </div>
                 <!-- Modality -->

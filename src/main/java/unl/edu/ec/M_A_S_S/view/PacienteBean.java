@@ -1,5 +1,6 @@
 package unl.edu.ec.M_A_S_S.view;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
@@ -20,11 +21,13 @@ import java.io.Serializable;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Named
 @SessionScoped
@@ -54,12 +57,127 @@ public class PacienteBean implements Serializable {
     private Paciente nuevoPaciente = new Paciente();
     private String especialidadSeleccionada;
     private String medicoSeleccionado;
-    private String horarioSeleccionado;
+    private String horarioSeleccionado; // Mantiene compatibilidad
+    private HorarioMedico horarioSeleccionadoObjeto; // Objeto directo seleccionado en UI
     private String citaSeleccionada;
     private String tabActiva = "agendar";
     private Cita ultimaCitaAgendada;
     private String terminoBusquedaPaciente;
     private boolean busquedaPacienteRealizada;
+
+    // --- Atributos para Calendario Dinámico y Navegación de Fecha/Hora ---
+    private LocalDate fechaHoy;
+    private YearMonth mesAnoVisible;
+    private LocalDate fechaSeleccionada;
+    private List<DiaCalendarioDTO> diasDelMes;
+
+    @PostConstruct
+    public void init() {
+        this.fechaHoy = LocalDate.now();
+        this.mesAnoVisible = YearMonth.now();
+        this.fechaSeleccionada = LocalDate.now();
+        cargarCalendario();
+    }
+
+    // ==========================================
+    // MÉTODOS DEL CALENDARIO Y NAVEGACIÓN PASO 3-4
+    // ==========================================
+
+    public void cargarCalendario() {
+        diasDelMes = new ArrayList<>();
+        LocalDate primerDiaMes = mesAnoVisible.atDay(1);
+        int diaSemanaInicio = primerDiaMes.getDayOfWeek().getValue(); // 1 = Lunes, 7 = Domingo
+
+        // Días de relleno del mes anterior
+        LocalDate mesAnterior = primerDiaMes.minusDays(diaSemanaInicio - 1);
+        for (int i = 0; i < diaSemanaInicio - 1; i++) {
+            LocalDate fechaAux = mesAnterior.plusDays(i);
+            diasDelMes.add(new DiaCalendarioDTO(fechaAux.getDayOfMonth(), fechaAux, true, true, false));
+        }
+
+        // Días del mes actual
+        for (int dia = 1; dia <= mesAnoVisible.lengthOfMonth(); dia++) {
+            LocalDate fechaIteracion = mesAnoVisible.atDay(dia);
+            boolean esPasado = fechaIteracion.isBefore(fechaHoy);
+            boolean esSeleccionado = fechaIteracion.equals(fechaSeleccionada);
+            diasDelMes.add(new DiaCalendarioDTO(dia, fechaIteracion, false, esPasado, esSeleccionado));
+        }
+    }
+
+    public void seleccionarDia(LocalDate fecha) {
+        if (fecha != null && !fecha.isBefore(fechaHoy)) {
+            this.fechaSeleccionada = fecha;
+            this.horarioSeleccionadoObjeto = null;
+            this.horarioSeleccionado = null;
+            cargarCalendario();
+        }
+    }
+
+    public void mesSiguiente() {
+        this.mesAnoVisible = this.mesAnoVisible.plusMonths(1);
+        cargarCalendario();
+    }
+
+    public void mesAnterior() {
+        if (!isEsMesActual()) {
+            this.mesAnoVisible = this.mesAnoVisible.minusMonths(1);
+            cargarCalendario();
+        }
+    }
+
+    public boolean isEsMesActual() {
+        return mesAnoVisible != null && mesAnoVisible.equals(YearMonth.now());
+    }
+
+    public String getMesAnioActualFormateado() {
+        if (mesAnoVisible == null) return "";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy", new Locale("es", "ES"));
+        String texto = mesAnoVisible.format(formatter);
+        return texto.substring(0, 1).toUpperCase() + texto.substring(1);
+    }
+
+    public String getFechaSeleccionadaFormateada() {
+        if (fechaSeleccionada == null) return "";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, d 'de' MMMM", new Locale("es", "ES"));
+        String texto = fechaSeleccionada.format(formatter);
+        return texto.substring(0, 1).toUpperCase() + texto.substring(1);
+    }
+
+    public String getHoraSeleccionadaFormateada() {
+        if (horarioSeleccionadoObjeto == null || horarioSeleccionadoObjeto.getHoraInicio() == null) return "";
+        return horarioSeleccionadoObjeto.getHoraInicio().toString();
+    }
+
+    public List<DiaCalendarioDTO> getDiasDelMes() {
+        if (diasDelMes == null) {
+            cargarCalendario();
+        }
+        return diasDelMes;
+    }
+
+    public LocalDate getFechaSeleccionada() {
+        return fechaSeleccionada;
+    }
+
+    public void setFechaSeleccionada(LocalDate fechaSeleccionada) {
+        this.fechaSeleccionada = fechaSeleccionada;
+    }
+
+    public HorarioMedico getHorarioSeleccionadoObjeto() {
+        return horarioSeleccionadoObjeto;
+    }
+
+    public void setHorarioSeleccionadoObjeto(HorarioMedico horarioSeleccionadoObjeto) {
+        this.horarioSeleccionadoObjeto = horarioSeleccionadoObjeto;
+        if (horarioSeleccionadoObjeto != null) {
+            // Mantiene sincronizado el String horarioSeleccionado utilizado por agendarCita()
+            this.horarioSeleccionado = horarioSeleccionadoObjeto.getFecha().toString() + " " + horarioSeleccionadoObjeto.getHoraInicio().toString();
+        }
+    }
+
+    // ==========================================
+    // MÉTODOS EXISTENTES
+    // ==========================================
 
     public String iniciarSesion() {
         if ("admin".equals(cedula) && "admin123".equals(contrasena)) {
@@ -124,14 +242,12 @@ public class PacienteBean implements Serializable {
             return null;
         }
 
-        // Verificar que la cédula no exista
         if (pacienteRepositorioBean.existeCedula(nuevoPaciente.getCedula())) {
             mensaje = "Ya existe un paciente registrado con esa cédula.";
             error = true;
             return null;
         }
 
-        // Verificar que el correo no exista
         if (pacienteRepositorioBean.existeCorreo(nuevoPaciente.getCorreoElectronico())) {
             mensaje = "El correo electrónico ya está registrado.";
             error = true;
@@ -264,14 +380,41 @@ public class PacienteBean implements Serializable {
                 .getResultList();
     }
 
+    /**
+     * Consulta los horarios creados por el Administrador filtrando por el Médico
+     * y por la fecha elegida en el Calendario.
+     */
     public List<HorarioMedico> getHorariosDisponibles() {
         Medico medico = encontrarMedicoPorNombre(medicoSeleccionado);
         if (medico == null) {
             return new ArrayList<>();
         }
+
+        if (fechaSeleccionada != null) {
+            return em.createQuery(
+                            "SELECT h FROM HorarioMedico h WHERE h.medico = :medico AND h.estado = 'DISPONIBLE' "
+                                    + "AND h.fecha = :fecha ORDER BY h.horaInicio",
+                            HorarioMedico.class)
+                    .setParameter("medico", medico)
+                    .setParameter("fecha", fechaSeleccionada)
+                    .getResultList();
+        }
+
         return em.createQuery(
                         "SELECT h FROM HorarioMedico h WHERE h.medico = :medico AND h.estado = 'DISPONIBLE' "
                                 + "ORDER BY h.fecha, h.horaInicio",
+                        HorarioMedico.class)
+                .setParameter("medico", medico)
+                .getResultList();
+    }
+
+    public List<HorarioMedico> getTodosLosHorariosDelMedico() {
+        Medico medico = encontrarMedicoPorNombre(medicoSeleccionado);
+        if (medico == null) {
+            return new ArrayList<>();
+        }
+        return em.createQuery(
+                        "SELECT h FROM HorarioMedico h WHERE h.medico = :medico ORDER BY h.fecha, h.horaInicio",
                         HorarioMedico.class)
                 .setParameter("medico", medico)
                 .getResultList();
@@ -449,7 +592,7 @@ public class PacienteBean implements Serializable {
     }
 
     private HorarioMedico encontrarHorarioPorTexto(String texto, Medico medico) {
-        if (medico == null) {
+        if (medico == null || texto == null) {
             return null;
         }
         for (HorarioMedico horario : medico.getHorarios()) {
@@ -460,6 +603,8 @@ public class PacienteBean implements Serializable {
         }
         return null;
     }
+
+    // --- GETTERS Y SETTERS COMPATIBLES ---
 
     public String getCedula() {
         return cedula;
@@ -563,7 +708,7 @@ public class PacienteBean implements Serializable {
 
     public String getFechaActualFormateada() {
         LocalDate hoy = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy", new java.util.Locale("es"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy", new Locale("es"));
         return hoy.format(formatter);
     }
 
@@ -579,7 +724,45 @@ public class PacienteBean implements Serializable {
 
     public String getFechaActualConDia() {
         LocalDate hoy = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, d 'de' MMMM", new java.util.Locale("es"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, d 'de' MMMM", new Locale("es"));
         return hoy.format(formatter);
+    }
+
+    public static class DiaCalendarioDTO implements Serializable {
+        private static final long serialVersionUID = 1L;
+
+        private int numeroDia;
+        private LocalDate fechaCompleta;
+        private boolean fueraDeMes;
+        private boolean pasado;
+        private boolean seleccionado;
+
+        public DiaCalendarioDTO(int numeroDia, LocalDate fechaCompleta, boolean fueraDeMes, boolean pasado, boolean seleccionado) {
+            this.numeroDia = numeroDia;
+            this.fechaCompleta = fechaCompleta;
+            this.fueraDeMes = fueraDeMes;
+            this.pasado = pasado;
+            this.seleccionado = seleccionado;
+        }
+
+        public int getNumeroDia() {
+            return numeroDia;
+        }
+
+        public LocalDate getFechaCompleta() {
+            return fechaCompleta;
+        }
+
+        public boolean isFueraDeMes() {
+            return fueraDeMes;
+        }
+
+        public boolean isPasado() {
+            return pasado;
+        }
+
+        public boolean isSeleccionado() {
+            return seleccionado;
+        }
     }
 }
