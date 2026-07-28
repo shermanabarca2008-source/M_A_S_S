@@ -141,34 +141,54 @@
         </div>
     </div>
 </div>
-    <nav class="flex-1 flex flex-col">
-        <h:link outcome="gestionAdmin" styleClass="relative flex items-center gap-4 px-gutter py-md text-white/80 hover:bg-white/10 transition-colors duration-200">
-            <span class="material-symbols-outlined">dashboard</span>
-            <span class="font-body-md text-body-md">Tablero</span>
-        </h:link>
-        <h:link outcome="gestionMedicos" styleClass="relative flex items-center gap-4 px-gutter py-md text-white/80 hover:bg-white/10 transition-colors duration-200">
-            <span class="material-symbols-outlined">medical_services</span>
-            <span class="font-body-md text-body-md">Doctores</span>
-        </h:link>
-        <h:link outcome="gestionEspecialidades" styleClass="relative flex items-center gap-4 px-gutter py-md sidebar-active transition-colors duration-200">
-            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">category</span>
-            <span class="font-body-md text-body-md">Especialidades</span>
-        </h:link>
-        <h:link outcome="reportes" styleClass="relative flex items-center gap-4 px-gutter py-md text-white/80 hover:bg-white/10 transition-colors duration-200">
-            <span class="material-symbols-outlined">assessment</span>
-            <span class="font-body-md text-body-md">Reportes</span>
-        </h:link>
-        <h:link outcome="configuracionSistema" styleClass="relative flex items-center gap-4 px-gutter py-md text-white/80 hover:bg-white/10 transition-colors duration-200">
-            <span class="material-symbols-outlined">settings</span>
-            <span class="font-body-md text-body-md">Configuración</span>
-        </h:link>
-        <h:form>
-            <h:commandLink action="#{pacienteBean.cerrarSesion}" styleClass="relative flex items-center gap-4 px-gutter py-md text-red-200 hover:bg-white/10 transition-colors duration-200 w-full">
-                <span class="material-symbols-outlined">logout</span>
-                <span class="font-body-md text-body-md">Cerrar Sesión</span>
-            </h:commandLink>
-        </h:form>
-    </nav>
+    <aside class="fixed left-0 top-0 h-screen w-sidebar_width bg-primary border-r border-primary-container flex flex-col py-lg z-50 text-white"><div class="px-gutter mb-xl">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                <span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">health_metrics</span>
+            </div>
+            <div>
+                <h1 class="font-headline-sm text-headline-sm font-bold text-white">M.A.S.S.</h1>
+                <p class="text-label-sm text-blue-100 leading-none">Panel de Administración</p>
+            </div>
+        </div>
+    </div>
+        <nav class="flex-1 flex flex-col">
+            <h:link outcome="gestionAdmin" styleClass="relative flex items-center gap-4 px-gutter py-md text-white/80 hover:bg-white/10 transition-colors duration-200">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-body-md text-body-md">Tablero</span>
+            </h:link>
+            <h:link outcome="gestionMedicos" styleClass="relative flex items-center gap-4 px-gutter py-md text-white/80 hover:bg-white/10 transition-colors duration-200">
+                <span class="material-symbols-outlined">medical_services</span>
+                <span class="font-body-md text-body-md">Doctores</span>
+            </h:link>
+            <h:link outcome="gestionEspecialidades" styleClass="relative flex items-center gap-4 px-gutter py-md sidebar-active transition-colors duration-200">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">category</span>
+                <span class="font-body-md text-body-md">Especialidades</span>
+            </h:link>
+            <h:link outcome="reportes" styleClass="relative flex items-center gap-4 px-gutter py-md text-white/80 hover:bg-white/10 transition-colors duration-200">
+                <span class="material-symbols-outlined">assessment</span>
+                <span class="font-body-md text-body-md">Reportes</span>
+            </h:link>
+            <h:link outcome="configuracionSistema" styleClass="relative flex items-center gap-4 px-gutter py-md text-white/80 hover:bg-white/10 transition-colors duration-200">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-body-md text-body-md">Configuración</span>
+            </h:link>
+            <h:form>
+                <h:commandLink action="#{pacienteBean.cerrarSesion}" styleClass="relative flex items-center gap-4 px-gutter py-md text-red-200 hover:bg-white/10 transition-colors duration-200 w-full">
+                    <span class="material-symbols-outlined">logout</span>
+                    <span class="font-body-md text-body-md">Cerrar Sesión</span>
+                </h:commandLink>
+            </h:form>
+        </nav>
+        <div class="px-gutter pt-lg mt-auto border-t border-white/20">
+            <div class="flex items-center gap-3 p-2 rounded-xl bg-white/10">
+                <img class="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAf6QxTf5cZhLYGf22vz-D0F-6CG3HlMIL9LNO1X8d_k9p8uz_MakmPEsfy60XaKyZiUAxFaX4nFIiaYwiiZeWwIOG_FCn8TGLTpDlSBFSoVna0AoLFRBD-WTwWkiErV22tHAcezopKudx3M85TMvIA2Z652LHKO_fJL_FP17lvAieYJyPx93G8daj5ln3qHN6dppTA-Z2KPf969Us4twq3-YNtYfjpTp00O5z8j-IwfwAtb4tWlVfVF3nh5AFZJKTR3QpZsA9sIO4" alt="Dr. Ricardo Alva"/>
+                <div class="overflow-hidden">
+                    <p class="text-label-md text-white font-bold truncate">Dr. Ricardo Alva</p>
+                    <p class="text-label-sm text-blue-100 truncate">Admin Superior</p>
+                </div>
+            </div>
+        </div></aside>
     <div class="px-gutter pt-lg mt-auto border-t border-white/20">
         <div class="flex items-center gap-3 p-2 rounded-xl bg-white/10">
             <img class="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAf6QxTf5cZhLYGf22vz-D0F-6CG3HlMIL9LNO1X8d_k9p8uz_MakmPEsfy60XaKyZiUAxFaX4nFIiaYwiiZeWwIOG_FCn8TGLTpDlSBFSoVna0AoLFRBD-WTwWkiErV22tHAcezopKudx3M85TMvIA2Z652LHKO_fJL_FP17lvAieYJyPx93G8daj5ln3qHN6dppTA-Z2KPf969Us4twq3-YNtYfjpTp00O5z8j-IwfwAtb4tWlVfVF3nh5AFZJKTR3QpZsA9sIO4" alt="Dr. Ricardo Alva"/>
@@ -305,14 +325,4 @@
     });
 </script>
 
-<<<<<<< HEAD
 </body></html>
-=======
-
-
-
-
-
-
-</body></html>
->>>>>>> 5bd8cf7f5c6b65511a5c5a4fd7862f8efbfab71c

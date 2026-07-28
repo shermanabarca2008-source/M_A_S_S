@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-
 <html class="light" lang="es"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="jakarta.faces.facelets"><head>
+      xmlns:ui="jakarta.faces.facelets">
+<head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>M.A.S.S. - Reportes Estadísticos</title>
@@ -144,13 +144,9 @@
     </style>
 </head>
 <body class="text-on-surface">
-<<<<<<< HEAD
-<!-- Sidebar Azul -->
-<aside class="fixed left-0 top-0 h-screen w-sidebar_width bg-primary border-r border-primary-container flex flex-col py-lg z-50 text-white shadow-lg">
-=======
+
 <!-- Sidebar -->
-<aside class="no-print fixed left-0 top-0 h-screen w-sidebar_width bg-surface-container border-r border-outline-variant flex flex-col py-lg z-50">
->>>>>>> 5bd8cf7f5c6b65511a5c5a4fd7862f8efbfab71c
+<aside class="no-print fixed left-0 top-0 h-screen w-sidebar_width bg-primary border-r border-primary-container flex flex-col py-lg z-50 text-white shadow-lg">
     <div class="px-gutter mb-xl">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
@@ -205,7 +201,7 @@
     </nav>
     <div class="px-gutter pt-lg mt-auto border-t border-white/10">
         <div class="flex items-center gap-3 p-2 rounded-xl bg-white/10 backdrop-blur-sm">
-            <img class="w-10 h-10 rounded-full object-cover border border-white/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAf6QxTf5cZhLYGf22vz-D0F-6CG3HlMIL9LNO1X8d_k9p8uz_MakmPEsfy60XaKyZiUAxFaX4nFIiaYwiiZeWwIOG_FCn8TGLTpDlSBFSoVna0AoLFRBD-WTwWkiErV22tHAcezopKudx3M85TMvIA2Z652LHKO_fJL_FP17lvAieYJyPx93G8daj5ln3qHN6dppTA-Z2KPf969Us4twq3-YNtYfjpTp00O5z8j-IwfwAtb4tWlVfVF3nh5AFZJKTR3QpZsA9sIO4"/>
+            <img class="w-10 h-10 rounded-full object-cover border border-white/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAf6QxTf5cZhLYGf22vz-D0F-6CG3HlMIL9LNO1X8d_k9p8uz_MakmPEsfy60XaKyZiUAxFaX4nFIiaYwiiZeWwIOG_FCn8TGLTpDlSBFSoVna0AoLFRBD-WTwWkiErV22tHAcezopKudx3M85TMvIA2Z652LHKO_fJL_FP17lvAieYJyPx93G8daj5ln3qHN6dppTA-Z2KPf969Us4twq3-YNtYfjpTp00O5z8j-IwfwAtb4tWlVfVF3nh5AFZJKTR3QpZsA9sIO4" alt="Avatar Admin"/>
             <div class="overflow-hidden">
                 <p class="text-label-md text-white font-bold truncate">Dr. Ricardo Alva</p>
                 <p class="text-label-sm text-blue-200 truncate">Admin Superior</p>
@@ -372,21 +368,11 @@
                                         </div>
                                         <span class="text-body-md font-medium text-on-surface">#{medico.nombreCompleto}</span>
                                     </div>
-<<<<<<< HEAD
                                 </td>
                                 <td class="px-lg py-md text-body-md text-on-surface-variant">#{medico.especialidadesTexto}</td>
-                                <td class="px-lg py-md text-center text-body-md font-bold">#{medico.citas.size()}</td>
+                                <td class="px-lg py-md text-center text-body-md font-bold">#{reporteBean.getCantidadCitasMesActual(medico)}</td>
                                 <td class="px-lg py-md text-center text-body-md text-on-surface-variant">#{medico.horarios.size()}</td>
                             </tr>
-=======
-                                    <span class="text-body-md font-medium text-on-surface">#{medico.nombreCompleto}</span>
-                                </div>
-                            </td>
-                            <td class="px-lg py-md text-body-md text-on-surface-variant">#{medico.especialidadesTexto}</td>
-                            <td class="px-lg py-md text-center text-body-md font-bold">#{reporteBean.getCantidadCitasMesActual(medico)}</td>
-                            <td class="px-lg py-md text-center text-body-md text-on-surface-variant">#{medico.horarios.size()}</td>
-                        </tr>
->>>>>>> 5bd8cf7f5c6b65511a5c5a4fd7862f8efbfab71c
                         </ui:repeat>
                         <ui:fragment rendered="#{empty reporteBean.medicosPorCantidadDeCitas}">
                             <tr>
@@ -401,11 +387,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer class="no-print mt-auto py-lg px-gutter border-t border-outline-variant text-center">
-        <p class="text-label-sm text-on-surface-variant">© 2024 M.A.S.S. Medical Administration Support System. Todos los derechos reservados. Generado para Dr. Ricardo Alva.</p>
-    </footer>
 </main>
 
 <script>
@@ -423,7 +404,7 @@
         });
 
         // Interactive chart bars
-        const chartBars = document.querySelectorAll('.bg-primary.rounded-t');
+        const chartBars = document.querySelectorAll('.bg-primary.rounded-t, .bg-tertiary.rounded-t, .bg-secondary.rounded-t, .bg-error.rounded-t');
         chartBars.forEach(bar => {
             const targetHeight = bar.style.height;
             bar.style.height = '0';
@@ -434,4 +415,5 @@
         });
     });
 </script>
-</body></html>
+</body>
+</html>

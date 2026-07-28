@@ -145,67 +145,92 @@
             </div>
         </div>
     </div>
-    <nav class="flex-1 overflow-y-auto px-md space-y-1 custom-scrollbar">
+    <aside class="fixed left-0 top-0 h-screen w-[280px] bg-primary border-r border-primary-container flex flex-col py-lg z-50 text-white">
+        <div class="px-lg mb-xl">
+            <div class="flex items-center gap-sm">
+                <div class="bg-white/20 p-2 rounded-lg text-white">
+                    <span class="material-symbols-outlined text-headline-sm">medical_services</span>
+                </div>
+                <div>
+                    <h1 class="font-headline-sm text-headline-sm font-extrabold text-white tracking-tight">M.A.S.S.</h1>
+                    <p class="text-label-sm text-blue-100">Panel de Administración</p>
+                </div>
+            </div>
+        </div>
         <nav class="flex-1 overflow-y-auto px-md space-y-1 custom-scrollbar">
+            <nav class="flex-1 overflow-y-auto px-md space-y-1 custom-scrollbar">
 
-            <h:link outcome="gestionAdmin"
-                    styleClass="flex items-center gap-md px-lg py-md sidebar-active rounded-r-lg transition-all duration-200">
+                <h:link outcome="gestionAdmin"
+                        styleClass="flex items-center gap-md px-lg py-md sidebar-active rounded-r-lg transition-all duration-200">
 
-                <span class="material-symbols-outlined">dashboard</span>
-                <span class="font-body-md text-body-md">Tablero</span>
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <span class="font-body-md text-body-md">Tablero</span>
 
-            </h:link>
+                </h:link>
 
-            <h:link outcome="gestionMedicos"
-                    styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+                <h:link outcome="gestionMedicos"
+                        styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
 
-                <span class="material-symbols-outlined">medical_services</span>
-                <span class="font-body-md text-body-md">Doctores</span>
+                    <span class="material-symbols-outlined">medical_services</span>
+                    <span class="font-body-md text-body-md">Doctores</span>
 
-            </h:link>
+                </h:link>
 
-            <h:link outcome="gestionHorarios"
-                    styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+                <h:link outcome="gestionHorarios"
+                        styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
 
-                <span class="material-symbols-outlined">event_available</span>
-                <span class="font-body-md text-body-md">Horarios</span>
+                    <span class="material-symbols-outlined">event_available</span>
+                    <span class="font-body-md text-body-md">Horarios</span>
 
-            </h:link>
+                </h:link>
 
-            <h:link outcome="gestionEspecialidades"
-                    styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+                <h:link outcome="gestionEspecialidades"
+                        styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
 
-                <span class="material-symbols-outlined">category</span>
-                <span class="font-body-md text-body-md">Especialidades</span>
+                    <span class="material-symbols-outlined">category</span>
+                    <span class="font-body-md text-body-md">Especialidades</span>
 
-            </h:link>
+                </h:link>
 
-            <h:link outcome="reportes"
-                    styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+                <h:link outcome="reportes"
+                        styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
 
-                <span class="material-symbols-outlined">assessment</span>
-                <span class="font-body-md text-body-md">Reportes</span>
+                    <span class="material-symbols-outlined">assessment</span>
+                    <span class="font-body-md text-body-md">Reportes</span>
 
-            </h:link>
+                </h:link>
 
-            <h:link outcome="configuracionSistema"
-                    styleClass="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200">
+                <h:link outcome="configuracionSistema"
+                        styleClass="flex items-center gap-md px-lg py-md text-white/80 hover:bg-white/10 rounded-lg transition-all duration-200">
 
-                <span class="material-symbols-outlined">settings</span>
-                <span class="font-body-md text-body-md">Configuración</span>
+                    <span class="material-symbols-outlined">settings</span>
+                    <span class="font-body-md text-body-md">Configuración</span>
 
-            </h:link>
+                </h:link>
 
-            <h:form>
-                <h:commandLink action="#{pacienteBean.cerrarSesion}"
-                        styleClass="flex items-center gap-md px-lg py-md text-error hover:bg-error-container/20 rounded-lg transition-all duration-200 w-full">
-                    <span class="material-symbols-outlined">logout</span>
-                    <span class="font-body-md text-body-md">Cerrar Sesión</span>
-                </h:commandLink>
-            </h:form>
+                <h:form>
+                    <h:commandLink action="#{pacienteBean.cerrarSesion}"
+                                   styleClass="flex items-center gap-md px-lg py-md text-red-200 hover:bg-white/10 rounded-lg transition-all duration-200 w-full">
+                        <span class="material-symbols-outlined">logout</span>
+                        <span class="font-body-md text-body-md">Cerrar Sesión</span>
+                    </h:commandLink>
+                </h:form>
 
+            </nav>
         </nav>
-    </nav>
+        <div class="px-md mt-auto pt-lg border-t border-white/20">
+
+            <div class="mt-lg p-md bg-white/10 rounded-xl flex items-center gap-md">
+                <div class="w-10 h-10 rounded-full overflow-hidden bg-white/20">
+                    <img class="w-full h-full object-cover" data-alt="Professional headshot of a hospital administrator in a corporate office setting, high-end medical environment with soft clinical lighting, crisp white collar, warm professional expression, photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDffm5Qx-4PjekJEikfk1HxFqHF1rc02A1I5M-3WAyVeS_M1FpArOaiFXxwwNdGX63JykE9bw404gf4cfieq_BWsOfPFerlo43WDHlbIjyQ0n0r1LR-fXiaISNAWFJVvUHzqLN2yJV13umDDExaAA03CdjKxahbaUt58bKUXQPBK9DPmSK7v_dJR0g1QSMebAs0ksFmwrOuwckSy3aewssyRCX8wbLTMwBeA3WCm6tPO3bGrl0DbMpEILRU4nbDAzTWOw5V1avvybs"/>
+                </div>
+                <div class="flex-1 overflow-hidden">
+                    <p class="text-label-md font-bold truncate text-white">Admin Central</p>
+                    <p class="text-[10px] text-blue-100 truncate">ID: 4892-MASS</p>
+                </div>
+            </div>
+        </div>
+    </aside>
     <div class="px-md mt-auto pt-lg border-t border-outline-variant/30">
 
         <div class="mt-lg p-md bg-surface-container-high rounded-xl flex items-center gap-md">
