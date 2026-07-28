@@ -5,7 +5,8 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"><head>
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:pt="jakarta.faces.passthrough"><head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>M.A.S.S. | Portal del Paciente</title>
@@ -157,12 +158,12 @@
             <span class="material-symbols-outlined">history_edu</span>
             <span>Historial</span>
         </h:link>
+        <h:link outcome="reportePaciente" styleClass="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg font-label-md transition-all">
+            <span class="material-symbols-outlined">description</span>
+            <span>Reporte Médico</span>
+        </h:link>
     </nav>
     <div class="mt-auto space-y-1">
-        <a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:text-primary transition-colors font-body-sm" href="#">
-            <span class="material-symbols-outlined">help</span>
-            <span>Centro de Ayuda</span>
-        </a>
         <h:form>
             <h:commandLink action="#{pacienteBean.cerrarSesion}" styleClass="flex items-center gap-md px-md py-3 text-error hover:opacity-80 transition-opacity font-body-sm w-full">
                 <span class="material-symbols-outlined">logout</span>
@@ -174,20 +175,17 @@
 <!-- Top AppBar -->
 <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-lg h-16 bg-surface-container-highest shadow-sm border-b border-outline-variant">
     <div class="flex items-center gap-md lg:ml-[280px]">
-        <div class="relative group hidden sm:block">
+        <h:form id="busquedaPacienteForm" styleClass="relative group hidden sm:block">
             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
-            <input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none w-64 lg:w-96 transition-all" placeholder="Buscar citas, médicos..." type="text"/>
-        </div>
+            <h:inputText value="#{pacienteBean.terminoBusquedaPaciente}"
+                         styleClass="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-full text-body-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none w-64 lg:w-96 transition-all"
+                         pt:placeholder="Buscar médicos, especialidades o mis citas...">
+                <f:ajax event="keyup" listener="#{pacienteBean.buscarEnPortal}"
+                        render=":resultadosBusquedaPaciente" delay="400"/>
+            </h:inputText>
+        </h:form>
     </div>
     <div class="flex items-center gap-md">
-        <button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors relative">
-            <span class="material-symbols-outlined">notifications</span>
-            <span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
-        </button>
-        <button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors">
-            <span class="material-symbols-outlined">settings</span>
-        </button>
-        <div class="h-8 w-[1px] bg-outline-variant mx-2"></div>
         <div class="flex items-center gap-sm">
             <div class="text-right hidden sm:block">
                 <p class="font-label-md text-label-md text-on-surface">#{pacienteBean.pacienteActual.nombreCompleto}</p>
@@ -201,6 +199,71 @@
 </header>
 <!-- Main Content Canvas -->
 <main class="pt-24 pb-xl px-lg lg:ml-[280px] max-w-max_container mx-auto">
+    <!-- Resultados de búsqueda -->
+    <h:panelGroup id="resultadosBusquedaPaciente" layout="block">
+        <ui:fragment rendered="#{pacienteBean.busquedaPacienteRealizada}">
+            <h:form id="accionesBusquedaPaciente">
+                <section class="bento-card rounded-xl p-lg mb-lg space-y-lg">
+                    <div class="flex items-center gap-sm">
+                        <span class="material-symbols-outlined text-primary">manage_search</span>
+                        <h3 class="font-headline-sm text-on-surface">
+                            Resultados para "#{pacienteBean.terminoBusquedaPaciente}"
+                        </h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+                        <div>
+                            <p class="text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm">
+                                Médicos (#{pacienteBean.resultadosMedicosBusquedaPaciente.size()})
+                            </p>
+                            <ui:repeat value="#{pacienteBean.resultadosMedicosBusquedaPaciente}" var="med">
+                                <h:commandLink action="#{pacienteBean.abrirMedicoDesdeBusqueda(med)}"
+                                               styleClass="block py-2 border-b border-outline-variant/40 hover:text-primary transition-colors">
+                                    <span class="font-label-md">#{med.nombreCompleto}</span>
+                                    <span class="block text-body-sm text-on-surface-variant">#{med.especialidadesTexto}</span>
+                                </h:commandLink>
+                            </ui:repeat>
+                            <ui:fragment rendered="#{empty pacienteBean.resultadosMedicosBusquedaPaciente}">
+                                <p class="text-body-sm text-on-surface-variant">Sin coincidencias.</p>
+                            </ui:fragment>
+                        </div>
+                        <div>
+                            <p class="text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm">
+                                Especialidades (#{pacienteBean.resultadosEspecialidadesBusquedaPaciente.size()})
+                            </p>
+                            <ui:repeat value="#{pacienteBean.resultadosEspecialidadesBusquedaPaciente}" var="esp">
+                                <h:commandLink action="#{pacienteBean.abrirEspecialidadDesdeBusqueda(esp)}"
+                                               styleClass="flex items-center gap-sm py-2 border-b border-outline-variant/40 hover:text-primary transition-colors">
+                                    <span class="material-symbols-outlined text-[18px]">medical_services</span>
+                                    <span class="font-label-md">#{esp.nombre}</span>
+                                </h:commandLink>
+                            </ui:repeat>
+                            <ui:fragment rendered="#{empty pacienteBean.resultadosEspecialidadesBusquedaPaciente}">
+                                <p class="text-body-sm text-on-surface-variant">Sin coincidencias.</p>
+                            </ui:fragment>
+                        </div>
+                        <div>
+                            <p class="text-label-sm text-on-surface-variant uppercase tracking-wider mb-sm">
+                                Mis Citas (#{pacienteBean.resultadosCitasBusquedaPaciente.size()})
+                            </p>
+                            <ui:repeat value="#{pacienteBean.resultadosCitasBusquedaPaciente}" var="cita">
+                                <h:link outcome="misCitas"
+                                        styleClass="block py-2 border-b border-outline-variant/40 hover:text-primary transition-colors">
+                                    <span class="font-label-md">#{cita.medico.nombreCompleto}</span>
+                                    <span class="block text-body-sm text-on-surface-variant">
+                                        <h:outputText value="#{cita.fecha}"><f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>
+                                        - #{cita.estado}
+                                    </span>
+                                </h:link>
+                            </ui:repeat>
+                            <ui:fragment rendered="#{empty pacienteBean.resultadosCitasBusquedaPaciente}">
+                                <p class="text-body-sm text-on-surface-variant">Sin coincidencias.</p>
+                            </ui:fragment>
+                        </div>
+                    </div>
+                </section>
+            </h:form>
+        </ui:fragment>
+    </h:panelGroup>
     <!-- Welcome Message -->
     <section class="mb-lg">
         <h2 class="font-headline-lg text-headline-lg text-primary">Hola, #{pacienteBean.pacienteActual.nombres}</h2>
@@ -310,7 +373,7 @@
         <!-- Bento Grid Right Col -->
         <div class="col-span-12 lg:col-span-4 space-y-gutter">
             <!-- Notificaciones Panel -->
-            <aside class="bento-card rounded-xl overflow-hidden flex flex-col h-full min-h-[400px]">
+            <aside id="notificaciones" class="bento-card rounded-xl overflow-hidden flex flex-col h-full min-h-[400px] scroll-mt-24">
                 <div class="p-lg border-b border-outline-variant bg-surface-container flex items-center justify-between">
                     <h3 class="font-label-md text-label-md text-on-surface">Notificaciones</h3>
                     <span class="bg-error text-white text-[10px] px-2 py-0.5 rounded-full font-bold">#{pacienteBean.notificaciones.size()}</span>
@@ -364,6 +427,10 @@
     <h:link outcome="historialMedico" styleClass="flex flex-col items-center text-on-surface-variant">
         <span class="material-symbols-outlined">history</span>
         <span class="text-[10px]">Historial</span>
+    </h:link>
+    <h:link outcome="reportePaciente" styleClass="flex flex-col items-center text-on-surface-variant">
+        <span class="material-symbols-outlined">description</span>
+        <span class="text-[10px]">Reporte</span>
     </h:link>
 </nav>
 <script>

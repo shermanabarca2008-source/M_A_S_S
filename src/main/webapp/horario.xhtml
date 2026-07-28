@@ -133,18 +133,15 @@
             <span class="text-headline-md font-headline-md font-bold text-primary">M.A.S.S.</span>
         </div>
         <nav class="hidden md:flex items-center gap-xl">
-            <a class="text-on-surface-variant font-body-md hover:text-primary transition-colors duration-200" href="#">Dashboard</a>
-            <a class="text-on-surface-variant font-body-md hover:text-primary transition-colors duration-200" href="#">Find Doctor</a>
-            <a class="text-primary border-b-2 border-primary font-bold pb-1 font-body-md" href="#">My Bookings</a>
-            <a class="text-on-surface-variant font-body-md hover:text-primary transition-colors duration-200" href="#">Help</a>
+            <h:link outcome="gestionPacientes" styleClass="text-on-surface-variant font-body-md hover:text-primary transition-colors duration-200">Inicio</h:link>
+            <h:link outcome="aggCitas" styleClass="text-on-surface-variant font-body-md hover:text-primary transition-colors duration-200">Buscar médico</h:link>
+            <h:link outcome="misCitas" styleClass="text-primary border-b-2 border-primary font-bold pb-1 font-body-md">Mis citas</h:link>
         </nav>
         <div class="flex items-center gap-md">
             <div class="relative hidden sm:block">
                 <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
                 <input class="pl-xl pr-md py-xs rounded-full border border-outline-variant bg-surface-container focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all w-48 lg:w-64" placeholder="Buscar..." type="text"/>
             </div>
-            <button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors p-xs rounded-full hover:bg-surface-variant">notifications</button>
-            <button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors p-xs rounded-full hover:bg-surface-variant">settings</button>
             <img class="w-10 h-10 rounded-full border-2 border-primary-container object-cover cursor-pointer hover:opacity-90 active:opacity-80" data-alt="A professional medical profile avatar of a smiling doctor in a bright, modern clinic. The lighting is soft and clinical, using a palette of blues and whites to match the medical app theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnCkpP3wFVYW-SehLkgwwkZzrxFbLiNFkRy1asC8PNZCqHO_REQIT6lm507wJ4J8hrw8363VYpwsfZmkj1BPtHuB--EghGvh6x8D0AgPM3HTm1xT--P5skFOWrk7X-kBGrNb4aTgBV-OfEIjRof54ozhxmJt9XiiMAri2yhumG0eaisGlPglC2nMp2H_0IM41IdJ1vlHCb7orfFYrf4fe5eENt9VPciugB6hB-GADDpEB9KiZG7QMoTqwg41AXxL-VM6K8ZwCsGNc"/>
         </div>
     </div>
@@ -206,36 +203,35 @@
     </div>
     <nav class="flex-1 flex flex-col gap-xs">
         <div class="text-label-sm font-bold text-on-surface-variant px-md mb-xs mt-md">MENÚ PRINCIPAL</div>
-        <a class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all duration-200" href="#">
+        <h:link outcome="gestionPacientes" styleClass="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all duration-200">
             <span class="material-symbols-outlined">dashboard</span>
             <span class="font-label-md text-label-md">Dashboard</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-sm cursor-pointer bg-primary-container text-on-primary-container border-l-4 border-primary rounded-r-full shadow-sm" href="#">
+        </h:link>
+        <h:link outcome="aggCitas" styleClass="flex items-center gap-md px-md py-sm cursor-pointer bg-primary-container text-on-primary-container border-l-4 border-primary rounded-r-full shadow-sm">
             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
             <span class="font-label-md text-label-md font-bold">Schedule</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all duration-200" href="#">
+        </h:link>
+        <h:link outcome="gestionPacientes" styleClass="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all duration-200">
             <span class="material-symbols-outlined">groups</span>
             <span class="font-label-md text-label-md">Patients</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all duration-200" href="#">
+        </h:link>
+        <h:link outcome="aggCitas" styleClass="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all duration-200">
             <span class="material-symbols-outlined">medical_services</span>
             <span class="font-label-md text-label-md">Doctors</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all duration-200" href="#">
-            <span class="material-symbols-outlined">bar_chart</span>
-            <span class="font-label-md text-label-md">Reports</span>
-        </a>
+        </h:link>
+        <h:link outcome="reportePaciente" styleClass="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all duration-200">
+            <span class="material-symbols-outlined">description</span>
+            <span class="font-label-md text-label-md">Reporte Médico</span>
+        </h:link>
     </nav>
     <div class="mt-auto border-t border-outline-variant pt-md flex flex-col gap-xs">
-        <a class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all duration-200" href="#">
-            <span class="material-symbols-outlined">help_outline</span>
-            <span class="font-label-md text-label-md">Support</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-sm cursor-pointer text-error hover:bg-error-container/10 rounded-lg transition-all duration-200" href="#">
-            <span class="material-symbols-outlined">logout</span>
-            <span class="font-label-md text-label-md">Logout</span>
-        </a>
+        <h:form>
+            <h:commandLink action="#{pacienteBean.cerrarSesion}"
+                    styleClass="flex items-center gap-md px-md py-sm cursor-pointer text-error hover:bg-error-container/10 rounded-lg transition-all duration-200 w-full">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-md text-label-md">Logout</span>
+            </h:commandLink>
+        </h:form>
     </div>
 </aside>
 <script>

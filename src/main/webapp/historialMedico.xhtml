@@ -147,12 +147,6 @@
         </div>
     </div>
     <div class="flex items-center gap-md">
-        <button class="p-2 rounded-full hover:bg-surface-container-low transition-colors duration-200">
-            <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
-        </button>
-        <button class="p-2 rounded-full hover:bg-surface-container-low transition-colors duration-200">
-            <span class="material-symbols-outlined text-on-surface-variant">settings</span>
-        </button>
         <div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant">
             <img class="w-full h-full object-cover" data-alt="Close-up professional portrait of a medical practitioner in a clean clinical setting, soft natural lighting, high-fidelity digital photography, modern healthcare aesthetic with a blue and white color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxGMybQ4XgmId_QUb1DXQ9GqVES2Srqf1BlmVzFcbJ9IqQrPovvPPzVXR5Tw6rk1Jzuso8qo_L4bICACENaOXUbm2iDvsgBDaRJWL-2kqRntzK1qrbFRfcSLw6LeJ9C_auKZhpQL32qJuOMaHaMTVIcFv8aMgrOw7yT3OjptRqd01RZbfbiRQuKkXuhmDX7e50EKl4OpkMiydTv_jrOyRilDUkBKHpYqL8HtGhZA9-o92P404womdY"/>
         </div>
@@ -177,12 +171,12 @@
             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">history_edu</span>
             <span class="font-label-md text-label-md">Historial</span>
         </h:link>
+        <h:link outcome="reportePaciente" styleClass="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group">
+            <span class="material-symbols-outlined">description</span>
+            <span class="font-label-md text-label-md">Reporte Médico</span>
+        </h:link>
     </nav>
     <div class="mt-auto pt-lg border-t border-outline-variant">
-        <a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group" href="#">
-            <span class="material-symbols-outlined">help</span>
-            <span class="font-label-md text-label-md">Centro de Ayuda</span>
-        </a>
         <h:form>
             <h:commandLink action="#{pacienteBean.cerrarSesion}" styleClass="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 group w-full">
                 <span class="material-symbols-outlined">logout</span>
@@ -200,10 +194,11 @@
                 <h1 class="font-headline-lg text-headline-lg text-on-background">Historial Médico</h1>
                 <p class="font-body-md text-on-surface-variant">Accede a tus consultas previas, diagnósticos y tratamientos realizados.</p>
             </div>
-            <button class="bg-primary hover:bg-primary-container text-white px-lg py-2.5 rounded-full font-label-md flex items-center gap-2 transition-all shadow-md active:scale-95">
+            <h:link outcome="reportePaciente"
+                    styleClass="bg-primary hover:bg-primary-container text-white px-lg py-2.5 rounded-full font-label-md flex items-center gap-2 transition-all shadow-md active:scale-95">
                 <span class="material-symbols-outlined text-[20px]">download</span>
                 Descargar Historial Completo
-            </button>
+            </h:link>
         </div>
         <!-- Filters Bar -->
         <div class="glass-panel border border-outline-variant p-md rounded-xl flex flex-wrap items-center gap-md shadow-sm">
@@ -278,26 +273,22 @@
 </main>
 <!-- Mobile Bottom Navigation -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-outline-variant z-50 flex items-center justify-around h-16 px-4">
-    <a class="flex flex-col items-center text-on-surface-variant gap-1" href="#">
+    <h:link outcome="gestionPacientes" styleClass="flex flex-col items-center text-on-surface-variant gap-1">
         <span class="material-symbols-outlined">home</span>
         <span class="text-[10px]">Inicio</span>
-    </a>
-    <a class="flex flex-col items-center text-on-surface-variant gap-1" href="#">
+    </h:link>
+    <h:link outcome="misCitas" styleClass="flex flex-col items-center text-on-surface-variant gap-1">
         <span class="material-symbols-outlined">calendar_today</span>
         <span class="text-[10px]">Citas</span>
-    </a>
-    <a class="flex flex-col items-center text-primary gap-1" href="#">
+    </h:link>
+    <h:link outcome="historialMedico" styleClass="flex flex-col items-center text-primary gap-1">
         <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">history_edu</span>
         <span class="text-[10px] font-bold">Historial</span>
-    </a>
-    <a class="flex flex-col items-center text-on-surface-variant gap-1" href="#">
-        <span class="material-symbols-outlined">folder</span>
-        <span class="text-[10px]">Informes</span>
-    </a>
-    <a class="flex flex-col items-center text-on-surface-variant gap-1" href="#">
-        <span class="material-symbols-outlined">person</span>
-        <span class="text-[10px]">Perfil</span>
-    </a>
+    </h:link>
+    <h:link outcome="reportePaciente" styleClass="flex flex-col items-center text-on-surface-variant gap-1">
+        <span class="material-symbols-outlined">description</span>
+        <span class="text-[10px]">Reporte</span>
+    </h:link>
 </nav>
 <script>
     function toggleSidebar() {

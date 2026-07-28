@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html class="light" lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:pt="jakarta.faces.passthrough">
+<h:head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>M.A.S.S. | Calendario Médico</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#004d99",
+                        "primary-container": "#1565c0",
+                        "primary-fixed": "#d6e3ff",
+                        tertiary: "#005b15",
+                        "tertiary-fixed": "#98f994",
+                        error: "#ba1a1a",
+                        background: "#f4faff",
+                        surface: "#f4faff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#e9f6fd",
+                        "surface-container-high": "#ddeaf2",
+                        "surface-container-highest": "#d7e4ec",
+                        "on-surface": "#111d23",
+                        "on-surface-variant": "#424752",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#dae5ff",
+                        outline: "#727783",
+                        "outline-variant": "#c2c6d4",
+                        "secondary-container": "#dfe0e0",
+                        "on-secondary-container": "#454747"
+                    },
+                    spacing: {
+                        xs: "4px", sm: "8px", md: "16px", lg: "24px", xl: "32px",
+                        gutter: "24px", max_container: "1600px"
+                    },
+                    borderRadius: {lg: "0.5rem", xl: "0.75rem", full: "9999px"}
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4faff;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(105px, 1fr));
+        }
+        .calendar-cell {
+            min-height: 112px;
+        }
+        @media (max-width: 768px) {
+            .calendar-grid {
+                grid-template-columns: repeat(7, minmax(76px, 1fr));
+            }
+            .calendar-cell {
+                min-height: 92px;
+            }
+        }
+    </style>
+</h:head>
+<h:body styleClass="bg-background text-on-surface min-h-screen">
+    <!-- CABECERA -->
+    <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-lg h-16 bg-blue-900 border-b border-blue-800 shadow-sm text-white">
+        <div class="flex items-center gap-xl">
+            <h1 class="text-xl font-black text-white">M.A.S.S.</h1>
+            <nav class="hidden md:flex items-center gap-sm">
+                <h:link outcome="ingresoMedico"
+                        styleClass="text-sm text-blue-200 hover:bg-blue-800 px-md py-2 rounded-lg">
+                    Inicio
+                </h:link>
+                <h:link outcome="calendarioMedico"
+                        styleClass="text-sm text-white font-bold border-b-2 border-white px-md py-5">
+                    Calendario
+                </h:link>
+                <h:link outcome="indicacionesMedicas"
+                        styleClass="text-sm text-blue-200 hover:bg-blue-800 px-md py-2 rounded-lg">
+                    Indicaciones
+                </h:link>
+            </nav>
+        </div>
+        <div class="flex items-center gap-md">
+            <h:form id="busquedaCalendarioForm"
+                    styleClass="hidden lg:flex items-center bg-blue-800 rounded-full px-md py-1 border border-blue-700">
+                <span class="material-symbols-outlined text-blue-300 text-[20px]">search</span>
+                <h:inputText value="#{medicoSesionBean.terminoBusqueda}"
+                             styleClass="bg-transparent border-none focus:ring-0 text-sm text-white placeholder-blue-300 w-52"
+                             pt:placeholder="Buscar paciente...">
+                    <f:ajax event="keyup" listener="#{medicoSesionBean.buscarCitas}"
+                            render=":contenidoCalendario" delay="350"/>
+                </h:inputText>
+            </h:form>
+            <h:link outcome="ingresoMedico" fragment="notificaciones" title="Notificaciones"
+                    styleClass="relative p-2 hover:bg-blue-800 rounded-full">
+                <span class="material-symbols-outlined text-blue-100">notifications</span>
+                <ui:fragment rendered="#{not empty medicoSesionBean.notificaciones}">
+                    <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-error"></span>
+                </ui:fragment>
+            </h:link>
+            <div class="hidden sm:block text-right">
+                <p class="text-sm font-semibold text-white">#{medicoSesionBean.medicoActual.nombreCompleto}</p>
+                <p class="text-xs text-blue-200">#{medicoSesionBean.medicoActual.especialidadesTexto}</p>
+            </div>
+            <div class="w-10 h-10 rounded-full border-2 border-white bg-blue-800 flex items-center justify-center text-white">
+                <span class="material-symbols-outlined">stethoscope</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MENÚ LATERAL -->
+    <aside class="hidden lg:flex flex-col w-[280px] h-screen fixed left-0 top-0 pt-20 pb-lg px-md bg-blue-900 border-r border-blue-800 z-40 text-white">
+        <div class="px-md mb-md">
+            <p class="text-xs font-semibold text-blue-300 uppercase tracking-wider">Portal Médico</p>
+        </div>
+        <nav class="flex-1 space-y-2">
+            <h:link outcome="ingresoMedico"
+                    styleClass="flex items-center gap-md px-md py-3 text-blue-200 hover:text-white hover:bg-blue-800 rounded-lg">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-semibold">Ingreso Médico</span>
+            </h:link>
+            <h:link outcome="calendarioMedico"
+                    styleClass="flex items-center gap-md px-md py-3 bg-blue-700 text-white border-l-4 border-white rounded-r-full shadow-sm">
+                <span class="material-symbols-outlined">calendar_month</span>
+                <span class="font-semibold">Calendario Médico</span>
+            </h:link>
+            <h:link outcome="indicacionesMedicas"
+                    styleClass="flex items-center gap-md px-md py-3 text-blue-200 hover:text-white hover:bg-blue-800 rounded-lg">
+                <span class="material-symbols-outlined">clinical_notes</span>
+                <span class="font-semibold">Indicaciones Médicas</span>
+            </h:link>
+        </nav>
+        <h:form>
+            <h:commandLink action="#{medicoSesionBean.cerrarSesion}"
+                           styleClass="flex items-center gap-md px-md py-3 text-red-300 hover:bg-red-900/50 hover:text-white rounded-lg w-full">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-semibold">Cerrar sesión</span>
+            </h:commandLink>
+        </h:form>
+    </aside>
+
+    <!-- CALENDARIO DINÁMICO -->
+    <h:panelGroup id="contenidoCalendario" layout="block">
+        <main class="lg:ml-[280px] pt-16 min-h-screen bg-background">
+            <h:form id="calendarioMedicoForm">
+                <!-- CONTROLES -->
+                <section class="flex flex-col md:flex-row justify-between items-start md:items-center px-lg py-md bg-white border-b border-outline-variant gap-md">
+                    <div>
+                        <h2 class="text-3xl font-bold text-primary">Agenda mensual</h2>
+                        <p class="text-sm text-on-surface-variant">
+                            Citas de #{medicoSesionBean.medicoActual.nombreCompleto} · #{medicoSesionBean.tituloMes}
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-sm">
+                        <h:commandLink action="#{medicoSesionBean.mesAnterior}"
+                                       title="Mes anterior"
+                                       styleClass="p-2 hover:bg-surface-container-low rounded-full border border-outline-variant flex">
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </h:commandLink>
+                        <h:commandLink value="Hoy" action="#{medicoSesionBean.irAHoy}"
+                                       styleClass="px-md py-2 rounded-lg border border-primary text-primary font-bold hover:bg-primary-fixed"/>
+                        <span class="font-semibold min-w-32 text-center">#{medicoSesionBean.tituloMes}</span>
+                        <h:commandLink action="#{medicoSesionBean.mesSiguiente}"
+                                       title="Mes siguiente"
+                                       styleClass="p-2 hover:bg-surface-container-low rounded-full border border-outline-variant flex">
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </h:commandLink>
+                    </div>
+                </section>
+
+                <section class="grid grid-cols-1 2xl:grid-cols-[minmax(0,1fr)_360px]">
+                    <!-- CUADRÍCULA -->
+                    <div class="p-md overflow-x-auto">
+                        <div class="bg-white rounded-xl shadow-sm border border-outline-variant overflow-hidden min-w-[620px]">
+                            <div class="calendar-grid bg-surface-container-low border-b border-outline-variant">
+                                <div class="py-3 text-center text-xs font-bold text-on-surface-variant">DOM</div>
+                                <div class="py-3 text-center text-xs font-bold text-on-surface-variant">LUN</div>
+                                <div class="py-3 text-center text-xs font-bold text-on-surface-variant">MAR</div>
+                                <div class="py-3 text-center text-xs font-bold text-on-surface-variant">MIÉ</div>
+                                <div class="py-3 text-center text-xs font-bold text-on-surface-variant">JUE</div>
+                                <div class="py-3 text-center text-xs font-bold text-on-surface-variant">VIE</div>
+                                <div class="py-3 text-center text-xs font-bold text-on-surface-variant">SÁB</div>
+                            </div>
+                            <div class="calendar-grid">
+                                <ui:repeat value="#{medicoSesionBean.diasCalendario}" var="dia">
+                                    <h:commandLink action="#{medicoSesionBean.seleccionarDia(dia.fecha)}"
+                                                   styleClass="calendar-cell block p-2 border-r border-b border-outline-variant/60 text-on-surface hover:bg-surface-container-low transition-colors
+                                                   #{not dia.mesActual ? 'bg-surface-container-low/40 opacity-50' : 'bg-white'}
+                                                   #{dia.seleccionado ? 'ring-2 ring-inset ring-primary bg-primary/5' : ''}">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-xs font-bold #{dia.hoy ? 'w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center' : ''}">
+                                                #{dia.numero}
+                                            </span>
+                                            <ui:fragment rendered="#{dia.hoy}">
+                                                <span class="text-[9px] uppercase font-bold text-primary">Hoy</span>
+                                            </ui:fragment>
+                                        </div>
+                                        <div class="space-y-1">
+                                            <ui:repeat value="#{dia.citasVisibles}" var="cita">
+                                                <div class="bg-primary-fixed text-primary border-l-4 border-primary px-2 py-1 rounded text-[10px] font-bold truncate">
+                                                    <h:outputText value="#{cita.hora}">
+                                                        <f:convertDateTime pattern="HH:mm"/>
+                                                    </h:outputText>
+                                                    · #{cita.paciente.nombreCompleto}
+                                                </div>
+                                            </ui:repeat>
+                                            <ui:fragment rendered="#{dia.cantidadAdicional gt 0}">
+                                                <div class="text-[10px] text-center font-bold text-on-surface-variant">
+                                                    +#{dia.cantidadAdicional} más
+                                                </div>
+                                            </ui:fragment>
+                                        </div>
+                                    </h:commandLink>
+                                </ui:repeat>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DETALLES DEL DÍA -->
+                    <aside class="bg-white border-l border-outline-variant">
+                        <div class="p-lg border-b border-outline-variant">
+                            <div class="mb-md">
+                                <p class="text-xs uppercase tracking-wider text-on-surface-variant">Día seleccionado</p>
+                                <h3 class="text-xl font-bold">#{medicoSesionBean.fechaSeleccionadaFormateada}</h3>
+                            </div>
+                            <div class="grid grid-cols-2 gap-sm">
+                                <div class="bg-surface-container-low p-md rounded-lg text-center">
+                                    <p class="text-xs text-outline">Total</p>
+                                    <p class="text-2xl font-bold">#{medicoSesionBean.totalCitasFechaSeleccionada}</p>
+                                </div>
+                                <div class="bg-surface-container-low p-md rounded-lg text-center">
+                                    <p class="text-xs text-outline">Pendientes</p>
+                                    <p class="text-2xl font-bold text-primary">#{medicoSesionBean.citasRestantesFechaSeleccionada}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-lg space-y-md">
+                            <ui:repeat value="#{medicoSesionBean.citasFechaSeleccionada}" var="cita">
+                                <article class="p-md rounded-xl border border-outline-variant hover:shadow-md transition-shadow">
+                                    <div class="flex justify-between gap-md items-start mb-sm">
+                                        <span class="text-xs font-bold px-2 py-1 rounded bg-primary-fixed text-primary">
+                                            #{cita.estado}
+                                        </span>
+                                        <span class="text-xs text-on-surface-variant font-semibold">
+                                            <h:outputText value="#{cita.hora}">
+                                                <f:convertDateTime pattern="HH:mm"/>
+                                            </h:outputText>
+                                        </span>
+                                    </div>
+                                    <h4 class="font-bold">#{cita.paciente.nombreCompleto}</h4>
+                                    <p class="text-sm text-on-surface-variant">Cédula: #{cita.paciente.cedula}</p>
+                                    <h:commandLink action="#{indicacionesMedicasBean.prepararIndicacion(cita)}"
+                                                   styleClass="mt-md inline-flex items-center gap-xs text-primary text-sm font-bold hover:underline">
+                                        <span class="material-symbols-outlined text-[18px]">clinical_notes</span>
+                                        Crear indicación
+                                    </h:commandLink>
+                                </article>
+                            </ui:repeat>
+                            <ui:fragment rendered="#{empty medicoSesionBean.citasFechaSeleccionada}">
+                                <div class="text-center py-xl text-on-surface-variant">
+                                    <span class="material-symbols-outlined text-4xl">event_available</span>
+                                    <p>No hay citas para esta fecha.</p>
+                                </div>
+                            </ui:fragment>
+                        </div>
+                    </aside>
+                </section>
+            </h:form>
+        </main>
+    </h:panelGroup>
+
+    <!-- NAVEGACIÓN MÓVIL -->
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-outline-variant flex justify-around items-center z-50">
+        <h:link outcome="ingresoMedico" styleClass="flex flex-col items-center text-on-surface-variant text-xs">
+            <span class="material-symbols-outlined">dashboard</span>
+            Inicio
+        </h:link>
+        <h:link outcome="calendarioMedico" styleClass="flex flex-col items-center text-primary text-xs font-bold">
+            <span class="material-symbols-outlined">calendar_month</span>
+            Calendario
+        </h:link>
+        <h:link outcome="indicacionesMedicas" styleClass="flex flex-col items-center text-on-surface-variant text-xs">
+            <span class="material-symbols-outlined">clinical_notes</span>
+            Indicaciones
+        </h:link>
+    </nav>
+</h:body>
+</html>

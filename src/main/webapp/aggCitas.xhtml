@@ -128,10 +128,9 @@
             <span class="text-headline-md font-headline-md font-bold text-primary">M.A.S.S.</span>
         </div>
         <nav class="hidden md:flex items-center gap-xl">
-            <a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-200" href="#">Tablero</a>
-            <a class="text-primary border-b-2 border-primary font-bold pb-1 font-body-md text-body-md" href="#">Buscar Doctor</a>
-            <a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-200" href="#">Mis Citas</a>
-            <a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-200" href="#">Ayuda</a>
+            <h:link outcome="gestionPacientes" styleClass="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-200">Tablero</h:link>
+            <h:link outcome="aggCitas" styleClass="text-primary border-b-2 border-primary font-bold pb-1 font-body-md text-body-md">Buscar Doctor</h:link>
+            <h:link outcome="misCitas" styleClass="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors duration-200">Mis Citas</h:link>
         </nav>
         <div class="flex items-center gap-md">
             <div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">

@@ -165,6 +165,10 @@
                 <span class="material-symbols-outlined">history_edu</span>
                 <span class="font-label-md text-label-md">Historial Médico</span>
             </h:link>
+            <h:link outcome="reportePaciente" styleClass="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-variant rounded-md transition-all duration-200">
+                <span class="material-symbols-outlined">description</span>
+                <span class="font-label-md text-label-md">Reporte Médico</span>
+            </h:link>
         </nav>
         <div class="mt-auto p-sm">
             <h:link outcome="aggCitas" styleClass="w-full py-md px-md bg-primary text-on-primary rounded-lg font-label-md text-label-md flex items-center justify-center gap-sm shadow-sm hover:brightness-110 active:opacity-90 transition-all">
@@ -185,13 +189,6 @@
                 </div>
             </div>
             <div class="flex items-center gap-md">
-                <button class="p-sm text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 rounded-full">
-                    <span class="material-symbols-outlined">notifications</span>
-                </button>
-                <button class="p-sm text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 rounded-full">
-                    <span class="material-symbols-outlined">settings</span>
-                </button>
-                <div class="w-px h-6 bg-outline-variant mx-xs"></div>
                 <div class="flex items-center gap-sm">
                     <div class="text-right hidden sm:block">
                         <p class="font-label-md text-label-md text-on-surface">#{pacienteBean.pacienteActual.nombreCompleto}</p>
@@ -299,23 +296,6 @@
                             <span class="text-label-md">Notificaciones activas</span>
                         </div>
                     </div>
-                    <div class="glass-panel rounded-xl p-lg">
-                        <h4 class="font-label-md mb-md text-on-surface uppercase tracking-wider">Centro de Ayuda</h4>
-                        <ul class="space-y-md">
-                            <li class="flex items-center gap-sm text-body-sm text-on-surface-variant cursor-pointer hover:text-primary transition-colors">
-                                <span class="material-symbols-outlined text-[18px]">help_center</span>
-                                ¿Cómo reprogramar una cita?
-                            </li>
-                            <li class="flex items-center gap-sm text-body-sm text-on-surface-variant cursor-pointer hover:text-primary transition-colors">
-                                <span class="material-symbols-outlined text-[18px]">verified_user</span>
-                                Política de cancelación
-                            </li>
-                            <li class="flex items-center gap-sm text-body-sm text-on-surface-variant cursor-pointer hover:text-primary transition-colors">
-                                <span class="material-symbols-outlined text-[18px]">call</span>
-                                Contactar a soporte técnico
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
             <!-- Section: Past Appointments -->
@@ -342,7 +322,7 @@
                                     <span class="bg-surface-container-highest text-on-surface-variant text-label-sm px-sm py-1 rounded-full">Finalizada</span>
                                 </td>
                                 <td class="px-lg py-md text-right flex justify-end gap-sm">
-                                    <button class="text-primary font-label-md text-label-md hover:underline">Ver Resumen</button>
+                                    <h:link outcome="resumen" styleClass="text-primary font-label-md text-label-md hover:underline">Ver Resumen</h:link>
                                     <button class="p-xs text-on-surface-variant hover:bg-surface-variant rounded"><span class="material-symbols-outlined">download</span></button>
                                 </td>
                             </tr>
@@ -354,7 +334,7 @@
                                     <span class="bg-surface-container-highest text-on-surface-variant text-label-sm px-sm py-1 rounded-full">Finalizada</span>
                                 </td>
                                 <td class="px-lg py-md text-right flex justify-end gap-sm">
-                                    <button class="text-primary font-label-md text-label-md hover:underline">Ver Resumen</button>
+                                    <h:link outcome="resumen" styleClass="text-primary font-label-md text-label-md hover:underline">Ver Resumen</h:link>
                                     <button class="p-xs text-on-surface-variant hover:bg-surface-variant rounded"><span class="material-symbols-outlined">download</span></button>
                                 </td>
                             </tr>
@@ -383,6 +363,10 @@
     <h:link outcome="historialMedico" styleClass="flex flex-col items-center gap-1 text-on-surface-variant">
         <span class="material-symbols-outlined">history_edu</span>
         <span class="text-[10px] font-medium">Historial</span>
+    </h:link>
+    <h:link outcome="reportePaciente" styleClass="flex flex-col items-center gap-1 text-on-surface-variant">
+        <span class="material-symbols-outlined">description</span>
+        <span class="text-[10px] font-medium">Reporte</span>
     </h:link>
 </nav>
 <script>

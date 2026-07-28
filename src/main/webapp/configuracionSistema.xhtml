@@ -182,12 +182,14 @@
             </div>
         </div>
         <div class="flex items-center gap-sm">
-            <button class="hover:bg-surface-container-high rounded-full p-2 transition-shadow duration-200">
+            <h:link outcome="reportes" title="Ayuda"
+                    styleClass="hover:bg-surface-container-high rounded-full p-2 transition-shadow duration-200">
                 <span class="material-symbols-outlined text-on-surface-variant">help</span>
-            </button>
-            <button class="hover:bg-surface-container-high rounded-full p-2 transition-shadow duration-200">
+            </h:link>
+            <h:link outcome="gestionAdmin" title="Aplicaciones"
+                    styleClass="hover:bg-surface-container-high rounded-full p-2 transition-shadow duration-200">
                 <span class="material-symbols-outlined text-on-surface-variant">apps</span>
-            </button>
+            </h:link>
             <div class="h-8 w-px bg-outline-variant mx-2"></div>
             <img class="w-8 h-8 rounded-full border border-primary-fixed cursor-pointer" data-alt="A professional close-up studio portrait of a healthcare administrator in a bright, modern medical facility. The lighting is soft and even, highlighting a clean-shaven man in a crisp white shirt. The background is a blurred hospital reception area with soft blue and white tones, reflecting a state-of-the-art clinical environment that conveys reliability and expertise." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkEUT-mweD7J-hIWLlIS7KbsjOeEx5uR4SnCgnaL_oEUp7CtZ18cscEOGrGXcYv85wIeqyb8P5Zo3nnLcw1TkkRk34vQ9wKUD6cwMLr6IAKZsLhlVsCzqje71JeR09wVEbzvNK8a1PnNfldTqfDma1KsZzWM3EV8nLPAvRohh030MMhItuTtqSyjWKb-jD3HIQbLtN54VM4Q2j-dYqVU-r18bF1crOHwEQrGMYsDInIanEnM5Qbh4_PoLDEEnRXilpzreP3W3Szyg"/>
         </div>
@@ -202,37 +204,51 @@
         <div class="grid grid-cols-12 gap-lg">
             <!-- Section: Clinic Information (Col-span 8) -->
             <section class="col-span-12 lg:col-span-8 space-y-lg">
+                <h:form id="formConfiguracion">
                 <div class="glass-card rounded-xl p-lg">
                     <div class="flex items-center justify-between mb-lg">
                         <h3 class="font-headline-sm text-headline-sm flex items-center gap-sm">
                             <span class="material-symbols-outlined text-primary">local_hospital</span>
                             Información de la Clínica
                         </h3>
-                        <button class="bg-primary text-on-primary px-lg py-2 rounded-lg font-label-md hover:bg-primary-container transition-colors shadow-sm">Guardar Cambios</button>
+                        <h:commandButton value="Guardar Cambios"
+                                         action="#{administradorBean.guardarConfiguracion}"
+                                         styleClass="bg-primary text-on-primary px-lg py-2 rounded-lg font-label-md hover:bg-primary-container transition-colors shadow-sm cursor-pointer"/>
                     </div>
+                    <h:panelGroup layout="block" rendered="#{not empty administradorBean.mensajeAdmin}"
+                                  styleClass="mb-lg px-md py-3 rounded-lg #{administradorBean.errorAdmin ? 'bg-error-container text-on-error-container' : 'bg-tertiary-fixed text-on-tertiary-fixed-variant'}">
+                        <span class="material-symbols-outlined align-middle mr-2">#{administradorBean.errorAdmin ? 'error' : 'check_circle'}</span>
+                        <h:outputText value="#{administradorBean.mensajeAdmin}"/>
+                    </h:panelGroup>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
                         <div class="space-y-base">
                             <label class="font-label-md text-on-surface-variant">Nombre de la Institución</label>
-                            <input class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-primary-container text-body-md" type="text" value="Centro Médico de Alta Especialidad M.A.S.S."/>
+                            <h:inputText value="#{administradorBean.nombreInstitucion}"
+                                         styleClass="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-primary-container text-body-md"/>
                         </div>
                         <div class="space-y-base">
                             <label class="font-label-md text-on-surface-variant">ID de Registro Sanitario</label>
-                            <input class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-primary-container text-body-md" type="text" value="HE-2023-MEX-0941"/>
+                            <h:inputText value="#{administradorBean.registroSanitario}"
+                                         styleClass="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-primary-container text-body-md"/>
                         </div>
                         <div class="space-y-base md:col-span-2">
                             <label class="font-label-md text-on-surface-variant">Dirección Física</label>
-                            <input class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-primary-container text-body-md" type="text" value="Av. Insurgentes Sur 1450, Col. Actipan, CDMX"/>
+                            <h:inputText value="#{administradorBean.direccionInstitucion}"
+                                         styleClass="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-primary-container text-body-md"/>
                         </div>
                         <div class="space-y-base">
                             <label class="font-label-md text-on-surface-variant">Correo Electrónico de Soporte</label>
-                            <input class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-primary-container text-body-md" type="email" value="contacto@mass-salud.mx"/>
+                            <h:inputText value="#{administradorBean.correoSoporte}"
+                                         styleClass="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-primary-container text-body-md"/>
                         </div>
                         <div class="space-y-base">
                             <label class="font-label-md text-on-surface-variant">Teléfono de Emergencia</label>
-                            <input class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-primary-container text-body-md" type="tel" value="+52 (55) 5555-0199"/>
+                            <h:inputText value="#{administradorBean.telefonoEmergencia}"
+                                         styleClass="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-primary-container text-body-md"/>
                         </div>
                     </div>
                 </div>
+                </h:form>
                 <!-- Section: Role Management (Bento Part) -->
                 <h:form>
                 <div class="glass-card rounded-xl p-lg">
@@ -360,28 +376,7 @@
         </div>
     </div>
 </main>
-<!-- Notification Toast (Micro-interaction) -->
-<div class="fixed bottom-lg right-lg transform translate-y-24 transition-transform duration-300 bg-inverse-surface text-inverse-on-surface px-lg py-md rounded-lg shadow-xl flex items-center gap-md z-[100]" id="save-toast">
-    <span class="material-symbols-outlined text-green-400">check_circle</span>
-    <span class="font-label-md">Configuración guardada exitosamente</span>
-</div>
 <script>
-    // Simple micro-interaction for Save button
-    const saveButtons = document.querySelectorAll('button:contains("Guardar")');
-    const toast = document.getElementById('save-toast');
-
-    // Note: Using alternative selection as standard querySelector doesn't support :contains
-    document.querySelectorAll('button').forEach(btn => {
-        if(btn.innerText.includes('Guardar')) {
-            btn.onclick = () => {
-                toast.classList.remove('translate-y-24');
-                setTimeout(() => {
-                    toast.classList.add('translate-y-24');
-                }, 3000);
-            }
-        }
-    });
-
     // Add active states to sidebar icons when clicked
     const navItems = document.querySelectorAll('aside nav a');
     navItems.forEach(item => {

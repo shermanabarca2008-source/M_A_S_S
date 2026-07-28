@@ -134,12 +134,14 @@
         </div>
     </div>
     <div class="flex items-center gap-md">
-        <button class="p-sm rounded-full hover:bg-surface-container-low transition-colors">
+        <h:link outcome="gestionAdmin" title="Notificaciones"
+                styleClass="p-sm rounded-full hover:bg-surface-container-low transition-colors">
             <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
-        </button>
-        <button class="p-sm rounded-full hover:bg-surface-container-low transition-colors">
+        </h:link>
+        <h:link outcome="configuracionSistema" title="Configuración"
+                styleClass="p-sm rounded-full hover:bg-surface-container-low transition-colors">
             <span class="material-symbols-outlined text-on-surface-variant">settings</span>
-        </button>
+        </h:link>
         <div class="h-10 w-10 rounded-full border border-primary flex items-center justify-center overflow-hidden bg-primary-container">
             <img class="object-cover h-full w-full" data-alt="A professional medical practitioner headshot, mid-40s male doctor with a kind expression and wire-rimmed glasses, wearing a white clinical coat and a blue stethoscope. High-key clinical lighting, bright white background, studio quality photography reflecting the M.A.S.S. design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0mCphKJfbpC2Cp5faqqng1YMkQX9nbxVrqgfDcyHbFisy2ovqBTeA0WXSMLxT_5yDdCV1TDhlI2i2bVKUIXWp8GUp-YiAVv95YWDxidTCRbQxthjd1nxTx29Bb4hYeQHFtjglRKuB-NwRptbkcIp2ioLYoxjF2vc-T95H7OKByS4lFV7LyrgwP_aijAX9DL6EId1QxLHzLZnRwuqaxPZIQFtC6RsqlIFaR1VU4mda8N6MM5ruFK10QIA4U_ZrQ6c7BK126wsZeAY"/>
         </div>
@@ -148,40 +150,50 @@
 <!-- SideNavBar -->
 <aside class="hidden lg:flex flex-col w-[280px] h-screen fixed left-0 top-0 pt-20 pb-lg px-md bg-surface-container-low border-r border-outline-variant z-40">
     <div class="flex flex-col gap-xs flex-grow">
-        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group" href="#">
+        <h:link outcome="gestionAdmin"
+                styleClass="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group">
             <span class="material-symbols-outlined group-hover:text-primary">dashboard</span>
             <span class="font-label-md text-label-md">Tablero</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container border-l-4 border-primary rounded-r-full active-tab-pill" href="#">
+        </h:link>
+        <h:link outcome="gestionHorarios"
+                styleClass="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container border-l-4 border-primary rounded-r-full active-tab-pill">
             <span class="material-symbols-outlined">calendar_today</span>
             <span class="font-label-md text-label-md">Citas</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group" href="#">
+        </h:link>
+        <h:link outcome="gestionAdmin"
+                styleClass="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group">
             <span class="material-symbols-outlined group-hover:text-primary">groups</span>
             <span class="font-label-md text-label-md">Pacientes</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group" href="#">
+        </h:link>
+        <h:link outcome="historialMedico"
+                styleClass="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group">
             <span class="material-symbols-outlined group-hover:text-primary">history_edu</span>
             <span class="font-label-md text-label-md">Historial Médico</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group" href="#">
+        </h:link>
+        <h:link outcome="reportes"
+                styleClass="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group">
             <span class="material-symbols-outlined group-hover:text-primary">assessment</span>
             <span class="font-label-md text-label-md">Reportes</span>
-        </a>
+        </h:link>
     </div>
-    <button class="mt-lg bg-primary text-on-primary py-sm px-md rounded-lg font-label-md flex items-center justify-center gap-sm shadow-md hover:opacity-90 transition-all">
+    <h:link outcome="aggCitas"
+            styleClass="mt-lg bg-primary text-on-primary py-sm px-md rounded-lg font-label-md flex items-center justify-center gap-sm shadow-md hover:opacity-90 transition-all">
         <span class="material-symbols-outlined">add</span>
         Nueva Cita
-    </button>
+    </h:link>
     <div class="mt-xl pt-lg border-t border-outline-variant flex flex-col gap-xs">
-        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+        <h:link outcome="reportes"
+                styleClass="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-on-surface transition-colors">
             <span class="material-symbols-outlined">help</span>
             <span class="font-label-md text-label-md">Centro de Ayuda</span>
-        </a>
-        <a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-error transition-colors" href="#">
-            <span class="material-symbols-outlined">logout</span>
-            <span class="font-label-md text-label-md">Cerrar Sesión</span>
-        </a>
+        </h:link>
+        <h:form>
+            <h:commandLink action="#{pacienteBean.cerrarSesion}"
+                    styleClass="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-error transition-colors w-full">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-md text-label-md">Cerrar Sesión</span>
+            </h:commandLink>
+        </h:form>
     </div>
 </aside>
 <!-- Main Content Canvas -->

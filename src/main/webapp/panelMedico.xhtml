@@ -161,8 +161,10 @@
             </div>
             <div class="flex items-center gap-lg">
                 <div class="flex items-center gap-md">
-                    <button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">notifications</button>
-                    <button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">settings</button>
+                    <h:link outcome="panelMedico" fragment="notificaciones" title="Notificaciones"
+                            styleClass="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">notifications</h:link>
+                    <h:link outcome="configuracionSistema" title="Configuración"
+                            styleClass="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">settings</h:link>
                 </div>
                 <div class="h-8 w-[1px] bg-outline-variant"></div>
                 <div class="flex items-center gap-sm cursor-pointer active:opacity-80">
@@ -228,10 +230,11 @@
         <!-- MAIN CONTENT GRID (BENTO STYLE) -->
         <div class="grid grid-cols-12 gap-gutter">
             <!-- AGENDA SECTION -->
-            <section class="col-span-12 lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+            <section id="agenda" class="col-span-12 lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden scroll-mt-24">
                 <div class="px-lg py-md border-b border-outline-variant flex justify-between items-center bg-white/50">
                     <h3 class="font-headline-sm text-headline-sm text-on-surface">Agenda de hoy</h3>
-                    <button class="text-primary font-label-md hover:underline">Ver calendario</button>
+                    <h:link outcome="panelMedico" fragment="agenda"
+                            styleClass="text-primary font-label-md hover:underline">Ver calendario</h:link>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left">
@@ -278,7 +281,7 @@
             </section>
             <!-- RIGHT PANEL: NOTIFICATIONS -->
             <aside class="col-span-12 lg:col-span-4 space-y-gutter">
-                <section class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+                <section id="notificaciones" class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden scroll-mt-24">
                     <div class="px-lg py-md border-b border-outline-variant bg-white/50">
                         <h3 class="font-headline-sm text-headline-sm text-on-surface">Notificaciones recientes</h3>
                     </div>

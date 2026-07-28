@@ -306,7 +306,16 @@
                             </div>
                             <div class="flex flex-col gap-1.5">
                                 <label class="font-label-md text-label-md text-on-surface-variant" for="confirm_password">Confirmar Contraseña</label>
-                                <input class="form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md" id="confirm_password" name="confirm_password" placeholder="Repite tu contraseña" required="" type="password"/>
+                                <h:inputSecret
+                                        id="confirm_password"
+                                        value="#{pacienteBean.confirmacionContrasena}"
+                                        required="true"
+                                        pt:placeholder="Repite tu contraseña"
+                                        redisplay="true"
+                                        styleClass="form-input-focus border border-outline-variant rounded-lg p-3 bg-surface-container-lowest font-body-md"/>
+                                <span class="font-label-sm text-label-sm text-error hidden" id="password-match-feedback">
+                                    Las contraseñas no coinciden.
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -315,8 +324,17 @@
             <!-- Terms & Actions -->
             <div class="flex flex-col items-center gap-lg py-md">
                 <label class="flex items-center gap-3 cursor-pointer group">
-                    <input class="w-5 h-5 rounded text-primary border-outline-variant focus:ring-primary" required="" type="checkbox"/>
-                    <span class="font-body-md text-on-surface-variant group-hover:text-on-surface transition-colors">Acepto los <a class="text-primary font-bold hover:underline" href="#">términos y condiciones</a> de privacidad de datos médicos.</span>
+                    <h:selectBooleanCheckbox id="aceptaTerminos"
+                                             value="#{pacienteBean.aceptaTerminos}"
+                                             styleClass="w-5 h-5 rounded text-primary border-outline-variant focus:ring-primary"/>
+                    <span class="font-body-md text-on-surface-variant group-hover:text-on-surface transition-colors">
+                        Acepto los
+                        <a class="text-primary font-bold hover:underline" href="#"
+                           onclick="event.preventDefault(); event.stopPropagation(); abrirTerminos();">
+                            términos y condiciones
+                        </a>
+                        de privacidad de datos médicos.
+                    </span>
                 </label>
                 <h:messages styleClass="text-error font-label-md text-center" layout="list" globalOnly="false"/>
                 <h:outputText value="#{pacienteBean.mensaje}" styleClass="text-error font-label-md block"
@@ -335,6 +353,89 @@
         </h:form>
     </div>
 </main>
+<!-- Modal de términos y condiciones -->
+<div id="terms-modal"
+     class="hidden fixed inset-0 z-[100] bg-black/50 p-md items-center justify-center"
+     role="dialog" aria-modal="true" aria-labelledby="terms-title"
+     onclick="if (event.target === this) cerrarTerminos();">
+    <div class="bg-white w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-xl shadow-2xl border border-outline-variant">
+        <div class="sticky top-0 bg-white border-b border-outline-variant p-lg flex items-center justify-between">
+            <div>
+                <h2 id="terms-title" class="font-headline-md text-headline-md text-primary">Términos y Condiciones de M.A.S.S.</h2>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">Última actualización: julio de 2026</p>
+            </div>
+            <button type="button" onclick="cerrarTerminos()"
+                    class="p-2 rounded-full hover:bg-surface-container-high" aria-label="Cerrar">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="p-lg space-y-md text-on-surface">
+            <section>
+                <h3 class="font-label-md text-label-md font-bold">1. Aceptación</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant">
+                    Al crear una cuenta, el usuario confirma que ha leído y acepta estas condiciones para utilizar
+                    el sistema de agendamiento médico M.A.S.S.
+                </p>
+            </section>
+            <section>
+                <h3 class="font-label-md text-label-md font-bold">2. Datos personales</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant">
+                    El sistema registra los datos proporcionados en el formulario, como identificación, nombres,
+                    fecha de nacimiento, teléfono, correo y dirección, únicamente para identificar al paciente,
+                    gestionar su cuenta y administrar sus citas.
+                </p>
+            </section>
+            <section>
+                <h3 class="font-label-md text-label-md font-bold">3. Privacidad y confidencialidad</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant">
+                    La información médica y personal debe ser tratada de manera confidencial y utilizada solamente
+                    por personal autorizado para prestar los servicios disponibles en el sistema.
+                </p>
+            </section>
+            <section>
+                <h3 class="font-label-md text-label-md font-bold">4. Responsabilidad del usuario</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant">
+                    El usuario se compromete a ingresar información verdadera, mantener su contraseña protegida,
+                    no compartir su cuenta y actualizar sus datos cuando sea necesario.
+                </p>
+            </section>
+            <section>
+                <h3 class="font-label-md text-label-md font-bold">5. Citas médicas</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant">
+                    El usuario debe revisar la fecha, hora y médico antes de confirmar una cita. Si no puede asistir,
+                    deberá cancelarla o reagendarla oportunamente desde las opciones habilitadas.
+                </p>
+            </section>
+            <section>
+                <h3 class="font-label-md text-label-md font-bold">6. Seguridad</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant">
+                    M.A.S.S. aplica controles de acceso para proteger la información. El usuario debe cerrar sesión
+                    al utilizar equipos compartidos y comunicar cualquier acceso no autorizado.
+                </p>
+            </section>
+            <section>
+                <h3 class="font-label-md text-label-md font-bold">7. Derechos del usuario</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant">
+                    El usuario puede solicitar la revisión o corrección de sus datos personales mediante el personal
+                    responsable de la institución médica.
+                </p>
+            </section>
+            <section>
+                <h3 class="font-label-md text-label-md font-bold">8. Uso del sistema</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant">
+                    Está prohibido intentar acceder a cuentas ajenas, alterar información, afectar el funcionamiento
+                    del sistema o utilizarlo para actividades distintas a la gestión médica autorizada.
+                </p>
+            </section>
+        </div>
+        <div class="sticky bottom-0 bg-white border-t border-outline-variant p-lg flex justify-end">
+            <button type="button" onclick="cerrarTerminos()"
+                    class="bg-primary text-white px-xl py-3 rounded-lg font-label-md hover:bg-primary-container">
+                Entendido
+            </button>
+        </div>
+    </div>
+</div>
 <!-- Visual Background Element -->
 <div class="fixed top-0 right-0 -z-10 opacity-10 pointer-events-none">
     <div class="w-[600px] h-[600px] bg-cover bg-center" data-alt="A macro photography shot of medical cross symbols and blue anatomical DNA strands floating in a pristine, bright clinical environment. The lighting is soft and professional, emphasizing a clean and high-tech healthcare aesthetic with deep blues and whites." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCUOeUu1w6n6gmMs8LRrMZY8j4-Mjm3wUo44aRk1fbRm_Pbl-08cTkNREa5f2lpB8_YFy1e404uLsrcb7CpnK37S0wi7fJGdKCVw__0Cn169jCGN5hpS3ZZbcqFcKzBidsSz647zVQaG0bDXyJVVmLwnAO0ZR40_S3x4mFOCOhWbAm1Ygk0feEpVX5JgDqwImqq5AUOGf4Y3jcS_lfeS1EEKC3OsqKzRucM6bi8tk5tfyiJXBdC0RxbuI3_7xCeGO9jYWPev35z80M')">
@@ -348,19 +449,23 @@
         <p class="font-body-sm text-body-sm text-on-surface-variant text-center md:text-left">© 2024 Medical Appointment Scheduling System (M.A.S.S.). All rights reserved.</p>
     </div>
     <div class="flex flex-wrap justify-center gap-md">
-        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
-        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors"
+           href="#" onclick="event.preventDefault(); abrirTerminos();">Política de Privacidad</a>
+        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors"
+           href="#" onclick="event.preventDefault(); abrirTerminos();">Términos del Servicio</a>
         <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Contact Support</a>
         <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Clinic Locations</a>
     </div>
 </footer>
 <script>
     // Password strength logic
-    const passwordInput = document.getElementById('password');
+    const passwordInput = document.getElementById('registrationForm:password');
+    const confirmationInput = document.getElementById('registrationForm:confirm_password');
     const strengthBar = document.getElementById('password-strength');
     const feedbackText = document.getElementById('password-feedback');
+    const matchFeedback = document.getElementById('password-match-feedback');
 
-    passwordInput.addEventListener('input', () => {
+    passwordInput?.addEventListener('input', () => {
         const val = passwordInput.value;
         let strength = 0;
         if (val.length >= 8) strength += 25;
@@ -383,7 +488,34 @@
             feedbackText.innerText = 'Contraseña fuerte';
             feedbackText.className = 'font-label-sm text-label-sm text-tertiary';
         }
+        validarCoincidencia();
     });
+
+    function validarCoincidencia() {
+        if (!confirmationInput) {
+            return;
+        }
+        const diferentes = confirmationInput.value.length > 0
+            &amp;&amp; passwordInput.value !== confirmationInput.value;
+        confirmationInput.setCustomValidity(diferentes ? 'Las contraseñas no coinciden.' : '');
+        matchFeedback.classList.toggle('hidden', !diferentes);
+    }
+
+    confirmationInput?.addEventListener('input', validarCoincidencia);
+
+    function abrirTerminos() {
+        const modal = document.getElementById('terms-modal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function cerrarTerminos() {
+        const modal = document.getElementById('terms-modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = '';
+    }
 
 </script>
 

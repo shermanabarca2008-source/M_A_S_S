@@ -132,11 +132,29 @@
         .chart-bar {
             transition: height 1s ease-out;
         }
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background: #ffffff !important;
+            }
+            main {
+                margin-left: 0 !important;
+            }
+            .p-gutter {
+                padding: 0 !important;
+            }
+            .glass-card {
+                box-shadow: none !important;
+                break-inside: avoid;
+            }
+        }
     </style>
 </head>
 <body class="text-on-surface">
 <!-- Sidebar -->
-<aside class="fixed left-0 top-0 h-screen w-sidebar_width bg-surface-container border-r border-outline-variant flex flex-col py-lg z-50">
+<aside class="no-print fixed left-0 top-0 h-screen w-sidebar_width bg-surface-container border-r border-outline-variant flex flex-col py-lg z-50">
     <div class="px-gutter mb-xl">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center">
@@ -212,7 +230,7 @@
 <!-- Main Content Area -->
 <main class="ml-[280px] min-h-screen flex flex-col">
     <!-- Top Bar -->
-    <header class="sticky top-0 w-full h-16 bg-surface border-b border-outline-variant shadow-sm flex justify-between items-center px-gutter z-40">
+    <header class="no-print sticky top-0 w-full h-16 bg-surface border-b border-outline-variant shadow-sm flex justify-between items-center px-gutter z-40">
         <div class="flex items-center gap-4 flex-1">
             <div class="relative w-full max-w-md">
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
@@ -220,16 +238,19 @@
             </div>
         </div>
         <div class="flex items-center gap-2">
-            <button class="hover:bg-surface-container-high rounded-full p-2 text-on-surface-variant transition-colors">
+            <h:link outcome="reportes" title="Ayuda"
+                    styleClass="hover:bg-surface-container-high rounded-full p-2 text-on-surface-variant transition-colors">
                 <span class="material-symbols-outlined">help</span>
-            </button>
-            <button class="hover:bg-surface-container-high rounded-full p-2 text-on-surface-variant transition-colors relative">
+            </h:link>
+            <h:link outcome="gestionAdmin" title="Notificaciones"
+                    styleClass="hover:bg-surface-container-high rounded-full p-2 text-on-surface-variant transition-colors relative">
                 <span class="material-symbols-outlined">notifications</span>
                 <span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
-            </button>
-            <button class="hover:bg-surface-container-high rounded-full p-2 text-on-surface-variant transition-colors">
+            </h:link>
+            <h:link outcome="gestionAdmin" title="Aplicaciones"
+                    styleClass="hover:bg-surface-container-high rounded-full p-2 text-on-surface-variant transition-colors">
                 <span class="material-symbols-outlined">apps</span>
-            </button>
+            </h:link>
         </div>
     </header>
     <!-- Content Canvas -->
@@ -240,15 +261,14 @@
                 <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Reportes Estadísticos</h2>
                 <p class="text-body-lg text-on-surface-variant">Análisis detallado de rendimiento clínico y demanda hospitalaria.</p>
             </div>
-            <div class="flex items-center gap-3">
+            <div class="no-print flex items-center gap-3">
                 <div class="flex bg-surface-container rounded-lg p-1">
-                    <button class="px-4 py-1.5 bg-white shadow-sm rounded-md text-label-md text-primary font-bold">Mensual</button>
-                    <button class="px-4 py-1.5 text-label-md text-on-surface-variant hover:text-on-surface">Trimestral</button>
-                    <button class="px-4 py-1.5 text-label-md text-on-surface-variant hover:text-on-surface">Anual</button>
+                    <span class="px-4 py-1.5 bg-white shadow-sm rounded-md text-label-md text-primary font-bold">Mensual</span>
                 </div>
-                <button class="flex items-center gap-2 bg-primary text-white px-md py-2 rounded-lg font-label-md hover:bg-primary-container transition-colors">
-                    <span class="material-symbols-outlined text-[20px]">download</span>
-                    Exportar PDF
+                <button type="button" onclick="window.print(); return false;"
+                        class="flex items-center gap-2 bg-primary text-white px-md py-2 rounded-lg font-label-md hover:bg-primary-container transition-colors">
+                    <span class="material-symbols-outlined text-[20px]">picture_as_pdf</span>
+                    Guardar PDF
                 </button>
             </div>
         </div>
@@ -257,10 +277,10 @@
             <!-- KPI Cards -->
             <div class="col-span-12 lg:col-span-3 glass-card p-lg rounded-xl flex flex-col gap-2">
                 <div class="flex justify-between items-start">
-                    <span class="text-label-sm text-on-surface-variant uppercase tracking-wider">Citas Totales</span>
+                    <span class="text-label-sm text-on-surface-variant uppercase tracking-wider">Citas del Mes</span>
                 </div>
                 <div class="text-headline-md font-bold text-on-surface">#{reporteBean.totalCitas}</div>
-                <p class="text-body-sm text-on-surface-variant mt-1">Registradas en el sistema</p>
+                <p class="text-body-sm text-on-surface-variant mt-1">Registradas durante el mes actual</p>
             </div>
             <div class="col-span-12 lg:col-span-3 glass-card p-lg rounded-xl flex flex-col gap-2">
                 <div class="flex justify-between items-start">
@@ -278,7 +298,7 @@
             </div>
             <div class="col-span-12 lg:col-span-3 glass-card p-lg rounded-xl flex flex-col gap-2">
                 <div class="flex justify-between items-start">
-                    <span class="text-label-sm text-on-surface-variant uppercase tracking-wider">Citas Canceladas</span>
+                    <span class="text-label-sm text-on-surface-variant uppercase tracking-wider">Canceladas del Mes</span>
                 </div>
                 <div class="text-headline-md font-bold text-on-surface">#{reporteBean.citasCanceladas}</div>
                 <p class="text-body-sm text-on-surface-variant mt-1">De un total de #{reporteBean.totalCitas} citas</p>
@@ -338,7 +358,7 @@
             <!-- Doctor Performance Table -->
             <div class="col-span-12 glass-card rounded-xl overflow-hidden">
                 <div class="p-lg border-b border-outline-variant flex items-center justify-between">
-                    <h3 class="font-headline-sm text-headline-sm text-on-surface">Médicos con más Citas</h3>
+                    <h3 class="font-headline-sm text-headline-sm text-on-surface">Médicos con más Citas este Mes</h3>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
@@ -346,7 +366,7 @@
                         <tr class="bg-surface-container-low">
                             <th class="px-lg py-md text-label-sm text-on-surface-variant uppercase">Doctor</th>
                             <th class="px-lg py-md text-label-sm text-on-surface-variant uppercase">Especialidad</th>
-                            <th class="px-lg py-md text-label-sm text-on-surface-variant uppercase text-center">Citas Totales</th>
+                            <th class="px-lg py-md text-label-sm text-on-surface-variant uppercase text-center">Citas del Mes</th>
                             <th class="px-lg py-md text-label-sm text-on-surface-variant uppercase text-center">Horarios Registrados</th>
                         </tr>
                         </thead>
@@ -362,7 +382,7 @@
                                 </div>
                             </td>
                             <td class="px-lg py-md text-body-md text-on-surface-variant">#{medico.especialidadesTexto}</td>
-                            <td class="px-lg py-md text-center text-body-md font-bold">#{medico.citas.size()}</td>
+                            <td class="px-lg py-md text-center text-body-md font-bold">#{reporteBean.getCantidadCitasMesActual(medico)}</td>
                             <td class="px-lg py-md text-center text-body-md text-on-surface-variant">#{medico.horarios.size()}</td>
                         </tr>
                         </ui:repeat>
@@ -380,7 +400,7 @@
         </div>
     </div>
     <!-- Footer -->
-    <footer class="mt-auto py-lg px-gutter border-t border-outline-variant text-center">
+    <footer class="no-print mt-auto py-lg px-gutter border-t border-outline-variant text-center">
         <p class="text-label-sm text-on-surface-variant">© 2024 M.A.S.S. Medical Administration Support System. Todos los derechos reservados. Generado para Dr. Ricardo Alva.</p>
     </footer>
 </main>
